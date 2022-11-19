@@ -4,7 +4,7 @@ import pandas as pd
 
 person = Person()
 
-def get_person(name):
+def get_person(name: str) -> tuple[pd.DataFrame, str]:
     result = person.search(name)[0] 
     p = person.details(result["id"])
     known_department = p["known_for_department"]
@@ -22,4 +22,4 @@ def get_person(name):
     df['release_date'] = pd.to_datetime(df['release_date'])
     df.sort_values(by="release_date", inplace=True)
     df = df[df["department"] == known_department]
-    return df
+    return df, result["name"]
