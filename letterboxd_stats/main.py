@@ -5,6 +5,6 @@ import os
 
 if __name__ == '__main__':
     df = get_person("akira kurosawa")
-    path = os.path.join(os.environ.get('ROOT_FOLDER'), 'static', 'watched.csv')
+    path = os.path.join(os.environ['ROOT_FOLDER'], 'static', 'watched.csv')
     df = read_watched_films(df, path)
     print(df)
