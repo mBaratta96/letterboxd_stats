@@ -11,11 +11,9 @@ def get_person(name: str) -> tuple[pd.DataFrame, str]:
     
     movie_credits = person.movie_credits(result["id"])
     list_of_films = [{
-        "id": movie.get('id'),
-        "department": movie.get('department'),
         "title": movie.get('title'),
         "release_date": movie.get('release_date'),
-        "overview": movie.get('overview')
+        "department": movie.get('department'),
     } for movie in movie_credits["crew"]]
    
     df = pd.DataFrame(list_of_films)
