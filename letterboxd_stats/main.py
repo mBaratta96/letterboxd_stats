@@ -1,6 +1,7 @@
 from letterboxd_stats.tmdb import get_person
 from letterboxd_stats.data import read_watched_films
 from letterboxd_stats.cli import render_table
+import letterboxd_stats.web_scraper
 import argparse
 import os
 
