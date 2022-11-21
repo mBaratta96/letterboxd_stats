@@ -1,0 +1,609 @@
+1669063860206	geckodriver	INFO	Listening on 127.0.0.1:48967
+1669063860723	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "44673" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofile5hvmRz"
+
+(firefox:550966): Gtk-WARNING **: 21:51:00.770: Theme parsing error: colors.css:71:44: Invalid number for color value
+
+(firefox:550966): Gtk-WARNING **: 21:51:00.771: Theme parsing error: colors.css:72:44: Invalid number for color value
+
+(firefox:550966): Gtk-WARNING **: 21:51:00.771: Theme parsing error: colors.css:74:53: Invalid number for color value
+
+(firefox:550966): Gtk-WARNING **: 21:51:00.771: Theme parsing error: colors.css:75:53: Invalid number for color value
+
+(firefox:550966): Gtk-WARNING **: 21:51:00.771: Theme parsing error: colors.css:76:56: Invalid number for color value
+
+(firefox:550966): Gtk-WARNING **: 21:51:00.771: Theme parsing error: colors.css:77:65: Invalid number for color value
+
+(firefox:550966): Gtk-WARNING **: 21:51:00.772: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:550966): Gtk-WARNING **: 21:51:00.772: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:550966): Gtk-WARNING **: 21:51:01.363: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:550966): Gtk-WARNING **: 21:51:01.364: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:550966): Gtk-WARNING **: 21:51:01.418: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:550966): Gtk-WARNING **: 21:51:01.419: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:550966): Gtk-WARNING **: 21:51:01.421: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:550966): Gtk-WARNING **: 21:51:01.421: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1669063861611	Marionette	INFO	Marionette enabled
+1669063861615	Marionette	INFO	Listening on port 37215
+Read port: 37215
+WebDriver BiDi listening on ws://127.0.0.1:44673
+1669063861748	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofile5hvmRz/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:44673/devtools/browser/421e4899-bcff-4614-980a-cc45c405324b
+JavaScript warning: https://cdn.intergient.com/pageos/1.9.5/videoCard.01fa78e7064a386f48fc.js, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1669063882581	Marionette	INFO	Stopped listening on port 37215
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+1669064269659	geckodriver	INFO	Listening on 127.0.0.1:59643
+1669064270164	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "55923" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofile3ZhtH9"
+
+(firefox:560414): Gtk-WARNING **: 21:57:50.215: Theme parsing error: colors.css:71:44: Invalid number for color value
+
+(firefox:560414): Gtk-WARNING **: 21:57:50.215: Theme parsing error: colors.css:72:44: Invalid number for color value
+
+(firefox:560414): Gtk-WARNING **: 21:57:50.215: Theme parsing error: colors.css:74:53: Invalid number for color value
+
+(firefox:560414): Gtk-WARNING **: 21:57:50.215: Theme parsing error: colors.css:75:53: Invalid number for color value
+
+(firefox:560414): Gtk-WARNING **: 21:57:50.215: Theme parsing error: colors.css:76:56: Invalid number for color value
+
+(firefox:560414): Gtk-WARNING **: 21:57:50.215: Theme parsing error: colors.css:77:65: Invalid number for color value
+
+(firefox:560414): Gtk-WARNING **: 21:57:50.217: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:560414): Gtk-WARNING **: 21:57:50.218: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:560414): Gtk-WARNING **: 21:57:50.785: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:560414): Gtk-WARNING **: 21:57:50.786: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:560414): Gtk-WARNING **: 21:57:50.840: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:560414): Gtk-WARNING **: 21:57:50.841: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:560414): Gtk-WARNING **: 21:57:50.843: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:560414): Gtk-WARNING **: 21:57:50.843: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1669064271051	Marionette	INFO	Marionette enabled
+1669064271055	Marionette	INFO	Listening on port 42363
+Read port: 42363
+WebDriver BiDi listening on ws://127.0.0.1:55923
+1669064271247	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofile3ZhtH9/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:55923/devtools/browser/d301d7ee-b626-488b-9414-11d566a03620
+JavaScript warning: https://cdn.intergient.com/pageos/1.9.5/videoCard.01fa78e7064a386f48fc.js, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+1669064368541	Marionette	INFO	Stopped listening on port 42363
+Sandbox: Unexpected EOF, op 0 flags 00 path /proc/cpuinfo
+1669064372215	geckodriver	INFO	Listening on 127.0.0.1:33883
+1669064372720	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "50981" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofiledVAk16"
+
+(firefox:562915): Gtk-WARNING **: 21:59:32.769: Theme parsing error: colors.css:71:44: Invalid number for color value
+
+(firefox:562915): Gtk-WARNING **: 21:59:32.770: Theme parsing error: colors.css:72:44: Invalid number for color value
+
+(firefox:562915): Gtk-WARNING **: 21:59:32.770: Theme parsing error: colors.css:74:53: Invalid number for color value
+
+(firefox:562915): Gtk-WARNING **: 21:59:32.770: Theme parsing error: colors.css:75:53: Invalid number for color value
+
+(firefox:562915): Gtk-WARNING **: 21:59:32.770: Theme parsing error: colors.css:76:56: Invalid number for color value
+
+(firefox:562915): Gtk-WARNING **: 21:59:32.770: Theme parsing error: colors.css:77:65: Invalid number for color value
+
+(firefox:562915): Gtk-WARNING **: 21:59:32.772: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:562915): Gtk-WARNING **: 21:59:32.773: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:562915): Gtk-WARNING **: 21:59:33.341: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:562915): Gtk-WARNING **: 21:59:33.342: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:562915): Gtk-WARNING **: 21:59:33.397: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:562915): Gtk-WARNING **: 21:59:33.398: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:562915): Gtk-WARNING **: 21:59:33.400: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:562915): Gtk-WARNING **: 21:59:33.400: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1669064373576	Marionette	INFO	Marionette enabled
+1669064373581	Marionette	INFO	Listening on port 33485
+Read port: 33485
+WebDriver BiDi listening on ws://127.0.0.1:50981
+1669064373778	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofiledVAk16/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:50981/devtools/browser/5fc2ff96-71be-423d-b10c-4a7d06957346
+JavaScript warning: https://cdn.intergient.com/pageos/1.9.5/videoCard.01fa78e7064a386f48fc.js, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://pagead2.googlesyndication.com/bg/api979c0EJY6QQNrS8TSWwgKrshdt-vRMqEtOqF-hYY.js line 2 > eval line 492 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1669064413000	geckodriver	INFO	Listening on 127.0.0.1:34133
+1669064413503	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "42229" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilebCzlsq"
+
+(firefox:564180): Gtk-WARNING **: 22:00:13.530: Theme parsing error: colors.css:71:44: Invalid number for color value
+
+(firefox:564180): Gtk-WARNING **: 22:00:13.530: Theme parsing error: colors.css:72:44: Invalid number for color value
+
+(firefox:564180): Gtk-WARNING **: 22:00:13.530: Theme parsing error: colors.css:74:53: Invalid number for color value
+
+(firefox:564180): Gtk-WARNING **: 22:00:13.530: Theme parsing error: colors.css:75:53: Invalid number for color value
+
+(firefox:564180): Gtk-WARNING **: 22:00:13.530: Theme parsing error: colors.css:76:56: Invalid number for color value
+
+(firefox:564180): Gtk-WARNING **: 22:00:13.530: Theme parsing error: colors.css:77:65: Invalid number for color value
+
+(firefox:564180): Gtk-WARNING **: 22:00:13.532: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:564180): Gtk-WARNING **: 22:00:13.532: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:564180): Gtk-WARNING **: 22:00:14.117: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:564180): Gtk-WARNING **: 22:00:14.118: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:564180): Gtk-WARNING **: 22:00:14.174: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:564180): Gtk-WARNING **: 22:00:14.175: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:564180): Gtk-WARNING **: 22:00:14.177: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:564180): Gtk-WARNING **: 22:00:14.178: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1669064414361	Marionette	INFO	Marionette enabled
+1669064414366	Marionette	INFO	Listening on port 42435
+Read port: 42435
+WebDriver BiDi listening on ws://127.0.0.1:42229
+1669064414554	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilebCzlsq/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:42229/devtools/browser/0ba3b22e-acb3-4cde-85cb-5e97d09a5ee4
+1669064417165	Marionette	INFO	Stopped listening on port 33485
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+JavaScript warning: https://cdn.intergient.com/pageos/1.9.5/videoCard.01fa78e7064a386f48fc.js, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1669064427239	Marionette	INFO	Stopped listening on port 42435
+1669064480277	geckodriver	INFO	Listening on 127.0.0.1:48107
+1669064480794	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "38133" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilerzCiJF"
+
+(firefox:566027): Gtk-WARNING **: 22:01:20.845: Theme parsing error: colors.css:71:44: Invalid number for color value
+
+(firefox:566027): Gtk-WARNING **: 22:01:20.845: Theme parsing error: colors.css:72:44: Invalid number for color value
+
+(firefox:566027): Gtk-WARNING **: 22:01:20.845: Theme parsing error: colors.css:74:53: Invalid number for color value
+
+(firefox:566027): Gtk-WARNING **: 22:01:20.845: Theme parsing error: colors.css:75:53: Invalid number for color value
+
+(firefox:566027): Gtk-WARNING **: 22:01:20.845: Theme parsing error: colors.css:76:56: Invalid number for color value
+
+(firefox:566027): Gtk-WARNING **: 22:01:20.845: Theme parsing error: colors.css:77:65: Invalid number for color value
+
+(firefox:566027): Gtk-WARNING **: 22:01:20.848: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:566027): Gtk-WARNING **: 22:01:20.849: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:566027): Gtk-WARNING **: 22:01:21.456: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:566027): Gtk-WARNING **: 22:01:21.457: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:566027): Gtk-WARNING **: 22:01:21.510: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:566027): Gtk-WARNING **: 22:01:21.511: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:566027): Gtk-WARNING **: 22:01:21.513: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:566027): Gtk-WARNING **: 22:01:21.513: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1669064481707	Marionette	INFO	Marionette enabled
+1669064481710	Marionette	INFO	Listening on port 33377
+Read port: 33377
+WebDriver BiDi listening on ws://127.0.0.1:38133
+1669064481850	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilerzCiJF/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:38133/devtools/browser/cb6b6bbd-ebd4-4bb0-a07f-6a59cc43ab96
+JavaScript warning: https://cdn.intergient.com/pageos/1.9.5/videoCard.01fa78e7064a386f48fc.js, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: "Already started legacy listener for root-node on server0.conn0.windowGlobal4294967378/windowGlobalTarget2"
+console.warn: "Already started legacy listener for root-node on server0.conn0.windowGlobal4294967379/windowGlobalTarget2"
+console.warn: "Already started legacy listener for root-node on server0.conn0.windowGlobal4294967380/windowGlobalTarget2"
+console.warn: "Already started legacy listener for root-node on server0.conn0.windowGlobal4294967395/windowGlobalTarget2"
+console.warn: "Already started legacy listener for root-node on server0.conn0.windowGlobal4294967396/windowGlobalTarget2"
+console.warn: "Already started legacy listener for root-node on server0.conn0.windowGlobal4294967397/windowGlobalTarget2"
+console.warn: "Already started legacy listener for root-node on server0.conn0.windowGlobal4294967398/windowGlobalTarget2"
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+JavaScript warning: https://pagead2.googlesyndication.com/bg/api979c0EJY6QQNrS8TSWwgKrshdt-vRMqEtOqF-hYY.js line 2 > eval line 4671 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.error: "Error while calling actor 'domwalker's method 'getEmbedderElement'" "Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [inIDeepTreeWalker.currentNode]"
+console.error: ({})
+console.warn: "Error while destroying front:" "inspector" (new Error("Protocol error (NS_ERROR_FAILURE): Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [inIDeepTreeWalker.currentNode] from: server0.conn0.windowGlobal4294967354/domwalker22 (resource://devtools/server/actors/inspector/document-walker.js:77:0)", "resource://devtools/shared/protocol/Front.js", 383))
+console.error: "Failed to start [root-node] legacy listener for target null" (new Error("Protocol error (NS_ERROR_FAILURE): Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [inIDeepTreeWalker.currentNode] from: server0.conn0.windowGlobal4294967354/domwalker22 (resource://devtools/server/actors/inspector/document-walker.js:77:0)", "resource://devtools/shared/protocol/Front.js", 383))
+console.warn: "Listener for event 'frame' did not return a promise."
+JavaScript error: resource://devtools/shared/protocol/Front.js, line 383: Error: Protocol error (NS_ERROR_FAILURE): Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [inIDeepTreeWalker.currentNode] from: server0.conn0.windowGlobal4294967354/domwalker22 (resource://devtools/server/actors/inspector/document-walker.js:77:0)
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+1669064524105	Marionette	INFO	Stopped listening on port 33377
+1669064567788	geckodriver	INFO	Listening on 127.0.0.1:48187
+1669064568294	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "57601" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileaCQCso"
+
+(firefox:568265): Gtk-WARNING **: 22:02:48.343: Theme parsing error: colors.css:71:44: Invalid number for color value
+
+(firefox:568265): Gtk-WARNING **: 22:02:48.343: Theme parsing error: colors.css:72:44: Invalid number for color value
+
+(firefox:568265): Gtk-WARNING **: 22:02:48.343: Theme parsing error: colors.css:74:53: Invalid number for color value
+
+(firefox:568265): Gtk-WARNING **: 22:02:48.343: Theme parsing error: colors.css:75:53: Invalid number for color value
+
+(firefox:568265): Gtk-WARNING **: 22:02:48.343: Theme parsing error: colors.css:76:56: Invalid number for color value
+
+(firefox:568265): Gtk-WARNING **: 22:02:48.343: Theme parsing error: colors.css:77:65: Invalid number for color value
+
+(firefox:568265): Gtk-WARNING **: 22:02:48.346: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:568265): Gtk-WARNING **: 22:02:48.347: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:568265): Gtk-WARNING **: 22:02:48.898: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:568265): Gtk-WARNING **: 22:02:48.898: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:568265): Gtk-WARNING **: 22:02:48.951: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:568265): Gtk-WARNING **: 22:02:48.952: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:568265): Gtk-WARNING **: 22:02:48.954: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:568265): Gtk-WARNING **: 22:02:48.955: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1669064569144	Marionette	INFO	Marionette enabled
+1669064569148	Marionette	INFO	Listening on port 44493
+Read port: 44493
+WebDriver BiDi listening on ws://127.0.0.1:57601
+1669064569341	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileaCQCso/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:57601/devtools/browser/46b73d69-fa1d-42cc-9d00-66b5dac81a56
+JavaScript warning: https://cdn.intergient.com/pageos/1.9.5/videoCard.01fa78e7064a386f48fc.js, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+JavaScript warning: https://pagead2.googlesyndication.com/bg/api979c0EJY6QQNrS8TSWwgKrshdt-vRMqEtOqF-hYY.js line 2 > eval line 198 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+1669064587964	Marionette	WARN	Ignoring event 'pageshow' because document has an invalid readyState of 'uninitialized'.
+console.warn: "Listener for event 'frame' did not return a promise."
+1669064588034	Marionette	WARN	Ignoring event 'pageshow' because document has an invalid readyState of 'uninitialized'.
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+console.warn: "Listener for event 'frame' did not return a promise."
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+1669064599661	Marionette	INFO	Stopped listening on port 44493
+1669064624284	geckodriver	INFO	Listening on 127.0.0.1:43183
+1669064624790	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "39929" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilevdLfnC"
+
+(firefox:569843): Gtk-WARNING **: 22:03:44.841: Theme parsing error: colors.css:71:44: Invalid number for color value
+
+(firefox:569843): Gtk-WARNING **: 22:03:44.841: Theme parsing error: colors.css:72:44: Invalid number for color value
+
+(firefox:569843): Gtk-WARNING **: 22:03:44.841: Theme parsing error: colors.css:74:53: Invalid number for color value
+
+(firefox:569843): Gtk-WARNING **: 22:03:44.841: Theme parsing error: colors.css:75:53: Invalid number for color value
+
+(firefox:569843): Gtk-WARNING **: 22:03:44.841: Theme parsing error: colors.css:76:56: Invalid number for color value
+
+(firefox:569843): Gtk-WARNING **: 22:03:44.841: Theme parsing error: colors.css:77:65: Invalid number for color value
+
+(firefox:569843): Gtk-WARNING **: 22:03:44.843: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:569843): Gtk-WARNING **: 22:03:44.845: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:569843): Gtk-WARNING **: 22:03:45.422: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:569843): Gtk-WARNING **: 22:03:45.422: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:569843): Gtk-WARNING **: 22:03:45.477: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:569843): Gtk-WARNING **: 22:03:45.477: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:569843): Gtk-WARNING **: 22:03:45.479: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:569843): Gtk-WARNING **: 22:03:45.480: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1669064625659	Marionette	INFO	Marionette enabled
+1669064625663	Marionette	INFO	Listening on port 43107
+Read port: 43107
+WebDriver BiDi listening on ws://127.0.0.1:39929
+1669064625844	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilevdLfnC/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:39929/devtools/browser/e1d987a8-5d61-4fd0-8a7d-548d2e81c58c
+JavaScript warning: https://cdn.intergient.com/pageos/1.9.5/videoCard.01fa78e7064a386f48fc.js, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://pagead2.googlesyndication.com/bg/api979c0EJY6QQNrS8TSWwgKrshdt-vRMqEtOqF-hYY.js line 2 > eval line 7281 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1669064638177	Marionette	INFO	Stopped listening on port 43107
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
