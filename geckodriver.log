@@ -1603,3 +1603,1067 @@ JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundEr
 JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
 JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
 1669145444240	Marionette	INFO	Stopped listening on port 33827
+1669145858372	geckodriver	INFO	Listening on 127.0.0.1:46251
+1669145858878	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "41323" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilePNxYhC"
+
+(firefox:65269): Gtk-WARNING **: 20:37:38.928: Theme parsing error: colors.css:71:44: Invalid number for color value
+
+(firefox:65269): Gtk-WARNING **: 20:37:38.928: Theme parsing error: colors.css:72:44: Invalid number for color value
+
+(firefox:65269): Gtk-WARNING **: 20:37:38.928: Theme parsing error: colors.css:74:53: Invalid number for color value
+
+(firefox:65269): Gtk-WARNING **: 20:37:38.928: Theme parsing error: colors.css:75:53: Invalid number for color value
+
+(firefox:65269): Gtk-WARNING **: 20:37:38.928: Theme parsing error: colors.css:76:56: Invalid number for color value
+
+(firefox:65269): Gtk-WARNING **: 20:37:38.928: Theme parsing error: colors.css:77:65: Invalid number for color value
+
+(firefox:65269): Gtk-WARNING **: 20:37:38.930: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:65269): Gtk-WARNING **: 20:37:38.932: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:65269): Gtk-WARNING **: 20:37:39.551: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:65269): Gtk-WARNING **: 20:37:39.552: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:65269): Gtk-WARNING **: 20:37:39.608: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:65269): Gtk-WARNING **: 20:37:39.609: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:65269): Gtk-WARNING **: 20:37:39.611: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:65269): Gtk-WARNING **: 20:37:39.612: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1669145859759	Marionette	INFO	Marionette enabled
+1669145859763	Marionette	INFO	Listening on port 34653
+Read port: 34653
+WebDriver BiDi listening on ws://127.0.0.1:41323
+1669145859923	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilePNxYhC/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:41323/devtools/browser/9c32d20a-ea5c-4dd3-9def-3bf3a280b55f
+JavaScript warning: https://cdn.intergient.com/pageos/1.9.6/videoCard.01fa78e7064a386f48fc.js, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://cdn.intergi.com/hera/releases/4.6.5/main.981ab3f6e69e94e592d7.js, line 1: TypeError: window[window.ramp.pbKey] is undefined
+1669145881077	Marionette	INFO	Stopped listening on port 34653
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+Sandbox: Unexpected EOF, op 0 flags 00 path /proc/cpuinfo
+1669145893993	geckodriver	INFO	Listening on 127.0.0.1:53953
+1669145894499	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "47923" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileXhLWbp"
+
+(firefox:66454): Gtk-WARNING **: 20:38:14.553: Theme parsing error: colors.css:71:44: Invalid number for color value
+
+(firefox:66454): Gtk-WARNING **: 20:38:14.553: Theme parsing error: colors.css:72:44: Invalid number for color value
+
+(firefox:66454): Gtk-WARNING **: 20:38:14.553: Theme parsing error: colors.css:74:53: Invalid number for color value
+
+(firefox:66454): Gtk-WARNING **: 20:38:14.553: Theme parsing error: colors.css:75:53: Invalid number for color value
+
+(firefox:66454): Gtk-WARNING **: 20:38:14.553: Theme parsing error: colors.css:76:56: Invalid number for color value
+
+(firefox:66454): Gtk-WARNING **: 20:38:14.553: Theme parsing error: colors.css:77:65: Invalid number for color value
+
+(firefox:66454): Gtk-WARNING **: 20:38:14.555: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:66454): Gtk-WARNING **: 20:38:14.557: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:66454): Gtk-WARNING **: 20:38:15.117: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:66454): Gtk-WARNING **: 20:38:15.117: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:66454): Gtk-WARNING **: 20:38:15.171: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:66454): Gtk-WARNING **: 20:38:15.172: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:66454): Gtk-WARNING **: 20:38:15.174: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:66454): Gtk-WARNING **: 20:38:15.175: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1669145895353	Marionette	INFO	Marionette enabled
+1669145895358	Marionette	INFO	Listening on port 42963
+Read port: 42963
+WebDriver BiDi listening on ws://127.0.0.1:47923
+1669145895546	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileXhLWbp/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:47923/devtools/browser/4e3a9717-0280-4383-85bf-8bb421dc1d31
+JavaScript warning: https://cdn.intergient.com/pageos/1.9.6/videoCard.01fa78e7064a386f48fc.js, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://pagead2.googlesyndication.com/bg/M3JMhzk_3vTF8k0i77EsfxGITEmQ_9Y04x5PTEuqQvc.js line 2 > eval line 1494 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+1669145918658	Marionette	INFO	Stopped listening on port 42963
+console.error: "stylesheets: fetch failed for https://s.ltrbxd.com/static/css/main.min.f99f57e2.css, using system principal instead."
+console.error: "stylesheets: fetch failed for https://s.ltrbxd.com/static/css/main.min.f99f57e2.css, using system principal instead."
+console.error: "stylesheets: fetch failed for https://s.ltrbxd.com/static/css/main.min.f99f57e2.css, using system principal instead."
+1669145976667	geckodriver	INFO	Listening on 127.0.0.1:46539
+1669145977170	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "42037" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileGZdnuH"
+
+(firefox:68576): Gtk-WARNING **: 20:39:37.195: Theme parsing error: colors.css:71:44: Invalid number for color value
+
+(firefox:68576): Gtk-WARNING **: 20:39:37.195: Theme parsing error: colors.css:72:44: Invalid number for color value
+
+(firefox:68576): Gtk-WARNING **: 20:39:37.195: Theme parsing error: colors.css:74:53: Invalid number for color value
+
+(firefox:68576): Gtk-WARNING **: 20:39:37.195: Theme parsing error: colors.css:75:53: Invalid number for color value
+
+(firefox:68576): Gtk-WARNING **: 20:39:37.195: Theme parsing error: colors.css:76:56: Invalid number for color value
+
+(firefox:68576): Gtk-WARNING **: 20:39:37.195: Theme parsing error: colors.css:77:65: Invalid number for color value
+
+(firefox:68576): Gtk-WARNING **: 20:39:37.196: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:68576): Gtk-WARNING **: 20:39:37.197: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:68576): Gtk-WARNING **: 20:39:37.738: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:68576): Gtk-WARNING **: 20:39:37.738: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:68576): Gtk-WARNING **: 20:39:37.792: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:68576): Gtk-WARNING **: 20:39:37.793: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:68576): Gtk-WARNING **: 20:39:37.795: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:68576): Gtk-WARNING **: 20:39:37.796: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1669145977962	Marionette	INFO	Marionette enabled
+1669145977966	Marionette	INFO	Listening on port 41927
+Read port: 41927
+WebDriver BiDi listening on ws://127.0.0.1:42037
+1669145978156	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileGZdnuH/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:42037/devtools/browser/20df82ef-b44c-43cc-8bba-5375c89cb4a1
+JavaScript warning: https://cdn.intergient.com/pageos/1.9.6/videoCard.01fa78e7064a386f48fc.js, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: , line 0: uncaught exception: undefined
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://pagead2.googlesyndication.com/bg/M3JMhzk_3vTF8k0i77EsfxGITEmQ_9Y04x5PTEuqQvc.js line 2 > eval line 3889 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+SourceActor threw an exception: [Exception... "Failed to open input source 'chrome://global/content/neterror/aboutNetErrorCodes.js'"  nsresult: "0x805303f4 (<unknown>)"  location: "JS frame :: resource://devtools/shared/DevToolsUtils.js :: mainThreadFetch/< :: line 676"  data: yes]
+Stack: mainThreadFetch/<@resource://devtools/shared/DevToolsUtils.js:676:15
+mainThreadFetch@resource://devtools/shared/DevToolsUtils.js:520:10
+_fetchURLContents@resource://devtools/server/actors/utils/sources-manager.js:446:22
+urlContents@resource://devtools/server/actors/utils/sources-manager.js:410:17
+_resurrectSource@resource://devtools/server/actors/thread.js:2154:35
+addAllSources@resource://devtools/server/actors/thread.js:1486:14
+watch@resource://devtools/server/actors/resources/sources.js:78:17
+watchResources@resource://devtools/server/actors/resources/index.js:302:19
+addSessionDataEntry@resource://devtools/server/actors/targets/session-data-processors/resources.js:11:21
+addSessionDataEntry@resource://devtools/server/actors/targets/target-actor-mixin.js:46:25
+_addSessionDataEntry@resource://devtools/server/connectors/js-window-actor/DevToolsFrameChild.sys.mjs:528:24
+receiveMessage@resource://devtools/server/connectors/js-window-actor/DevToolsFrameChild.sys.mjs:437:21
+Line: 676, column: 0
+console.error: ({})
+SourceActor threw an exception: [Exception... "Failed to open input source 'chrome://global/content/neterror/aboutNetErrorCodes.js'"  nsresult: "0x805303f4 (<unknown>)"  location: "JS frame :: resource://devtools/shared/DevToolsUtils.js :: mainThreadFetch/< :: line 676"  data: yes]
+Stack: mainThreadFetch/<@resource://devtools/shared/DevToolsUtils.js:676:15
+mainThreadFetch@resource://devtools/shared/DevToolsUtils.js:520:10
+_fetchURLContents@resource://devtools/server/actors/utils/sources-manager.js:446:22
+urlContents@resource://devtools/server/actors/utils/sources-manager.js:410:17
+_resurrectSource@resource://devtools/server/actors/thread.js:2154:35
+addAllSources@resource://devtools/server/actors/thread.js:1486:14
+watch@resource://devtools/server/actors/resources/sources.js:78:17
+watchResources@resource://devtools/server/actors/resources/index.js:302:19
+addSessionDataEntry@resource://devtools/server/actors/targets/session-data-processors/resources.js:11:21
+addSessionDataEntry@resource://devtools/server/actors/targets/target-actor-mixin.js:46:25
+_addSessionDataEntry@resource://devtools/server/connectors/js-window-actor/DevToolsFrameChild.sys.mjs:528:24
+receiveMessage@resource://devtools/server/connectors/js-window-actor/DevToolsFrameChild.sys.mjs:437:21
+Line: 676, column: 0
+console.error: ({})
+JavaScript error: resource://devtools/shared/DevToolsUtils.js, line 676: Failed to open input source 'chrome://global/content/neterror/aboutNetErrorCodes.js'
+JavaScript error: resource://devtools/shared/DevToolsUtils.js, line 676: Failed to open input source 'chrome://global/content/neterror/aboutNetErrorCodes.js'
+SourceActor threw an exception: [Exception... "Component returned failure code: 0x80470002 (NS_BASE_STREAM_CLOSED) [nsIInputStream.available]"  nsresult: "0x80470002 (NS_BASE_STREAM_CLOSED)"  location: "JS frame :: resource://devtools/shared/DevToolsUtils.js :: onResponse :: line 571"  data: no]
+Stack: onResponse@resource://devtools/shared/DevToolsUtils.js:571:34
+onStopRequest@resource://gre/modules/NetUtil.jsm:126:18
+Line: 571, column: 0
+console.error: ({})
+JavaScript error: resource://devtools/shared/DevToolsUtils.js, line 571: NS_BASE_STREAM_CLOSED: Component returned failure code: 0x80470002 (NS_BASE_STREAM_CLOSED) [nsIInputStream.available]
+console.warn: "Listener for event 'frame' did not return a promise."
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+1669146069877	Marionette	INFO	Stopped listening on port 41927
+1669146081437	geckodriver	INFO	Listening on 127.0.0.1:53687
+1669146081943	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "33621" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileQ5fFI4"
+
+(firefox:71277): Gtk-WARNING **: 20:41:21.995: Theme parsing error: colors.css:71:44: Invalid number for color value
+
+(firefox:71277): Gtk-WARNING **: 20:41:21.995: Theme parsing error: colors.css:72:44: Invalid number for color value
+
+(firefox:71277): Gtk-WARNING **: 20:41:21.995: Theme parsing error: colors.css:74:53: Invalid number for color value
+
+(firefox:71277): Gtk-WARNING **: 20:41:21.995: Theme parsing error: colors.css:75:53: Invalid number for color value
+
+(firefox:71277): Gtk-WARNING **: 20:41:21.995: Theme parsing error: colors.css:76:56: Invalid number for color value
+
+(firefox:71277): Gtk-WARNING **: 20:41:21.995: Theme parsing error: colors.css:77:65: Invalid number for color value
+
+(firefox:71277): Gtk-WARNING **: 20:41:21.997: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:71277): Gtk-WARNING **: 20:41:21.998: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:71277): Gtk-WARNING **: 20:41:22.550: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:71277): Gtk-WARNING **: 20:41:22.550: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:71277): Gtk-WARNING **: 20:41:22.605: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:71277): Gtk-WARNING **: 20:41:22.605: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:71277): Gtk-WARNING **: 20:41:22.607: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:71277): Gtk-WARNING **: 20:41:22.608: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1669146082799	Marionette	INFO	Marionette enabled
+1669146082802	Marionette	INFO	Listening on port 41355
+Read port: 41355
+WebDriver BiDi listening on ws://127.0.0.1:33621
+1669146082954	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileQ5fFI4/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:33621/devtools/browser/a843f7d6-e147-4413-bda2-c6a1cca7cb2d
+JavaScript warning: https://cdn.intergient.com/pageos/1.9.6/videoCard.01fa78e7064a386f48fc.js, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://pagead2.googlesyndication.com/bg/M3JMhzk_3vTF8k0i77EsfxGITEmQ_9Y04x5PTEuqQvc.js line 2 > eval line 267 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+1669146136535	Marionette	INFO	Stopped listening on port 41355
+1669146144105	geckodriver	INFO	Listening on 127.0.0.1:59669
+1669146144612	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "55029" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileybfabG"
+
+(firefox:72988): Gtk-WARNING **: 20:42:24.659: Theme parsing error: colors.css:71:44: Invalid number for color value
+
+(firefox:72988): Gtk-WARNING **: 20:42:24.659: Theme parsing error: colors.css:72:44: Invalid number for color value
+
+(firefox:72988): Gtk-WARNING **: 20:42:24.659: Theme parsing error: colors.css:74:53: Invalid number for color value
+
+(firefox:72988): Gtk-WARNING **: 20:42:24.660: Theme parsing error: colors.css:75:53: Invalid number for color value
+
+(firefox:72988): Gtk-WARNING **: 20:42:24.660: Theme parsing error: colors.css:76:56: Invalid number for color value
+
+(firefox:72988): Gtk-WARNING **: 20:42:24.660: Theme parsing error: colors.css:77:65: Invalid number for color value
+
+(firefox:72988): Gtk-WARNING **: 20:42:24.662: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:72988): Gtk-WARNING **: 20:42:24.664: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:72988): Gtk-WARNING **: 20:42:25.218: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:72988): Gtk-WARNING **: 20:42:25.219: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:72988): Gtk-WARNING **: 20:42:25.272: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:72988): Gtk-WARNING **: 20:42:25.273: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:72988): Gtk-WARNING **: 20:42:25.275: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:72988): Gtk-WARNING **: 20:42:25.276: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1669146145447	Marionette	INFO	Marionette enabled
+1669146145454	Marionette	INFO	Listening on port 44693
+Read port: 44693
+WebDriver BiDi listening on ws://127.0.0.1:55029
+1669146145630	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileybfabG/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:55029/devtools/browser/5b323bf4-e734-4544-8799-0b18a084dfb0
+JavaScript warning: https://cdn.intergient.com/pageos/1.9.6/videoCard.01fa78e7064a386f48fc.js, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1669146154362	Marionette	WARN	Ignoring event 'pageshow' because document has an invalid readyState of 'uninitialized'.
+JavaScript warning: https://pagead2.googlesyndication.com/bg/M3JMhzk_3vTF8k0i77EsfxGITEmQ_9Y04x5PTEuqQvc.js line 2 > eval line 4374 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+JavaScript error: , line 0: uncaught exception: Error: Tyche Blocked! [object Event]
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+1669146235680	Marionette	INFO	Stopped listening on port 44693
+1669146238343	geckodriver	INFO	Listening on 127.0.0.1:32921
+1669146238849	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "60461" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileZvQHka"
+
+(firefox:75325): Gtk-WARNING **: 20:43:58.894: Theme parsing error: colors.css:71:44: Invalid number for color value
+
+(firefox:75325): Gtk-WARNING **: 20:43:58.894: Theme parsing error: colors.css:72:44: Invalid number for color value
+
+(firefox:75325): Gtk-WARNING **: 20:43:58.894: Theme parsing error: colors.css:74:53: Invalid number for color value
+
+(firefox:75325): Gtk-WARNING **: 20:43:58.894: Theme parsing error: colors.css:75:53: Invalid number for color value
+
+(firefox:75325): Gtk-WARNING **: 20:43:58.894: Theme parsing error: colors.css:76:56: Invalid number for color value
+
+(firefox:75325): Gtk-WARNING **: 20:43:58.894: Theme parsing error: colors.css:77:65: Invalid number for color value
+
+(firefox:75325): Gtk-WARNING **: 20:43:58.895: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:75325): Gtk-WARNING **: 20:43:58.896: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:75325): Gtk-WARNING **: 20:43:59.463: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:75325): Gtk-WARNING **: 20:43:59.463: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:75325): Gtk-WARNING **: 20:43:59.517: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:75325): Gtk-WARNING **: 20:43:59.518: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:75325): Gtk-WARNING **: 20:43:59.520: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:75325): Gtk-WARNING **: 20:43:59.520: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1669146239695	Marionette	INFO	Marionette enabled
+1669146239698	Marionette	INFO	Listening on port 35299
+Read port: 35299
+WebDriver BiDi listening on ws://127.0.0.1:60461
+1669146239820	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileZvQHka/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:60461/devtools/browser/a0b9e091-039d-4a93-8eda-81c6e1e24f0e
+JavaScript warning: https://cdn.intergient.com/pageos/1.9.6/videoCard.01fa78e7064a386f48fc.js, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+JavaScript error: , line 0: uncaught exception: Error: Tyche Blocked! [object Event]
+1669146314199	geckodriver	INFO	Listening on 127.0.0.1:45339
+1669146314705	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "52053" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileT5Zy6q"
+
+(firefox:77268): Gtk-WARNING **: 20:45:14.756: Theme parsing error: colors.css:71:44: Invalid number for color value
+
+(firefox:77268): Gtk-WARNING **: 20:45:14.756: Theme parsing error: colors.css:72:44: Invalid number for color value
+
+(firefox:77268): Gtk-WARNING **: 20:45:14.756: Theme parsing error: colors.css:74:53: Invalid number for color value
+
+(firefox:77268): Gtk-WARNING **: 20:45:14.756: Theme parsing error: colors.css:75:53: Invalid number for color value
+
+(firefox:77268): Gtk-WARNING **: 20:45:14.756: Theme parsing error: colors.css:76:56: Invalid number for color value
+
+(firefox:77268): Gtk-WARNING **: 20:45:14.756: Theme parsing error: colors.css:77:65: Invalid number for color value
+
+(firefox:77268): Gtk-WARNING **: 20:45:14.758: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:77268): Gtk-WARNING **: 20:45:14.760: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:77268): Gtk-WARNING **: 20:45:15.330: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:77268): Gtk-WARNING **: 20:45:15.331: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:77268): Gtk-WARNING **: 20:45:15.384: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:77268): Gtk-WARNING **: 20:45:15.385: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:77268): Gtk-WARNING **: 20:45:15.387: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:77268): Gtk-WARNING **: 20:45:15.388: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1669146315564	Marionette	INFO	Marionette enabled
+1669146315568	Marionette	INFO	Listening on port 35119
+Read port: 35119
+WebDriver BiDi listening on ws://127.0.0.1:52053
+1669146315742	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileT5Zy6q/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:52053/devtools/browser/af326a1a-5401-4e26-a05b-6f73f72e977a
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+1669146317820	Marionette	INFO	Stopped listening on port 35299
+JavaScript warning: https://cdn.intergient.com/pageos/1.9.6/videoCard.01fa78e7064a386f48fc.js, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+JavaScript error: https://cdn.intergi.com/hera/releases/4.6.5/main.981ab3f6e69e94e592d7.js, line 1: TypeError: window.googletag.pubads is not a function
+JavaScript error: https://cdn.intergi.com/hera/releases/4.6.5/main.981ab3f6e69e94e592d7.js, line 1: TypeError: window.googletag.pubads is not a function
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+1669146376931	geckodriver	INFO	Listening on 127.0.0.1:35833
+1669146377437	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "36483" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileP5n9II"
+
+(firefox:78938): Gtk-WARNING **: 20:46:17.473: Theme parsing error: colors.css:71:44: Invalid number for color value
+
+(firefox:78938): Gtk-WARNING **: 20:46:17.473: Theme parsing error: colors.css:72:44: Invalid number for color value
+
+(firefox:78938): Gtk-WARNING **: 20:46:17.473: Theme parsing error: colors.css:74:53: Invalid number for color value
+
+(firefox:78938): Gtk-WARNING **: 20:46:17.473: Theme parsing error: colors.css:75:53: Invalid number for color value
+
+(firefox:78938): Gtk-WARNING **: 20:46:17.473: Theme parsing error: colors.css:76:56: Invalid number for color value
+
+(firefox:78938): Gtk-WARNING **: 20:46:17.473: Theme parsing error: colors.css:77:65: Invalid number for color value
+
+(firefox:78938): Gtk-WARNING **: 20:46:17.474: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:78938): Gtk-WARNING **: 20:46:17.475: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:78938): Gtk-WARNING **: 20:46:18.011: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:78938): Gtk-WARNING **: 20:46:18.012: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:78938): Gtk-WARNING **: 20:46:18.067: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:78938): Gtk-WARNING **: 20:46:18.067: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:78938): Gtk-WARNING **: 20:46:18.069: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:78938): Gtk-WARNING **: 20:46:18.070: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1669146378244	Marionette	INFO	Marionette enabled
+1669146378247	Marionette	INFO	Listening on port 35495
+Read port: 35495
+WebDriver BiDi listening on ws://127.0.0.1:36483
+1669146378461	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileP5n9II/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:36483/devtools/browser/0afdde63-8980-4d04-a701-a95fc239d3be
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+1669146380394	Marionette	INFO	Stopped listening on port 35119
+JavaScript warning: https://cdn.intergient.com/pageos/1.9.6/videoCard.01fa78e7064a386f48fc.js, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+1669146432678	geckodriver	INFO	Listening on 127.0.0.1:48161
+1669146433184	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "35725" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilez6QCSj"
+
+(firefox:80436): Gtk-WARNING **: 20:47:13.235: Theme parsing error: colors.css:71:44: Invalid number for color value
+
+(firefox:80436): Gtk-WARNING **: 20:47:13.235: Theme parsing error: colors.css:72:44: Invalid number for color value
+
+(firefox:80436): Gtk-WARNING **: 20:47:13.235: Theme parsing error: colors.css:74:53: Invalid number for color value
+
+(firefox:80436): Gtk-WARNING **: 20:47:13.235: Theme parsing error: colors.css:75:53: Invalid number for color value
+
+(firefox:80436): Gtk-WARNING **: 20:47:13.235: Theme parsing error: colors.css:76:56: Invalid number for color value
+
+(firefox:80436): Gtk-WARNING **: 20:47:13.235: Theme parsing error: colors.css:77:65: Invalid number for color value
+
+(firefox:80436): Gtk-WARNING **: 20:47:13.237: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:80436): Gtk-WARNING **: 20:47:13.238: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:80436): Gtk-WARNING **: 20:47:13.805: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:80436): Gtk-WARNING **: 20:47:13.805: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:80436): Gtk-WARNING **: 20:47:13.869: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:80436): Gtk-WARNING **: 20:47:13.869: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:80436): Gtk-WARNING **: 20:47:13.871: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:80436): Gtk-WARNING **: 20:47:13.872: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1669146433910	Marionette	INFO	Stopped listening on port 35495
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1669146434052	Marionette	INFO	Marionette enabled
+1669146434056	Marionette	INFO	Listening on port 33891
+Read port: 33891
+WebDriver BiDi listening on ws://127.0.0.1:35725
+1669146434204	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilez6QCSj/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:35725/devtools/browser/d91c63c2-7a8d-4421-9338-f705a44b492d
+JavaScript warning: https://cdn.intergient.com/pageos/1.9.6/videoCard.01fa78e7064a386f48fc.js, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://cdn.intergi.com/hera/releases/4.6.5/main.981ab3f6e69e94e592d7.js, line 1: TypeError: window.googletag.pubads is not a function
+JavaScript error: https://cdn.intergi.com/hera/releases/4.6.5/main.981ab3f6e69e94e592d7.js, line 1: TypeError: window.googletag.pubads is not a function
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+1669146453063	Marionette	INFO	Stopped listening on port 33891
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+Sandbox: Unexpected EOF, op 0 flags 00 path /proc/cpuinfo
+1669146517905	geckodriver	INFO	Listening on 127.0.0.1:43325
+1669146518410	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "42813" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofile8fpKSD"
+
+(firefox:82702): Gtk-WARNING **: 20:48:38.458: Theme parsing error: colors.css:71:44: Invalid number for color value
+
+(firefox:82702): Gtk-WARNING **: 20:48:38.458: Theme parsing error: colors.css:72:44: Invalid number for color value
+
+(firefox:82702): Gtk-WARNING **: 20:48:38.458: Theme parsing error: colors.css:74:53: Invalid number for color value
+
+(firefox:82702): Gtk-WARNING **: 20:48:38.458: Theme parsing error: colors.css:75:53: Invalid number for color value
+
+(firefox:82702): Gtk-WARNING **: 20:48:38.458: Theme parsing error: colors.css:76:56: Invalid number for color value
+
+(firefox:82702): Gtk-WARNING **: 20:48:38.458: Theme parsing error: colors.css:77:65: Invalid number for color value
+
+(firefox:82702): Gtk-WARNING **: 20:48:38.460: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:82702): Gtk-WARNING **: 20:48:38.461: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:82702): Gtk-WARNING **: 20:48:39.010: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:82702): Gtk-WARNING **: 20:48:39.011: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:82702): Gtk-WARNING **: 20:48:39.065: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:82702): Gtk-WARNING **: 20:48:39.066: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:82702): Gtk-WARNING **: 20:48:39.068: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:82702): Gtk-WARNING **: 20:48:39.068: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1669146519239	Marionette	INFO	Marionette enabled
+1669146519242	Marionette	INFO	Listening on port 44303
+Read port: 44303
+WebDriver BiDi listening on ws://127.0.0.1:42813
+1669146519396	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofile8fpKSD/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:42813/devtools/browser/d52e08ac-e3d9-4460-ba95-2aa921291e48
+JavaScript warning: https://cdn.intergient.com/pageos/1.9.6/videoCard.01fa78e7064a386f48fc.js, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+1669146544272	Marionette	INFO	Stopped listening on port 44303
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+1669146557240	geckodriver	INFO	Listening on 127.0.0.1:40969
+1669146557743	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "46993" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilewA5h5L"
+
+(firefox:83866): Gtk-WARNING **: 20:49:17.770: Theme parsing error: colors.css:71:44: Invalid number for color value
+
+(firefox:83866): Gtk-WARNING **: 20:49:17.770: Theme parsing error: colors.css:72:44: Invalid number for color value
+
+(firefox:83866): Gtk-WARNING **: 20:49:17.770: Theme parsing error: colors.css:74:53: Invalid number for color value
+
+(firefox:83866): Gtk-WARNING **: 20:49:17.770: Theme parsing error: colors.css:75:53: Invalid number for color value
+
+(firefox:83866): Gtk-WARNING **: 20:49:17.770: Theme parsing error: colors.css:76:56: Invalid number for color value
+
+(firefox:83866): Gtk-WARNING **: 20:49:17.770: Theme parsing error: colors.css:77:65: Invalid number for color value
+
+(firefox:83866): Gtk-WARNING **: 20:49:17.771: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:83866): Gtk-WARNING **: 20:49:17.772: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:83866): Gtk-WARNING **: 20:49:18.326: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:83866): Gtk-WARNING **: 20:49:18.326: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:83866): Gtk-WARNING **: 20:49:18.381: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:83866): Gtk-WARNING **: 20:49:18.381: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:83866): Gtk-WARNING **: 20:49:18.383: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:83866): Gtk-WARNING **: 20:49:18.384: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1669146558547	Marionette	INFO	Marionette enabled
+1669146558551	Marionette	INFO	Listening on port 35621
+Read port: 35621
+WebDriver BiDi listening on ws://127.0.0.1:46993
+1669146558748	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilewA5h5L/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:46993/devtools/browser/ee7bc2dc-225f-46bf-be5c-af1156631c51
+JavaScript warning: https://cdn.intergient.com/pageos/1.9.6/videoCard.01fa78e7064a386f48fc.js, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+JavaScript error: resource://gre/modules/AsyncShutdown.jsm, line 574: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+1669146632514	Marionette	INFO	Stopped listening on port 35621
+1669146798480	geckodriver	INFO	Listening on 127.0.0.1:43181
+1669146798993	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "51371" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilenjjF5d"
+
+(firefox:89432): Gtk-WARNING **: 20:53:19.019: Theme parsing error: colors.css:71:44: Invalid number for color value
+
+(firefox:89432): Gtk-WARNING **: 20:53:19.019: Theme parsing error: colors.css:72:44: Invalid number for color value
+
+(firefox:89432): Gtk-WARNING **: 20:53:19.019: Theme parsing error: colors.css:74:53: Invalid number for color value
+
+(firefox:89432): Gtk-WARNING **: 20:53:19.019: Theme parsing error: colors.css:75:53: Invalid number for color value
+
+(firefox:89432): Gtk-WARNING **: 20:53:19.020: Theme parsing error: colors.css:76:56: Invalid number for color value
+
+(firefox:89432): Gtk-WARNING **: 20:53:19.020: Theme parsing error: colors.css:77:65: Invalid number for color value
+
+(firefox:89432): Gtk-WARNING **: 20:53:19.021: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:89432): Gtk-WARNING **: 20:53:19.021: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:89432): Gtk-WARNING **: 20:53:19.587: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:89432): Gtk-WARNING **: 20:53:19.588: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:89432): Gtk-WARNING **: 20:53:19.644: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:89432): Gtk-WARNING **: 20:53:19.645: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:89432): Gtk-WARNING **: 20:53:19.648: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:89432): Gtk-WARNING **: 20:53:19.650: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1669146799828	Marionette	INFO	Marionette enabled
+1669146799832	Marionette	INFO	Listening on port 39371
+Read port: 39371
+WebDriver BiDi listening on ws://127.0.0.1:51371
+1669146799992	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilenjjF5d/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:51371/devtools/browser/2e2c90d4-9689-4cbf-b45b-f61b734a505c
+JavaScript warning: https://cdn.intergient.com/pageos/1.9.6/videoCard.01fa78e7064a386f48fc.js, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+1669146820878	Marionette	INFO	Stopped listening on port 39371
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+Sandbox: Unexpected EOF, op 0 flags 00 path /proc/cpuinfo
+1669147046257	geckodriver	INFO	Listening on 127.0.0.1:48031
+1669147046773	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "55381" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileYXc7uX"
+
+(firefox:95939): Gtk-WARNING **: 20:57:26.818: Theme parsing error: colors.css:71:44: Invalid number for color value
+
+(firefox:95939): Gtk-WARNING **: 20:57:26.818: Theme parsing error: colors.css:72:44: Invalid number for color value
+
+(firefox:95939): Gtk-WARNING **: 20:57:26.818: Theme parsing error: colors.css:74:53: Invalid number for color value
+
+(firefox:95939): Gtk-WARNING **: 20:57:26.818: Theme parsing error: colors.css:75:53: Invalid number for color value
+
+(firefox:95939): Gtk-WARNING **: 20:57:26.819: Theme parsing error: colors.css:76:56: Invalid number for color value
+
+(firefox:95939): Gtk-WARNING **: 20:57:26.819: Theme parsing error: colors.css:77:65: Invalid number for color value
+
+(firefox:95939): Gtk-WARNING **: 20:57:26.820: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:95939): Gtk-WARNING **: 20:57:26.821: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:95939): Gtk-WARNING **: 20:57:27.382: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:95939): Gtk-WARNING **: 20:57:27.383: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:95939): Gtk-WARNING **: 20:57:27.441: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:95939): Gtk-WARNING **: 20:57:27.442: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:95939): Gtk-WARNING **: 20:57:27.444: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:95939): Gtk-WARNING **: 20:57:27.444: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1669147047645	Marionette	INFO	Marionette enabled
+1669147047649	Marionette	INFO	Listening on port 44673
+Read port: 44673
+WebDriver BiDi listening on ws://127.0.0.1:55381
+1669147047839	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileYXc7uX/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:55381/devtools/browser/1848bdcb-522b-4cd3-a2dc-dabbf19135ab
+JavaScript warning: https://cdn.intergient.com/pageos/1.9.6/videoCard.01fa78e7064a386f48fc.js, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://cdn.intergi.com/hera/releases/4.6.5/main.981ab3f6e69e94e592d7.js, line 1: TypeError: window.googletag.pubads is not a function
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+1669147081658	Marionette	INFO	Stopped listening on port 44673
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+1669147111045	geckodriver	INFO	Listening on 127.0.0.1:47515
+1669147111540	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "35183" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofileHVRxGw"
+
+(firefox:97772): Gtk-WARNING **: 20:58:31.592: Theme parsing error: colors.css:71:44: Invalid number for color value
+
+(firefox:97772): Gtk-WARNING **: 20:58:31.592: Theme parsing error: colors.css:72:44: Invalid number for color value
+
+(firefox:97772): Gtk-WARNING **: 20:58:31.592: Theme parsing error: colors.css:74:53: Invalid number for color value
+
+(firefox:97772): Gtk-WARNING **: 20:58:31.593: Theme parsing error: colors.css:75:53: Invalid number for color value
+
+(firefox:97772): Gtk-WARNING **: 20:58:31.593: Theme parsing error: colors.css:76:56: Invalid number for color value
+
+(firefox:97772): Gtk-WARNING **: 20:58:31.593: Theme parsing error: colors.css:77:65: Invalid number for color value
+
+(firefox:97772): Gtk-WARNING **: 20:58:31.595: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:97772): Gtk-WARNING **: 20:58:31.596: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:97772): Gtk-WARNING **: 20:58:32.181: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:97772): Gtk-WARNING **: 20:58:32.182: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:97772): Gtk-WARNING **: 20:58:32.235: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:97772): Gtk-WARNING **: 20:58:32.236: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:97772): Gtk-WARNING **: 20:58:32.238: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:97772): Gtk-WARNING **: 20:58:32.239: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1669147112455	Marionette	INFO	Marionette enabled
+1669147112460	Marionette	INFO	Listening on port 36825
+Read port: 36825
+WebDriver BiDi listening on ws://127.0.0.1:35183
+1669147112643	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileHVRxGw/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:35183/devtools/browser/53b46b6f-4c48-454a-a1fe-378bea7f210f
+JavaScript warning: https://cdn.intergient.com/pageos/1.9.6/videoCard.01fa78e7064a386f48fc.js, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+1669147218576	Marionette	INFO	Stopped listening on port 36825
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+Sandbox: Unexpected EOF, op 0 flags 00 path /proc/cpuinfo
+1669147444263	geckodriver	INFO	Listening on 127.0.0.1:60021
+1669147444782	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "41351" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "/tmp/rust_mozprofilefLB1gd"
+
+(firefox:105436): Gtk-WARNING **: 21:04:04.827: Theme parsing error: colors.css:71:44: Invalid number for color value
+
+(firefox:105436): Gtk-WARNING **: 21:04:04.827: Theme parsing error: colors.css:72:44: Invalid number for color value
+
+(firefox:105436): Gtk-WARNING **: 21:04:04.827: Theme parsing error: colors.css:74:53: Invalid number for color value
+
+(firefox:105436): Gtk-WARNING **: 21:04:04.827: Theme parsing error: colors.css:75:53: Invalid number for color value
+
+(firefox:105436): Gtk-WARNING **: 21:04:04.827: Theme parsing error: colors.css:76:56: Invalid number for color value
+
+(firefox:105436): Gtk-WARNING **: 21:04:04.827: Theme parsing error: colors.css:77:65: Invalid number for color value
+
+(firefox:105436): Gtk-WARNING **: 21:04:04.829: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:105436): Gtk-WARNING **: 21:04:04.830: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:105436): Gtk-WARNING **: 21:04:05.420: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:105436): Gtk-WARNING **: 21:04:05.421: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:105436): Gtk-WARNING **: 21:04:05.477: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:105436): Gtk-WARNING **: 21:04:05.478: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+
+(firefox:105436): Gtk-WARNING **: 21:04:05.480: Theme parsing error: gtk.css:263:12: 'text-align' is not a valid property name
+
+(firefox:105436): Gtk-WARNING **: 21:04:05.480: Theme parsing error: gtk.css:772:14: Junk at end of value for opacity
+[GFX1-]: glxtest: VA-API test failed: failed to initialise VAAPI connection.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1669147445628	Marionette	INFO	Marionette enabled
+1669147445633	Marionette	INFO	Listening on port 45277
+Read port: 45277
+WebDriver BiDi listening on ws://127.0.0.1:41351
+1669147445835	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilefLB1gd/search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:41351/devtools/browser/4d45bcbe-e738-4c9a-83bf-95e696d7ebd2
+JavaScript warning: https://cdn.intergient.com/pageos/1.9.6/videoCard.01fa78e7064a386f48fc.js, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://z.moatads.com/playwireprebidheader597261727146/moatheader.js, line 218: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+console.warn: LoginRecipes: "Falling back to a synchronous message for: https://letterboxd.com."
+1669147479971	Marionette	INFO	Stopped listening on port 45277
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
