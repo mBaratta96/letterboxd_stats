@@ -1,7 +1,7 @@
 from letterboxd_stats.tmdb import get_person
 from letterboxd_stats.data import read_watched_films
 from letterboxd_stats.cli import render_table
-import letterboxd_stats.web_scraper
+from letterboxd_stats.web_scraper import login
 import argparse
 import os
 
@@ -14,3 +14,4 @@ if __name__ == '__main__':
     path = os.path.join(os.environ['ROOT_FOLDER'], 'static', 'watched.csv')
     df = read_watched_films(df, path)
     render_table(df, name)
+    login()
