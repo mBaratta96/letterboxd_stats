@@ -4,3 +4,4 @@ python-dotenv~=0.21.0
 rich~=12.6.0
 numpy~=1.23.0
 selenium~=4.6.0
+tomli~=2.0.1
