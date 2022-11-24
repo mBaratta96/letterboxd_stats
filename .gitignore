@@ -17,3 +17,5 @@ instance/
 dist/
 build/
 static/
+config.toml
+*.log
