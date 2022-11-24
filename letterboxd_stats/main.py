@@ -1,4 +1,4 @@
-from letterboxd_stats.tmdb import get_person
+from letterboxd_stats.tmdb import get_person, create_person_dataframe
 from letterboxd_stats.data import read_watched_films
 from letterboxd_stats.cli import render_table
 from letterboxd_stats import web_scraper as ws
@@ -17,7 +17,9 @@ if __name__ == '__main__':
         ws.login()
         ws.download_stats()
         ws.extract_data()
-    df, name = get_person(args.search)
+    search_result = get_person(args.search)
+    name = search_result["name"]
+    df = create_person_dataframe(search_result)
     path = os.path.join(os.environ['ROOT_FOLDER'], 'static', 'watched.csv')
     df = read_watched_films(df, path)
     render_table(df, name)
