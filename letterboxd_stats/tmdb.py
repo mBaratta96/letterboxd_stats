@@ -1,8 +1,10 @@
-from dotenv import load_dotenv
-from tmdbv3api import Person
+from tmdbv3api import TMDb, Person
 import pandas as pd
 from letterboxd_stats.cli import select_department
+from config import config
 
+tmdb = TMDb()
+tmdb.api_key = config['TMDB']['api_key']
 person = Person()
 
 
@@ -22,7 +24,7 @@ def create_person_dataframe(search_result):
     } for movie in movie_credits["crew"]]
     df = pd.DataFrame(list_of_films)
     department = select_department(
-        df['department'].unique(), known_for_department
+        df['department'].unique(), p['name'], known_for_department
     )
     df = df[df['department'] == department]
     df['release_date'] = pd.to_datetime(df['release_date'])
