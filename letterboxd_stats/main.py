@@ -24,10 +24,11 @@ if __name__ == "__main__":
         ws.login()
         ws.download_stats()
         ws.extract_data()
-    search_result = get_person(args.search)
-    name = search_result["name"]
-    df = create_person_dataframe(search_result)
-    path = os.path.join(config["root_folder"], "static", "watched.csv")
-    df = read_watched_films(df, path)
-    render_table(df, name)
-    ws.close_webdriver()
+        ws.close_webdriver()
+    if args.search:
+        search_result = get_person(args.search)
+        name = search_result["name"]
+        df = create_person_dataframe(search_result)
+        path = os.path.join(config["root_folder"], "static", "watched.csv")
+        df = read_watched_films(df, path)
+        render_table(df, name)
