@@ -9,9 +9,7 @@ def select_department(departments: list[str], name: str, known_for_department: s
     print(departments)
     print(known_for_department)
     department = inquirer.select(
-        message=f"Select a department for {name}",
-        choices=departments,
-        default=known_for_department
+        message=f"Select a department for {name}", choices=departments, default=known_for_department
     ).execute()
     return department
 
