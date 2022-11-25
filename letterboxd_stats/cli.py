@@ -6,12 +6,17 @@ from InquirerPy import inquirer
 
 
 def select_department(departments: list[str], name: str, known_for_department: str):
-    print(departments)
-    print(known_for_department)
     department = inquirer.select(
         message=f"Select a department for {name}", choices=departments, default=known_for_department
     ).execute()
     return department
+
+
+def select_search_result(results: list[str]):
+    result = inquirer.select(
+        message="Result of your search. Please select one", choices=results, default=results[0]
+    ).execute()
+    return results.index(result)
 
 
 def render_table(df: pd.DataFrame, name: str):
