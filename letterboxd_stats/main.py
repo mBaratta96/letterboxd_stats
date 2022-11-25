@@ -4,6 +4,7 @@ from letterboxd_stats.cli import render_table
 from letterboxd_stats import web_scraper as ws
 import argparse
 import os
+from config import config
 
 parser = argparse.ArgumentParser(
     prog='Letterboxd Stats', description="CLI tool to display Letterboxd statistics")
@@ -20,6 +21,7 @@ if __name__ == '__main__':
     search_result = get_person(args.search)
     name = search_result["name"]
     df = create_person_dataframe(search_result)
-    path = os.path.join(os.environ['ROOT_FOLDER'], 'static', 'watched.csv')
+    path = os.path.join(config['root_folder'], 'static', 'watched.csv')
     df = read_watched_films(df, path)
     render_table(df, name)
+    ws.close_webdriver()

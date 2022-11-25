@@ -5,11 +5,11 @@ import pandas as pd
 from InquirerPy import inquirer
 
 
-def select_department(departments: list[str], known_for_department: str):
+def select_department(departments: list[str], name: str, known_for_department: str):
     print(departments)
     print(known_for_department)
     department = inquirer.select(
-        message="Select a department",
+        message=f"Select a department for {name}",
         choices=departments,
         default=known_for_department
     ).execute()
