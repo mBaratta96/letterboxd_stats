@@ -1,7 +1,7 @@
 from letterboxd_stats.tmdb import get_person, create_person_dataframe
 from letterboxd_stats.data import read_watched_films, show_wishlist
 from letterboxd_stats.cli import render_table
-from letterboxd_stats import web_scraper as ws
+from letterboxd_stats.web_scraper import FirefoxWebDriver
 import argparse
 import os
 from config import config
@@ -24,9 +24,9 @@ parser.add_argument("-r", "--random", help="shuffle wishlist", action="store_tru
 if __name__ == "__main__":
     args = parser.parse_args()
     if args.download:
+        ws = FirefoxWebDriver()
         ws.login()
         ws.download_stats()
-        ws.extract_data()
         ws.close_webdriver()
     if args.search:
         search_result = get_person(args.search)
