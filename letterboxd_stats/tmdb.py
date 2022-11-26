@@ -9,6 +9,7 @@ person = Person()
 
 
 def get_person(name: str):
+    print(f"Searching for '{name}'")
     search_results = person.search(name)
     names = [result.name for result in search_results]  # type: ignore
     result_index = select_search_result(names)  # type: ignore
