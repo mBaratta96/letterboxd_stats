@@ -1,5 +1,5 @@
 from letterboxd_stats.tmdb import get_person, create_person_dataframe
-from letterboxd_stats.data import read_watched_films
+from letterboxd_stats.data import read_watched_films, show_wishlist
 from letterboxd_stats.cli import render_table
 from letterboxd_stats import web_scraper as ws
 import argparse
@@ -17,6 +17,9 @@ parser.add_argument(
     help="Download letterboxd data from your account",
     action="store_true",
 )
+parser.add_argument("-w", "--wishlist", help="show wishlist", action="store_true")
+parser.add_argument("-l", "--wishlist-limit", help="limit the number of items of your wishlist", type=int)
+parser.add_argument("-r", "--random", help="shuffle wishlist", action="store_true")
 
 if __name__ == "__main__":
     args = parser.parse_args()
@@ -32,3 +35,6 @@ if __name__ == "__main__":
         path = os.path.join(config["root_folder"], "static", "watched.csv")
         df = read_watched_films(df, path)
         render_table(df, name)
+    if args.wishlist:
+        path = os.path.join(config["root_folder"], "static", "watchlist.csv")
+        show_wishlist(path, args.random, args.wishlist_limit)
