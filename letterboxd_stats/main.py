@@ -1,5 +1,5 @@
 from letterboxd_stats.tmdb import get_person, create_person_dataframe
-from letterboxd_stats.data import read_watched_films, show_wishlist
+from letterboxd_stats.data import read_watched_films, show_wishlist, show_diary
 from letterboxd_stats.cli import render_table
 from letterboxd_stats.web_scraper import FirefoxWebDriver
 import argparse
@@ -18,8 +18,9 @@ parser.add_argument(
     action="store_true",
 )
 parser.add_argument("-w", "--wishlist", help="show wishlist", action="store_true")
-parser.add_argument("-l", "--wishlist-limit", help="limit the number of items of your wishlist", type=int)
+parser.add_argument("-l", "--limit", help="limit the number of items of your wishlist/diary", type=int)
 parser.add_argument("-r", "--random", help="shuffle wishlist", action="store_true")
+parser.add_argument("-D", "--diary", help="show diary", action="store_true")
 
 if __name__ == "__main__":
     args = parser.parse_args()
@@ -37,4 +38,7 @@ if __name__ == "__main__":
         render_table(df, name)
     if args.wishlist:
         path = os.path.join(config["root_folder"], "static", "watchlist.csv")
-        show_wishlist(path, args.random, args.wishlist_limit)
+        show_wishlist(path, args.random, args.limit)
+    if args.diary:
+        path = os.path.join(config["root_folder"], "static", "diary.csv")
+        show_diary(path, args.limit)
