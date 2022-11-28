@@ -13,6 +13,15 @@ def show_wishlist(path: str, shuffle: bool, limit=None):
     df = pd.read_csv(path)
     if shuffle:
         df = df.sample(frac=1)
-    if limit:
+    if limit is not None:
         df = df.iloc[:limit, :]
     render_table(df, "Wishlist")
+
+
+def show_diary(path: str, limit=None):
+    df = pd.read_csv(path)
+    df["Watched Date"] = pd.to_datetime(df["Watched Date"])
+    df.sort_values(by="Watched Date", ascending=False, inplace=True)
+    if limit is not None:
+        df = df.iloc[:limit, :]
+    render_table(df, "Diary")
