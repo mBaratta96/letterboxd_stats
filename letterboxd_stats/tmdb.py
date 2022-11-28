@@ -1,4 +1,4 @@
-from tmdbv3api import TMDb, Person
+from tmdbv3api import TMDb, Person, Movie
 import pandas as pd
 from letterboxd_stats.cli import select_department, select_search_result
 from config import config
@@ -6,6 +6,7 @@ from config import config
 tmdb = TMDb()
 tmdb.api_key = config["TMDB"]["api_key"]
 person = Person()
+movie = Movie()
 
 
 def get_person(name: str):
@@ -21,16 +22,14 @@ def create_person_dataframe(search_result):
     known_for_department = p["known_for_department"]
     movie_credits = person.movie_credits(search_result["id"])
     list_of_films = [
-        {
-            "title": movie.title,
-            "release_date": movie.release_date,
-            "department": movie.department,
-        }
-        for movie in movie_credits["crew"]
+        {"title": m.title, "release_date": m.release_date, "department": m.department, "id": m.id}
+        for m in movie_credits["crew"]
     ]
     df = pd.DataFrame(list_of_films)
     department = select_department(df["department"].unique(), p["name"], known_for_department)
     df = df[df["department"] == department]
+    df["runtime"] = pd.Series([movie.details(movie_id)["runtime"] for movie_id in df["id"].values])
+    df.drop("id", axis=1)
     df["release_date"] = pd.to_datetime(df["release_date"])
     df.sort_values(by="release_date", inplace=True)
     return df
