@@ -5,9 +5,9 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import os
-import time
 from zipfile import ZipFile
 from config import config
+import requests
 
 profile = webdriver.FirefoxProfile()
 profile.set_preference("browser.download.folderList", 2)
@@ -42,18 +42,18 @@ class FirefoxWebDriver:
         self.web.find_element(By.LINK_TEXT, "Settings").click()
         self.web.find_element(By.XPATH, "//a[@data-id='data']").click()
         self.web.find_element(By.CLASS_NAME, "export-data-link").click()
-        WebDriverWait(self.web, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "export-data-button"))).click()
-        time.sleep(5)
-        print("Data download successful")
-        archive = None
+        WebDriverWait(self.web, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, "export-data-button")))
+        cookies = {cookie["name"]: cookie["value"] for cookie in self.web.get_cookies()}
+        res = requests.get("https://letterboxd.com/data/export/", cookies=cookies)
+        if res.status_code != 200:
+            self.close_webdriver()
+            raise ConnectionError("Impossible to download data.")
+        print("Data download successful.")
+        filename = res.headers["content-disposition"].split()[-1].split("=")[-1]
         path = os.path.expanduser(os.path.join(config["root_folder"], "static"))
-        with os.scandir(path) as it:
-            for entry in it:
-                if entry.is_file() and entry.name.endswith(".zip") and entry.name.startswith("letterboxd"):
-                    archive = entry.path
-                    break
-        if not archive:
-            raise FileNotFoundError("No Letterboxd .zip file found.")
+        archive = os.path.join(path, filename)
+        with open(archive, "wb") as f:
+            f.write(res.content)
         with ZipFile(archive, "r") as zip:
             zip.extractall(path)
         os.remove(archive)
