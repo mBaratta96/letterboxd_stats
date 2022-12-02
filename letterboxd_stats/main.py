@@ -1,6 +1,6 @@
-from letterboxd_stats.tmdb import get_person, create_person_dataframe
-from letterboxd_stats.data import read_watched_films, show_wishlist, show_diary
-from letterboxd_stats.cli import render_table
+from letterboxd_stats.tmdb import get_person, create_person_dataframe, get_movie_detail
+from letterboxd_stats import data
+from letterboxd_stats.cli import select_movie_id
 from letterboxd_stats.web_scraper import FirefoxWebDriver
 import argparse
 import os
@@ -34,11 +34,13 @@ if __name__ == "__main__":
         name = search_result["name"]
         df = create_person_dataframe(search_result)
         path = os.path.join(config["root_folder"], "static", "watched.csv")
-        df = read_watched_films(df, path)
-        render_table(df, name)
+        data.read_watched_films(df, path, name)
+        movie_id = select_movie_id(df["id"].tolist())
+        if movie_id is not None:
+            get_movie_detail(movie_id)
     if args.wishlist:
         path = os.path.join(config["root_folder"], "static", "watchlist.csv")
-        show_wishlist(path, args.random, args.limit)
+        data.show_wishlist(path, args.random, args.limit)
     if args.diary:
         path = os.path.join(config["root_folder"], "static", "diary.csv")
-        show_diary(path, args.limit)
+        data.show_diary(path, args.limit)
