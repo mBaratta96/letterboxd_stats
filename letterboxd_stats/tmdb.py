@@ -1,6 +1,6 @@
 from tmdbv3api import TMDb, Person, Movie
 import pandas as pd
-from letterboxd_stats.cli import select_department, select_search_result
+from letterboxd_stats.cli import select_department, select_search_result, pretty_print_film
 from config import config
 
 tmdb = TMDb()
@@ -28,8 +28,17 @@ def create_person_dataframe(search_result):
     df = pd.DataFrame(list_of_films)
     department = select_department(df["department"].unique(), p["name"], known_for_department)
     df = df[df["department"] == department]
-    df["runtime"] = pd.Series([movie.details(movie_id)["runtime"] for movie_id in df["id"].values])
-    df.drop("id", axis=1)
+    df = df.drop("department", axis=1)
     df["release_date"] = pd.to_datetime(df["release_date"])
     df.sort_values(by="release_date", inplace=True)
     return df
+
+
+def get_movie_detail(movie_id: int):
+    movie_details = movie.details(movie_id)
+    selected_details = {
+        "original_title": movie_details["original_title"],
+        "runtime": movie_details["runtime"],
+        "overview": movie_details["overview"],
+    }
+    pretty_print_film(selected_details)
