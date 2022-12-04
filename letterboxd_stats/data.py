@@ -3,10 +3,10 @@ import numpy as np
 from letterboxd_stats.cli import render_table
 
 
-def read_watched_films(df: pd.DataFrame, path: str) -> pd.DataFrame:
+def read_watched_films(df: pd.DataFrame, path: str, name: str):
     df_profile = pd.read_csv(path)
     df.insert(0, "watched", np.where(df["title"].isin(df_profile["Name"]), "[X]", "[ ]"))
-    return df
+    render_table(df, name)
 
 
 def show_wishlist(path: str, shuffle: bool, limit=None):
