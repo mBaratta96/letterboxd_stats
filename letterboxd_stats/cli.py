@@ -1,8 +1,6 @@
 from rich.console import Console
-from rich.markdown import Markdown
 from rich.table import Table
 from rich import box
-from rich.pretty import pprint
 import pandas as pd
 from InquirerPy import inquirer
 
@@ -23,7 +21,7 @@ def select_movie_id(movies_id: list[int]):
     return movie_id
 
 
-def pretty_print_film(film):
+def print_film(film):
     grid = Table.grid(expand=True, padding=1)
     grid.add_column()
     grid.add_column()
