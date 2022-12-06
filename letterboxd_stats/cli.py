@@ -5,20 +5,33 @@ import pandas as pd
 from InquirerPy import inquirer
 
 
-def select_department(departments: list[str], name: str, known_for_department: str):
-    department = inquirer.select(
-        message=f"Select a department for {name}", choices=departments, default=known_for_department
+def select_department(departments: list[str], name: str, known_for_department: str) -> str:
+    department = inquirer.select(  # type: ignore
+        message=f"Select a department for {name}",
+        choices=departments,
+        default=known_for_department,
     ).execute()
     return department
 
 
-def select_movie_id(movies_id: list[int]):
-    movie_id = inquirer.text(
+def select_movie_id(movies_id: list[int]) -> str:
+    movie_id = inquirer.fuzzy(  # type: ignore
         message="Write movie id for more information",
+        mandatory=False,
+        height="50%",
+        choices=movies_id,
+        keybindings={"skip": [{"key": "escape"}]},
         validate=lambda result: int(result) in movies_id,
         invalid_message="Input must be in the resulting IDs",
     ).execute()
     return movie_id
+
+
+def select_search_result(results: list[str]) -> int:
+    result = inquirer.select(  # type: ignore
+        message="Result of your search. Please select one", choices=results, default=results[0]
+    ).execute()
+    return results.index(result)
 
 
 def print_film(film):
@@ -29,13 +42,6 @@ def print_film(film):
         grid.add_row(str(k), str(v))
     console = Console()
     console.print(grid)
-
-
-def select_search_result(results: list[str]):
-    result = inquirer.select(
-        message="Result of your search. Please select one", choices=results, default=results[0]
-    ).execute()
-    return results.index(result)
 
 
 def render_table(df: pd.DataFrame, name: str):
