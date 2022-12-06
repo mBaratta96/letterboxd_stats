@@ -18,7 +18,7 @@ def select_movie_id(movies_id: list[int]) -> str:
     movie_id = inquirer.fuzzy(  # type: ignore
         message="Write movie id for more information",
         mandatory=False,
-        height="50%",
+        max_height="25%",
         choices=movies_id,
         keybindings={"skip": [{"key": "escape"}]},
         validate=lambda result: int(result) in movies_id,
