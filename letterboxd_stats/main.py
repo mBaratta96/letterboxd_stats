@@ -35,7 +35,7 @@ if __name__ == "__main__":
         df = create_person_dataframe(search_result)
         path = os.path.join(config["root_folder"], "static", "watched.csv")
         data.read_watched_films(df, path, name)
-        movie_id = select_movie_id(df["id"].tolist())
+        movie_id = int(select_movie_id(df["id"].tolist()))
         if movie_id is not None:
             get_movie_detail(movie_id)
     if args.wishlist:
