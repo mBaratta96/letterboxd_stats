@@ -13,11 +13,13 @@ def get_person(name: str):
     print(f"Searching for '{name}'")
     search_results = person.search(name)
     names = [result.name for result in search_results]  # type: ignore
+    if len(names) == 0:
+        raise Exception("No results for your search")
     result_index = select_search_result(names)  # type: ignore
     return search_results[result_index]
 
 
-def create_person_dataframe(search_result):
+def create_person_dataframe(search_result) -> pd.DataFrame:
     p = person.details(search_result["id"])
     known_for_department = p["known_for_department"]
     movie_credits = person.movie_credits(search_result["id"])
