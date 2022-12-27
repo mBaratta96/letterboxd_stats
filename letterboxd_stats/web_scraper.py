@@ -10,12 +10,6 @@ from config import config
 import requests
 from mechanicalsoup import StatefulBrowser
 
-profile = webdriver.FirefoxProfile()
-profile.set_preference("browser.download.folderList", 2)
-profile.set_preference("browser.download.manager.showWhenStarting", False)
-profile.set_preference("browser.download.dir", os.path.join(config["root_folder"], "static"))
-profile.set_preference("browser.helperApps.neverAsk.saveToDisk", "application/octet-stream")
-
 options = Options()
 options.add_argument("--headless")
 URL = "https://letterboxd.com/"
@@ -23,7 +17,7 @@ URL = "https://letterboxd.com/"
 
 class FirefoxWebDriver:
     def __init__(self):
-        self.web = webdriver.Firefox(firefox_profile=profile, options=options)
+        self.web = webdriver.Firefox(options=options)
         self.web.implicitly_wait(10)
         self.web.get(URL)
         self.web.find_element(By.CLASS_NAME, "fc-cta-do-not-consent").click()
