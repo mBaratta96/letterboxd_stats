@@ -29,14 +29,28 @@ def select_movie_id(movies_id: list[int]) -> str:
 
 def select_search_result(results: list[str]) -> int:
     result = inquirer.select(  # type: ignore
-        message="Result of your search. Please select one", choices=results, default=results[0]
+        message="Result of your search. Please select one",
+        choices=results,
+        default=results[0],
+        transformer=lambda result: results.index(result),
     ).execute()
-    return results.index(result)
+    return result
 
 
 def select_sort(sort_options: list[str]) -> str:
     result = inquirer.select(  # type: ignore
         message="Select the order of your diary entry:", choices=sort_options, default=sort_options[0]
+    ).execute()
+    return result
+
+
+def select_range(options: list[str]) -> list[str]:
+    result = inquirer.rawlist(  # type: ignore
+        message="Pick a desired value (or select 'all'). Use space to toggle your choices. CTRL+R to select all.",
+        choices=options,
+        default=options[0],
+        multiselect=True,
+        validate=lambda result: len(result) > 0,
     ).execute()
     return result
 
