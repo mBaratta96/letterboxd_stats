@@ -34,6 +34,13 @@ def select_search_result(results: list[str]) -> int:
     return results.index(result)
 
 
+def select_sort(sort_options: list[str]) -> str:
+    result = inquirer.select(  # type: ignore
+        message="Select the order of your diary entry:", choices=sort_options, default=sort_options[0]
+    ).execute()
+    return result
+
+
 def print_film(film):
     grid = Table.grid(expand=True, padding=1)
     grid.add_column()
