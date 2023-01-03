@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from letterboxd_stats.cli import render_table
+from letterboxd_stats.cli import render_table, select_sort
 
 
 def read_watched_films(df: pd.DataFrame, path: str, name: str):
@@ -23,7 +23,8 @@ def show_diary(path: str, limit=None):
     df = pd.read_csv(path)
     df["Year"] = df["Year"].fillna(0).astype(int)
     df["Watched Date"] = pd.to_datetime(df["Watched Date"])
-    df.sort_values(by="Watched Date", ascending=False, inplace=True)
+    sort_column = select_sort(df.columns.values.tolist())
+    df.sort_values(by=sort_column, ascending=False, inplace=True)
     df = df.drop("Rewatch", axis=1)
     df = df.drop("Tags", axis=1)
     if limit is not None:
