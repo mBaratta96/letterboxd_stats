@@ -40,7 +40,6 @@ def show_ratings(path: str, limit=None):
     df.sort_values(by=sort_column, ascending=False, inplace=True)
     if sort_column == "Rating":
         options = df["Rating"].unique().tolist()
-        print(options)
         rating_range = select_range(options=options)
         df = df[df["Rating"].isin(rating_range)]
     if limit is not None:
