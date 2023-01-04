@@ -38,7 +38,6 @@ def select_search_result(results: list[str]) -> int:
         default=results[0],
         filter=lambda result: results.index(result),
     ).execute()
-    print(result)
     return result
 
 
