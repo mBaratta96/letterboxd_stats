@@ -3,6 +3,7 @@ from rich.table import Table
 from rich import box
 import pandas as pd
 from InquirerPy import inquirer
+from InquirerPy.base.control import Choice
 
 
 def select_department(departments: list[str], name: str, known_for_department: str) -> str:
@@ -14,14 +15,17 @@ def select_department(departments: list[str], name: str, known_for_department: s
     return department
 
 
-def select_movie_id(movies_id: list[int]) -> str:
+def select_movie_id(movies_info: pd.DataFrame) -> int:
     movie_id = inquirer.fuzzy(  # type: ignore
         message="Write movie id for more information",
         mandatory=False,
         max_height="25%",
-        choices=movies_id,
+        choices=[
+            Choice(value=id, name=f"{id} - {title}") for id, title in zip(movies_info["id"], movies_info["title"])
+        ],
         keybindings={"skip": [{"key": "escape"}]},
-        validate=lambda result: int(result) in movies_id,
+        validate=lambda result: result in movies_info["id"].values,
+        filter=lambda result: int(result),
         invalid_message="Input must be in the resulting IDs",
     ).execute()
     return movie_id
@@ -32,8 +36,9 @@ def select_search_result(results: list[str]) -> int:
         message="Result of your search. Please select one",
         choices=results,
         default=results[0],
-        transformer=lambda result: results.index(result),
+        filter=lambda result: results.index(result),
     ).execute()
+    print(result)
     return result
 
 
