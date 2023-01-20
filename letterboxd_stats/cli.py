@@ -3,6 +3,7 @@ from rich.table import Table
 from rich import box
 import pandas as pd
 from InquirerPy import inquirer
+from InquirerPy.base.control import Choice
 
 
 def select_department(departments: list[str], name: str, known_for_department: str) -> str:
@@ -14,14 +15,17 @@ def select_department(departments: list[str], name: str, known_for_department: s
     return department
 
 
-def select_movie_id(movies_id: list[int]) -> str:
+def select_movie_id(movies_info: pd.DataFrame) -> int:
     movie_id = inquirer.fuzzy(  # type: ignore
         message="Write movie id for more information",
         mandatory=False,
         max_height="25%",
-        choices=movies_id,
+        choices=[
+            Choice(value=id, name=f"{id} - {title}") for id, title in zip(movies_info["id"], movies_info["title"])
+        ],
         keybindings={"skip": [{"key": "escape"}]},
-        validate=lambda result: int(result) in movies_id,
+        validate=lambda result: result in movies_info["id"].values,
+        filter=lambda result: None if result is None else int(result),
         invalid_message="Input must be in the resulting IDs",
     ).execute()
     return movie_id
@@ -29,9 +33,30 @@ def select_movie_id(movies_id: list[int]) -> str:
 
 def select_search_result(results: list[str]) -> int:
     result = inquirer.select(  # type: ignore
-        message="Result of your search. Please select one", choices=results, default=results[0]
+        message="Result of your search. Please select one",
+        choices=results,
+        default=results[0],
+        filter=lambda result: results.index(result),
     ).execute()
-    return results.index(result)
+    return result
+
+
+def select_sort(sort_options: list[str]) -> str:
+    result = inquirer.select(  # type: ignore
+        message="Select the order of your diary entry:", choices=sort_options, default=sort_options[0]
+    ).execute()
+    return result
+
+
+def select_range(options: list[str]) -> list[str]:
+    result = inquirer.rawlist(  # type: ignore
+        message="Pick a desired value (or select 'all'). Use space to toggle your choices. CTRL+R to select all.",
+        choices=options,
+        default=options[0],
+        multiselect=True,
+        validate=lambda result: len(result) > 0,
+    ).execute()
+    return result
 
 
 def print_film(film):
