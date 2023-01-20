@@ -8,23 +8,23 @@ import os
 from zipfile import ZipFile
 from config import config
 import requests
-
-profile = webdriver.FirefoxProfile()
-profile.set_preference("browser.download.folderList", 2)
-profile.set_preference("browser.download.manager.showWhenStarting", False)
-profile.set_preference("browser.download.dir", os.path.join(config["root_folder"], "static"))
-profile.set_preference("browser.helperApps.neverAsk.saveToDisk", "application/octet-stream")
+from mechanicalsoup import StatefulBrowser
 
 options = Options()
 options.add_argument("--headless")
+URL = "https://letterboxd.com/"
 
 
 class FirefoxWebDriver:
     def __init__(self):
-        self.web = webdriver.Firefox(firefox_profile=profile, options=options)
+        self.web = webdriver.Firefox(options=options)
         self.web.implicitly_wait(10)
-        self.web.get("https://letterboxd.com/")
+        self.web.get(URL)
         self.web.find_element(By.CLASS_NAME, "fc-cta-do-not-consent").click()
+        self.browser = StatefulBrowser(soup_config={"features": "lxml"}, raise_on_404=True)
+        self.browser.open(URL)
+        self.browser.select_form("form[id='signin']")
+        self.browser.form.print_summary()
 
     def login(self):
         sign_in_button = self.web.find_element(By.CLASS_NAME, "sign-in-menu")
@@ -34,6 +34,10 @@ class FirefoxWebDriver:
         password_input = self.web.find_element(By.ID, "password")
         password_input.send_keys(config["Letterboxd"]["password"])
         self.web.find_element(By.CLASS_NAME, "button-container").click()
+        self.browser["username"] = config["Letterboxd"]["username"]
+        self.browser["password"] = config["Letterboxd"]["password"]
+        res = self.browser.submit_selected()
+        print(res.status_code)
         print("Login successful")
 
     def download_stats(self):

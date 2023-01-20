@@ -21,6 +21,7 @@ parser.add_argument("-w", "--wishlist", help="show wishlist", action="store_true
 parser.add_argument("-l", "--limit", help="limit the number of items of your wishlist/diary", type=int)
 parser.add_argument("-r", "--random", help="shuffle wishlist", action="store_true")
 parser.add_argument("-D", "--diary", help="show diary", action="store_true")
+parser.add_argument("-R", "--ratings", help="show rating", action="store_true")
 
 if __name__ == "__main__":
     args = parser.parse_args()
@@ -35,7 +36,7 @@ if __name__ == "__main__":
         df = create_person_dataframe(search_result)
         path = os.path.join(config["root_folder"], "static", "watched.csv")
         data.read_watched_films(df, path, name)
-        movie_id = int(select_movie_id(df["id"].tolist()))
+        movie_id = select_movie_id(df[["id", "title"]])
         if movie_id is not None:
             get_movie_detail(movie_id)
     if args.wishlist:
@@ -44,3 +45,6 @@ if __name__ == "__main__":
     if args.diary:
         path = os.path.join(config["root_folder"], "static", "diary.csv")
         data.show_diary(path, args.limit)
+    if args.ratings:
+        path = os.path.join(config["root_folder"], "static", "ratings.csv")
+        data.show_ratings(path, args.limit)
