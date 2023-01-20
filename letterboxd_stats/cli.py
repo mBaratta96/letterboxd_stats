@@ -25,7 +25,7 @@ def select_movie_id(movies_info: pd.DataFrame) -> int:
         ],
         keybindings={"skip": [{"key": "escape"}]},
         validate=lambda result: result in movies_info["id"].values,
-        filter=lambda result: int(result),
+        filter=lambda result: None if result is None else int(result),
         invalid_message="Input must be in the resulting IDs",
     ).execute()
     return movie_id
