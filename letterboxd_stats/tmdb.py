@@ -43,5 +43,6 @@ def get_movie_detail(movie_id: int):
         "original_title": movie_details["original_title"],
         "runtime": movie_details["runtime"],
         "overview": movie_details["overview"],
+        "release_date": movie_details["release_date"],
     }
     print_film(selected_details)
