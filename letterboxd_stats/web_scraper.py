@@ -11,7 +11,6 @@ class Downloader:
     def __init__(self):
         self.session = requests.Session()
         self.session.get(URL)
-
     def login(self):
         request_payload = {
             'username': config['Letterboxd']['username'],
