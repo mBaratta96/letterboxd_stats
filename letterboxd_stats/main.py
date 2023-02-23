@@ -1,10 +1,10 @@
 from letterboxd_stats.tmdb import get_person, create_person_dataframe, get_movie_detail
 from letterboxd_stats import data
 from letterboxd_stats.cli import select_movie_id
-from letterboxd_stats.web_scraper import FirefoxWebDriver
+from letterboxd_stats.web_scraper import Downloader
 import argparse
 import os
-from config import config
+from letterboxd_stats import config
 
 parser = argparse.ArgumentParser(
     prog="Letterboxd Stats",
@@ -26,10 +26,9 @@ parser.add_argument("-R", "--ratings", help="show rating", action="store_true")
 if __name__ == "__main__":
     args = parser.parse_args()
     if args.download:
-        ws = FirefoxWebDriver()
+        ws = Downloader()
         ws.login()
         ws.download_stats()
-        ws.close_webdriver()
     if args.search:
         search_result = get_person(args.search)
         name = search_result["name"]
