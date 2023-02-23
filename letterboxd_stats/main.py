@@ -27,6 +27,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     if args.download:
         ws = Downloader()
+        ws.login()
         ws.download_stats()
     if args.search:
         search_result = get_person(args.search)

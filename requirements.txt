@@ -1,9 +1,7 @@
-MechanicalSoup~=1.2.0
+inquirerpy~=0.3.4
+numpy~=1.23.0
 pandas~=1.5.1
-tmdbv3api~=1.7.7 
 python-dotenv~=0.21.0 
 rich~=12.6.0
-numpy~=1.23.0
-selenium~=4.6.0
+tmdbv3api~=1.7.7 
 tomli~=2.0.1
-inquirerpy~=0.3.4
