@@ -4,7 +4,7 @@ from letterboxd_stats.cli import select_movie_id
 from letterboxd_stats.web_scraper import Downloader
 import argparse
 import os
-from config import config
+from letterboxd_stats import config
 
 parser = argparse.ArgumentParser(
     prog="Letterboxd Stats",
