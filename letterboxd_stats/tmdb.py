@@ -1,7 +1,7 @@
 from tmdbv3api import TMDb, Person, Movie
 import pandas as pd
 from letterboxd_stats.cli import select_department, select_search_result, print_film
-from config import config
+from letterboxd_stats import config
 
 tmdb = TMDb()
 tmdb.api_key = config["TMDB"]["api_key"]
