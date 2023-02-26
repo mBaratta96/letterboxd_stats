@@ -2,11 +2,13 @@ from tmdbv3api import TMDb, Person, Movie
 import pandas as pd
 from letterboxd_stats.cli import select_department, select_search_result, print_film
 from letterboxd_stats import config
+from ascii_magic import AsciiArt
 
 tmdb = TMDb()
 tmdb.api_key = config["TMDB"]["api_key"]
 person = Person()
 movie = Movie()
+IMAGE_URL = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2"
 
 
 def get_person(name: str):
@@ -36,8 +38,16 @@ def create_person_dataframe(search_result) -> pd.DataFrame:
     return df
 
 
+def download_poster(poster: str):
+    art = AsciiArt.from_url(IMAGE_URL + poster)
+    art.to_terminal(columns=180)
+
+
 def get_movie_detail(movie_id: int):
     movie_details = movie.details(movie_id)
+    poster = movie_details.get("poster_path")
+    if poster is not None:
+       download_poster(poster) 
     selected_details = {
         "title": movie_details["title"],
         "original_title": movie_details["original_title"],
