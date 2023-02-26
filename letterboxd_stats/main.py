@@ -1,7 +1,7 @@
 from letterboxd_stats.tmdb import get_person, create_person_dataframe, get_movie_detail
 from letterboxd_stats import data
-from letterboxd_stats.cli import select_movie_id
-from letterboxd_stats.web_scraper import Downloader
+from letterboxd_stats.cli import select_movie_id, select_movie
+from letterboxd_stats.web_scraper import Downloader, get_tmdb_id
 import argparse
 import os
 from letterboxd_stats import config
@@ -23,6 +23,14 @@ parser.add_argument("-r", "--random", help="shuffle wishlist", action="store_tru
 parser.add_argument("-D", "--diary", help="show diary", action="store_true")
 parser.add_argument("-R", "--ratings", help="show rating", action="store_true")
 
+def get_movie_detail_from_url(df, is_diary=False):
+    df.rename(columns={"Name": "title", "Letterboxd URI": "url"}, inplace=True)
+    link = select_movie(df[["title", "url"]]) 
+    id = get_tmdb_id(link, is_diary)
+    if id is not None:
+        get_movie_detail(id)
+
+
 if __name__ == "__main__":
     args = parser.parse_args()
     if args.download:
@@ -40,10 +48,14 @@ if __name__ == "__main__":
             get_movie_detail(movie_id)
     if args.wishlist:
         path = os.path.join(config["root_folder"], "static", "watchlist.csv")
-        data.show_wishlist(path, args.random, args.limit)
+        df = data.show_wishlist(path, args.random, args.limit)
+        get_movie_detail_from_url(df)
     if args.diary:
         path = os.path.join(config["root_folder"], "static", "diary.csv")
-        data.show_diary(path, args.limit)
+        df = data.show_diary(path, args.limit)
+        get_movie_detail_from_url(df, True)
     if args.ratings:
         path = os.path.join(config["root_folder"], "static", "ratings.csv")
-        data.show_ratings(path, args.limit)
+        df = data.show_ratings(path, args.limit)
+        get_movie_detail_from_url(df)
+
