@@ -26,8 +26,8 @@ requirements = (pathlib.Path(__file__).parent / "requirements.txt").read_text().
 EXCLUDE_FROM_PACKAGES = []
 print(requirements)
 setup(
-    name="YOUR PROJECT NAME",
-    version="0.0.0-prealpha",
+    name="Letterboxd Stats",
+    version="0.0.1",
     python_requires=">={}.{}".format(*MIN_REQUIRED_PYTHON_VERSION),
     url="",
     author="",
