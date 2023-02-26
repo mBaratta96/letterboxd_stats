@@ -1,5 +1,4 @@
 inquirerpy~=0.3.4
-numpy~=1.23.0
 pandas~=1.5.1
 python-dotenv~=0.21.0 
 rich~=12.6.0
