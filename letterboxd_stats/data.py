@@ -17,6 +17,7 @@ def show_wishlist(path: str, shuffle: bool, limit=None):
     if limit is not None:
         df = df.iloc[:limit, :]
     render_table(df, "Wishlist")
+    return df
 
 
 def show_diary(path: str, limit=None):
@@ -30,6 +31,7 @@ def show_diary(path: str, limit=None):
     if limit is not None:
         df = df.iloc[:limit, :]
     render_table(df, "Diary")
+    return df
 
 
 def show_ratings(path: str, limit=None):
@@ -45,3 +47,4 @@ def show_ratings(path: str, limit=None):
     if limit is not None:
         df = df.iloc[:limit, :]
     render_table(df, "Ratings")
+    return df
