@@ -2,7 +2,7 @@ import os
 from zipfile import ZipFile
 from letterboxd_stats import config
 import requests
-from bs4 import BeautifulSoup
+from lxml import html
 
 URL = "https://letterboxd.com"
 LOGIN_PAGE = URL + "/user/login.do"
@@ -39,15 +39,15 @@ class Downloader:
 
 def get_tmdb_id(link: str, is_diary: bool):
     res = requests.get(link)
-    movie_page = BeautifulSoup(res.text, "lxml")
+    movie_page = html.fromstring(res.text)    
     if is_diary:
-        title_link = movie_page.find("span", class_="film-title-wrapper")    
-        if title_link is not None:
-            movie_link = title_link.contents[1]  # type: ignore
-            movie_url = URL + movie_link.attrs['href']  #type: ignore
-            movie_page = BeautifulSoup(requests.get(movie_url).text, "lxml")
-    tmdb_link = movie_page.find("a", attrs={"data-track-action":"TMDb"})
-    if tmdb_link is not None:
-        id = tmdb_link.attrs['href'].split("/")[-2]  #type: ignore
+        title_link = movie_page.xpath("//span[@class='film-title-wrapper']/a")
+        if len(title_link) > 0:
+            movie_link = title_link[0]  # type: ignore
+            movie_url = URL + movie_link.get('href')  #type: ignore
+            movie_page = html.fromstring(requests.get(movie_url).text, "lxml")
+    tmdb_link = movie_page.xpath("//a[@data-track-action='TMDb']")
+    if len(tmdb_link) > 0:
+        id = tmdb_link[0].get('href').split("/")[-2]  #type: ignore
         return int(id)
     return None
