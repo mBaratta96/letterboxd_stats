@@ -54,4 +54,6 @@ options:
 ## To do
 _Note: this is something I do during my free time. Therefore, I can't promise consistent support for this project._
 
-[ ] Use web-scraping to add film to diary/wishlist
+- [ ] Use web-scraping to add film to diary/wishlist
+
+- [ ] Check followers' activity. 
