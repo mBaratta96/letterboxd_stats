@@ -1,8 +1,0 @@
-ascii_magic~=2.3.0
-inquirerpy~=0.3.4
-lxml~=4.9.0
-pandas~=1.5.1
-python-dotenv~=0.21.0 
-rich~=12.6.0
-tmdbv3api~=1.7.7 
-tomli~=2.0.1
