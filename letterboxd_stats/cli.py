@@ -4,6 +4,10 @@ from rich import box
 import pandas as pd
 from InquirerPy import inquirer
 from InquirerPy.base.control import Choice
+from letterboxd_stats import config
+from ascii_magic import AsciiArt
+
+IMAGE_URL = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2"
 
 
 def select_department(departments: list[str], name: str, known_for_department: str) -> str:
@@ -91,3 +95,12 @@ def render_table(df: pd.DataFrame, name: str):
         table.add_row(*row)
     console = Console()
     console.print(table)
+
+
+def download_poster(poster: str):
+    if config['poster_columns'] > 0:
+        art = AsciiArt.from_url(IMAGE_URL + poster)
+        art.to_terminal(columns=180)
+
+
+
