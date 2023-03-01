@@ -36,11 +36,11 @@ def select_movie_id(movies_info: pd.DataFrame) -> int:
 
 
 def select_search_result(results: list[str]) -> int:
+    choices = [Choice(i, name=r) for i, r in enumerate(results)]
     result = inquirer.select(  # type: ignore
         message="Result of your search. Please select one",
-        choices=results,
-        default=results[0],
-        filter=lambda result: results.index(result),
+        choices=choices,
+        default=choices[0],
     ).execute()
     return result
 
@@ -62,6 +62,7 @@ def select_range(options: list[str]) -> list[str]:
     ).execute()
     return result
 
+
 def select_movie(movie_df: pd.DataFrame) -> str:
     result = inquirer.fuzzy(  # type: ingore
         message="Write movie id for more information",
@@ -72,7 +73,7 @@ def select_movie(movie_df: pd.DataFrame) -> str:
         ],
         keybindings={"skip": [{"key": "escape"}]},
         invalid_message="Input must be in the resulting IDs",
-    ).execute() 
+    ).execute()
     return result
 
 
@@ -101,6 +102,3 @@ def download_poster(poster: str):
     if config['poster_columns'] > 0:
         art = AsciiArt.from_url(IMAGE_URL + poster)
         art.to_terminal(columns=180)
-
-
-

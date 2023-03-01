@@ -27,6 +27,8 @@ def create_person_dataframe(search_result) -> pd.DataFrame:
         {"title": m.title, "release_date": m.release_date, "department": m.department, "id": m.id}
         for m in movie_credits["crew"]
     ]
+    if len(list_of_films) == 0:
+        raise ValueError("The selected person doesn't have any film.")
     df = pd.DataFrame(list_of_films)
     department = select_department(df["department"].unique(), p["name"], known_for_department)
     df = df[df["department"] == department]
@@ -40,7 +42,7 @@ def get_movie_detail(movie_id: int):
     movie_details = movie.details(movie_id)
     poster = movie_details.get("poster_path")
     if poster is not None:
-       download_poster(poster) 
+        download_poster(poster)
     selected_details = {
         "title": movie_details["title"],
         "original_title": movie_details["original_title"],
