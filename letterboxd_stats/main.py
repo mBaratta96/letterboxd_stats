@@ -17,7 +17,11 @@ def get_movie_detail_from_url(df, is_diary=False):
 def search_film(args_search: str):
     search_result = get_person(args_search)
     name = search_result["name"]
-    df = create_person_dataframe(search_result)
+    try:
+        df = create_person_dataframe(search_result)
+    except ValueError as e:
+        print(e)
+        return
     path = os.path.join(config["root_folder"], "static", "watched.csv")
     data.read_watched_films(df, path, name)
     movie_id = select_movie_id(df[["id", "title"]])
