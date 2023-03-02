@@ -1,6 +1,6 @@
-from letterboxd_stats.tmdb import get_person, create_person_dataframe, get_movie_detail, get_movie
+from letterboxd_stats import tmdb
 from letterboxd_stats import data
-from letterboxd_stats.cli import select_movie_id, select_movie, select_value
+from letterboxd_stats import cli
 from letterboxd_stats.web_scraper import Downloader, get_tmdb_id
 import os
 from letterboxd_stats import args, config
@@ -14,35 +14,36 @@ MOVIE_OPERATIONS = {
 
 def get_movie_detail_from_url(df, is_diary=False):
     df.rename(columns={"Name": "title", "Letterboxd URI": "url"}, inplace=True)
-    link = select_movie(df[["title", "url"]])
+    link = cli.select_movie(df[["title", "url"]])
     id = get_tmdb_id(link, is_diary)
     if id is not None:
-        get_movie_detail(id)
+        tmdb.get_movie_detail(id)
 
 
 def search_person(args_search: str):
-    search_result = get_person(args_search)
+    search_result = tmdb.get_person(args_search)
     name = search_result["name"]
     try:
-        df = create_person_dataframe(search_result)
+        df = tmdb.create_person_dataframe(search_result)
     except ValueError as e:
         print(e)
         return
     path = os.path.join(config["root_folder"], "static", "watched.csv")
     data.read_watched_films(df, path, name)
-    movie_id = select_movie_id(df[["id", "title"]])
+    movie_id = cli.select_movie_id(df[["id", "title"]])
     if movie_id is not None:
-        get_movie_detail(movie_id)
+        tmdb.get_movie_detail(movie_id)
 
 
 def search_film(args_search_film: str):
-    search_result = get_movie(args_search_film)
+    search_result = tmdb.get_movie(args_search_film)
     movie_id = search_result["id"]
-    get_movie_detail(movie_id)
-    answer = select_value(["Exit"] + list(MOVIE_OPERATIONS.keys()), "Select operation:")
+    tmdb.get_movie_detail(movie_id)
+    answer = cli.select_value(["Exit"] + list(MOVIE_OPERATIONS.keys()), "Select operation:")
     if answer != "Exit":
         ws = Downloader()
-        getattr(ws, MOVIE_OPERATIONS[answer])("")
+        ws.login()
+        getattr(ws, MOVIE_OPERATIONS[answer])(search_result["title"])
 
 
 def get_wishlist(args_random, args_limit):
