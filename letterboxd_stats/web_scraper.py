@@ -40,8 +40,14 @@ class Downloader:
             zip.extractall(path)
         os.remove(archive)
 
-    def add_film_diary(self, link: str, stars: int, rewiew: None | str = None, watch_date: None | str = None):
-        pass
+    def add_film_diary(self, link: str):
+        print("film added")
+
+    def add_watchlist(self, link: str):
+        print("watchlist added")
+
+    def remove_watchlist(self, link: str):
+        print("watchlist removed")
 
 
 def get_tmdb_id(link: str, is_diary: bool):

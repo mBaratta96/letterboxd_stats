@@ -1,9 +1,15 @@
 from letterboxd_stats.tmdb import get_person, create_person_dataframe, get_movie_detail, get_movie
 from letterboxd_stats import data
-from letterboxd_stats.cli import select_movie_id, select_movie
+from letterboxd_stats.cli import select_movie_id, select_movie, select_value
 from letterboxd_stats.web_scraper import Downloader, get_tmdb_id
 import os
 from letterboxd_stats import args, config
+
+MOVIE_OPERATIONS = {
+    "Add to diary": "add_film_diary",
+    "Add to watchlist": "add_watchlist",
+    "Remove from watchlist": "remove_watchlist",
+}
 
 
 def get_movie_detail_from_url(df, is_diary=False):
@@ -33,6 +39,10 @@ def search_film(args_search_film: str):
     search_result = get_movie(args_search_film)
     movie_id = search_result["id"]
     get_movie_detail(movie_id)
+    answer = select_value(["Exit"] + list(MOVIE_OPERATIONS.keys()), "Select operation:")
+    if answer != "Exit":
+        ws = Downloader()
+        getattr(ws, MOVIE_OPERATIONS[answer])("")
 
 
 def get_wishlist(args_random, args_limit):
