@@ -7,6 +7,8 @@ from lxml import html
 URL = "https://letterboxd.com"
 LOGIN_PAGE = URL + "/user/login.do"
 DATA_PAGE = URL + "/data/export"
+FILM_PAGE = URL + "/csi/film/"
+FILM_PAGE_SUFFIX = "paddington/sidebar-user-actions/?esiAllowUser=true"
 
 
 class Downloader:
@@ -40,14 +42,26 @@ class Downloader:
             zip.extractall(path)
         os.remove(archive)
 
-    def add_film_diary(self, link: str):
-        print("film added")
+    def add_film_diary(self, title: str):
+        url = create_movie_url(title)
+        res = self.session.get(url)
+        if res.status_code != 200:
+            raise ConnectionError("It's been impossible to retireve the Letterboxd page")
+        movie_page = html.fromstring(res.text)
+        letterboxd_film_id = movie_page.get_element_by_id("frm-sidebar-rating").get("data-film-id")
+        print(letterboxd_film_id)
 
     def add_watchlist(self, link: str):
         print("watchlist added")
 
     def remove_watchlist(self, link: str):
         print("watchlist removed")
+
+
+def create_movie_url(title: str):
+    lowercase_title = "-".join([word.lower() for word in title.split()])
+    url = URL + f"/csi/film/{lowercase_title}/sidebar-user-actions/?esiAllowUser=true"
+    return url
 
 
 def get_tmdb_id(link: str, is_diary: bool):
