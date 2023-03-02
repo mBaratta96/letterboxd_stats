@@ -1,6 +1,6 @@
 from tmdbv3api import TMDb, Person, Movie
 import pandas as pd
-from letterboxd_stats.cli import select_department, select_search_result, print_film, download_poster
+from letterboxd_stats.cli import select_value, select_search_result, print_film, download_poster
 from letterboxd_stats import config
 
 tmdb = TMDb()
@@ -40,7 +40,7 @@ def create_person_dataframe(search_result) -> pd.DataFrame:
     if len(list_of_films) == 0:
         raise ValueError("The selected person doesn't have any film.")
     df = pd.DataFrame(list_of_films)
-    department = select_department(df["department"].unique(), p["name"], known_for_department)
+    department = select_value(df["department"].unique(), f"Select a department for {p['name']}", known_for_department)
     df = df[df["department"] == department]
     df = df.drop("department", axis=1)
     df["release_date"] = pd.to_datetime(df["release_date"])

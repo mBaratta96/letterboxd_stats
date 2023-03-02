@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from letterboxd_stats.cli import render_table, select_sort, select_range
+from letterboxd_stats.cli import render_table, select_value, select_range
 
 
 def read_watched_films(df: pd.DataFrame, path: str, name: str):
@@ -24,7 +24,7 @@ def show_diary(path: str, limit=None):
     df = pd.read_csv(path)
     df["Year"] = df["Year"].fillna(0).astype(int)
     df["Watched Date"] = pd.to_datetime(df["Watched Date"])
-    sort_column = select_sort(df.columns.values.tolist())
+    sort_column = select_value(df.columns.values.tolist(), "Select the order of your diary entries:")
     df.sort_values(by=sort_column, ascending=False, inplace=True)
     df = df.drop("Rewatch", axis=1)
     df = df.drop("Tags", axis=1)
@@ -38,7 +38,7 @@ def show_ratings(path: str, limit=None):
     df = pd.read_csv(path)
     df["Year"] = df["Year"].fillna(0).astype(int)
     df["Date"] = pd.to_datetime(df["Date"])
-    sort_column = select_sort(df.columns.values.tolist())
+    sort_column = select_value(df.columns.values.tolist(), "Select the order of your ratings:")
     df.sort_values(by=sort_column, ascending=False, inplace=True)
     if sort_column == "Rating":
         options = df["Rating"].unique().tolist()

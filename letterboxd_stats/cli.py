@@ -10,13 +10,13 @@ from ascii_magic import AsciiArt
 IMAGE_URL = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2"
 
 
-def select_department(departments: list[str], name: str, known_for_department: str) -> str:
-    department = inquirer.select(  # type: ignore
-        message=f"Select a department for {name}",
-        choices=departments,
-        default=known_for_department,
+def select_value(values: list[str], message: str, default: str | None = None):
+    value = inquirer.select(  # type: ignore
+        message=message,
+        choices=values,
+        default=default or values[0],
     ).execute()
-    return department
+    return value
 
 
 def select_movie_id(movies_info: pd.DataFrame) -> int:
@@ -41,13 +41,6 @@ def select_search_result(results: list[str]) -> int:
         message="Result of your search. Please select one",
         choices=choices,
         default=choices[0],
-    ).execute()
-    return result
-
-
-def select_sort(sort_options: list[str]) -> str:
-    result = inquirer.select(  # type: ignore
-        message="Select the order of your diary entry:", choices=sort_options, default=sort_options[0]
     ).execute()
     return result
 
