@@ -40,6 +40,9 @@ class Downloader:
             zip.extractall(path)
         os.remove(archive)
 
+    def add_film_diary(self, link: str, stars: int, rewiew: None | str = None, watch_date: None | str = None):
+        pass
+
 
 def get_tmdb_id(link: str, is_diary: bool):
     res = requests.get(link)
@@ -49,7 +52,7 @@ def get_tmdb_id(link: str, is_diary: bool):
         if len(title_link) > 0:
             movie_link = title_link[0]
             movie_url = URL + movie_link.get("href")
-            movie_page = html.fromstring(requests.get(movie_url).text, "lxml")
+            movie_page = html.fromstring(requests.get(movie_url).text)
     tmdb_link = movie_page.xpath("//a[@data-track-action='TMDb']")
     if len(tmdb_link) > 0:
         id = tmdb_link[0].get("href").split("/")[-2]

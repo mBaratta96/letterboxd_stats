@@ -19,6 +19,16 @@ def get_person(name: str):
     return search_results[result_index]
 
 
+def get_movie(movie_query: str):
+    print(f"Searching for movie '{movie_query}'")
+    search_results = movie.search(movie_query)
+    titles = [result.title for result in search_results]  # type: ignore
+    if len(titles) == 0:
+        raise Exception("No results for your search")
+    result_index = select_search_result(titles)  # type: ignore
+    return search_results[result_index]
+
+
 def create_person_dataframe(search_result) -> pd.DataFrame:
     p = person.details(search_result["id"])
     known_for_department = p["known_for_department"]
