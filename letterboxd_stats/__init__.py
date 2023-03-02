@@ -10,6 +10,7 @@ parser = argparse.ArgumentParser(
     description="CLI tool to display Letterboxd statistics",
 )
 parser.add_argument("-s", "--search", help="Search for a director")
+parser.add_argument("-S", "--search-film", help="Search for a film.")
 parser.add_argument(
     "-d",
     "--download",
