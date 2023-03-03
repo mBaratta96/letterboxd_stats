@@ -7,6 +7,8 @@ from lxml import html
 URL = "https://letterboxd.com"
 LOGIN_PAGE = URL + "/user/login.do"
 DATA_PAGE = URL + "/data/export"
+FILM_PAGE = URL + "/csi/film/"
+FILM_PAGE_SUFFIX = "paddington/sidebar-user-actions/?esiAllowUser=true"
 
 
 class Downloader:
@@ -41,7 +43,7 @@ class Downloader:
         os.remove(archive)
 
     def add_film_diary(self, title: str):
-        url = create_movie_url(title, "add_diary")
+        url = create_movie_url(title)
         res = self.session.get(url)
         if res.status_code != 200:
             raise ConnectionError("It's been impossible to retireve the Letterboxd page")
@@ -56,14 +58,9 @@ class Downloader:
         print("watchlist removed")
 
 
-def create_movie_url(title: str, operation: str):
-    FORMAT_URLS = {
-        "add_diary": lambda s: f"/csi/film/{s}/sidebar-user-actions/?esiAllowUser=true",
-        "add_watchlist": lambda s: f"/film/{s}/add-to-watchlist",
-        "remove_watchlist": lambda s: f"/film{s}/remove-from-watchlist",
-    }
+def create_movie_url(title: str):
     lowercase_title = "-".join([word.lower() for word in title.split()])
-    url = URL + FORMAT_URLS[operation](lowercase_title)
+    url = URL + f"/csi/film/{lowercase_title}/sidebar-user-actions/?esiAllowUser=true"
     return url
 
 
