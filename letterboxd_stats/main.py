@@ -17,72 +17,50 @@ def get_movie_detail_from_url(df, is_diary=False):
     link = cli.select_movie(df[["title", "url"]])
     id = get_tmdb_id(link, is_diary)
     if id is not None:
-        selected_details = tmdb.get_movie_detail(id)
-        if selected_details["poster"] is not None:
-            cli.download_poster(selected_details["poster"])
-        cli.print_film(selected_details)
+        tmdb.get_movie_detail(id)
 
 
 def search_person(args_search: str):
-    search_results = tmdb.get_person(args_search)
-    names = [result.name for result in search_results]  # type: ignore
-    result_index = cli.select_search_result(names)  # type: ignore
-    name = search_results[result_index]["name"]
+    search_result = tmdb.get_person(args_search)
+    name = search_result["name"]
     try:
-        df, known_for_department = tmdb.create_person_dataframe(search_results[result_index])
+        df = tmdb.create_person_dataframe(search_result)
     except ValueError as e:
         print(e)
         return
-    department = cli.select_value(df["department"].unique(), f"Select a department for {name}", known_for_department)
-    df = df[df["department"] == department]
-    df = df.drop("department", axis=1)
     path = os.path.join(config["root_folder"], "static", "watched.csv")
-    df = data.read_watched_films(df, path, name)
-    cli.render_table(df, name)
+    data.read_watched_films(df, path, name)
     movie_id = cli.select_movie_id(df[["id", "title"]])
     if movie_id is not None:
         tmdb.get_movie_detail(movie_id)
 
 
 def search_film(args_search_film: str):
-    search_results = tmdb.get_movie(args_search_film)
-    titles = [result.title for result in search_results]  # type: ignore
-    result_index = cli.select_search_result(titles)  # type: ignore
-    movie_id = search_results[result_index]["id"]
+    search_result = tmdb.get_movie(args_search_film)
+    movie_id = search_result["id"]
     tmdb.get_movie_detail(movie_id)
     answer = cli.select_value(["Exit"] + list(MOVIE_OPERATIONS.keys()), "Select operation:")
     if answer != "Exit":
         ws = Downloader()
         ws.login()
-        getattr(ws, MOVIE_OPERATIONS[answer])(search_results[result_index]["title"])
+        getattr(ws, MOVIE_OPERATIONS[answer])(search_result["title"])
 
 
 def get_wishlist(args_random, args_limit):
     path = os.path.join(config["root_folder"], "static", "watchlist.csv")
     df = data.show_wishlist(path, args_random, args_limit)
-    cli.render_table(df, "Wishlist")
     get_movie_detail_from_url(df)
 
 
 def get_diary(args_limit):
     path = os.path.join(config["root_folder"], "static", "diary.csv")
     df = data.show_diary(path, args_limit)
-    sort_column = cli.select_value(df.columns.values.tolist(), "Select the order of your diary entries:")
-    df.sort_values(by=sort_column, ascending=False, inplace=True)
-    cli.render_table(df, "Diary")
     get_movie_detail_from_url(df, True)
 
 
 def get_ratings(args_limit):
     path = os.path.join(config["root_folder"], "static", "ratings.csv")
     df = data.show_ratings(path, args_limit)
-    sort_column = cli.select_value(df.columns.values.tolist(), "Select the order of your ratings:")
-    df.sort_values(by=sort_column, ascending=False, inplace=True)
-    if sort_column == "Rating":
-        options = df["Rating"].unique().tolist()
-        rating_range = cli.select_range(options=options)
-        df = df[df["Rating"].isin(rating_range)]
-    cli.render_table(df, "Ratings")
     get_movie_detail_from_url(df)
 
 
