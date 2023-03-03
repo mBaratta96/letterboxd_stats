@@ -58,10 +58,10 @@ def select_range(options: list[str]) -> list[str]:
 
 def select_movie(movie_df: pd.DataFrame) -> str:
     result = inquirer.fuzzy(  # type: ignore
-        message="Write movie id for more information",
+        message="Select movie for more information",
         mandatory=False,
         max_height="25%",
-        choices=[Choice(value=url, name=f"{title}") for url, title in zip(movie_df["url"], movie_df["title"])],
+        choices=[Choice(value=url, name=f"{title}") for url, title in zip(movie_df["Url"], movie_df["Title"])],
         keybindings={"skip": [{"key": "escape"}]},
         invalid_message="Input must be in the resulting IDs",
     ).execute()

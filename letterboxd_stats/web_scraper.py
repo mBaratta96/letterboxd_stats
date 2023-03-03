@@ -1,6 +1,7 @@
 import os
 from zipfile import ZipFile
 from letterboxd_stats import config
+from letterboxd_stats import cli
 import requests
 from lxml import html
 
@@ -9,6 +10,11 @@ LOGIN_PAGE = URL + "/user/login.do"
 DATA_PAGE = URL + "/data/export"
 FILM_PAGE = URL + "/csi/film/"
 FILM_PAGE_SUFFIX = "paddington/sidebar-user-actions/?esiAllowUser=true"
+MOVIE_OPERATIONS = {
+    "Add to diary": "add_film_diary",
+    "Add to watchlist": "add_watchlist",
+    "Remove from watchlist": "remove_watchlist",
+}
 
 
 class Downloader:
@@ -57,6 +63,9 @@ class Downloader:
     def remove_watchlist(self, link: str):
         print("watchlist removed")
 
+    def perform_operation(self, answer: str, link: str):
+        getattr(self, MOVIE_OPERATIONS[answer])(link)
+
 
 def create_movie_url(title: str):
     lowercase_title = "-".join([word.lower() for word in title.split()])
@@ -78,3 +87,7 @@ def get_tmdb_id(link: str, is_diary: bool):
         id = tmdb_link[0].get("href").split("/")[-2]
         return int(id)
     return None
+
+
+def select_optional_operation():
+    return cli.select_value(["Exit"] + list(MOVIE_OPERATIONS.keys()), "Select operation:")
