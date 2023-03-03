@@ -1,4 +1,3 @@
-from numpy.random import shuffle
 from letterboxd_stats import tmdb
 from letterboxd_stats import data
 from letterboxd_stats import web_scraper as ws
