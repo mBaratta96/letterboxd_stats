@@ -19,6 +19,12 @@ def check_path(path: str):
         )
 
 
+def download_data():
+    downloader = ws.Downloader()
+    downloader.login()
+    downloader.download_stats()
+
+
 def get_movie_detail_from_url(letterboxd_url, is_diary=False):
     if letterboxd_url is not None:
         id = ws.get_tmdb_id(letterboxd_url, is_diary)
@@ -67,9 +73,7 @@ def get_ratings(args_limit, args_ascending):
 
 def main():
     if args.download:
-        downloader = ws.Downloader()
-        downloader.login()
-        downloader.download_stats()
+        try_command(download_data, ())
     if args.search:
         try_command(search_person, (args.search,))
     if args.search_film:
