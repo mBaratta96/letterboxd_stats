@@ -1,12 +1,25 @@
 import os
 from zipfile import ZipFile
 from letterboxd_stats import config
+from letterboxd_stats import cli
 import requests
 from lxml import html
+import re
 
 URL = "https://letterboxd.com"
 LOGIN_PAGE = URL + "/user/login.do"
 DATA_PAGE = URL + "/data/export"
+ADD_DIARY_URL = URL + "/s/save-diary-entry"
+MOVIE_OPERATIONS = {
+    "Add to diary": "add_film_diary",
+    "Add to watchlist": "add_watchlist",
+    "Remove from watchlist": "remove_watchlist",
+}
+OPERATIONS_URLS = {
+    "diary": lambda s: f"/csi/film/{s}/sidebar-user-actions/?esiAllowUser=true",
+    "add_watchlist": lambda s: f"/film/{s}/add-to-watchlist/",
+    "remove_watchlist": lambda s: f"/film/{s}/remove-from-watchlist/",
+}
 
 
 class Downloader:
@@ -40,6 +53,44 @@ class Downloader:
             zip.extractall(path)
         os.remove(archive)
 
+    def add_film_diary(self, title: str):
+        url = create_movie_url(title, "diary")
+        res = self.session.get(url)
+        if res.status_code != 200:
+            raise ConnectionError("It's been impossible to retireve the Letterboxd page")
+        movie_page = html.fromstring(res.text)
+        letterboxd_film_id = movie_page.get_element_by_id("frm-sidebar-rating").get("data-film-id")
+        payload = cli.add_film_questions(title)
+        payload["filmId"] = letterboxd_film_id
+        payload["__csrf"] = self.session.cookies.get("com.xk72.webparts.csrf")
+        res = self.session.post(ADD_DIARY_URL, data=payload)
+        if not (res.status_code == 200 and res.json()["result"] is True):
+            raise ConnectionError("Add diary request failed.")
+        print(f"{title} was added to your diary.")
+
+    def add_watchlist(self, title: str):
+        url = create_movie_url(title, "add_watchlist")
+        res = self.session.post(url, data={"__csrf": self.session.cookies.get("com.xk72.webparts.csrf")})
+        if not (res.status_code == 200 and res.json()["result"] is True):
+            raise ConnectionError("Add diary request failed.")
+        print(f"{title} added to your watchlist.")
+
+    def remove_watchlist(self, title: str):
+        url = create_movie_url(title, "remove_watchlist")
+        res = self.session.post(url, data={"__csrf": self.session.cookies.get("com.xk72.webparts.csrf")})
+        if not (res.status_code == 200 and res.json()["result"] is True):
+            raise ConnectionError("Add diary request failed.")
+        print(f"{title} removed to your watchlist.")
+
+    def perform_operation(self, answer: str, link: str):
+        getattr(self, MOVIE_OPERATIONS[answer])(link)
+
+
+def create_movie_url(title: str, operation: str):
+    lowercase_title = "-".join([re.sub("[^a-zA-Z0-9 ]", "", word.lower()) for word in title.split()])
+    url = URL + OPERATIONS_URLS[operation](lowercase_title)
+    return url
+
 
 def get_tmdb_id(link: str, is_diary: bool):
     res = requests.get(link)
@@ -49,9 +100,13 @@ def get_tmdb_id(link: str, is_diary: bool):
         if len(title_link) > 0:
             movie_link = title_link[0]
             movie_url = URL + movie_link.get("href")
-            movie_page = html.fromstring(requests.get(movie_url).text, "lxml")
+            movie_page = html.fromstring(requests.get(movie_url).text)
     tmdb_link = movie_page.xpath("//a[@data-track-action='TMDb']")
     if len(tmdb_link) > 0:
         id = tmdb_link[0].get("href").split("/")[-2]
         return int(id)
     return None
+
+
+def select_optional_operation():
+    return cli.select_value(["Exit"] + list(MOVIE_OPERATIONS.keys()), "Select operation:")
