@@ -1,84 +1,86 @@
+from numpy.random import shuffle
 from letterboxd_stats import tmdb
 from letterboxd_stats import data
-from letterboxd_stats import cli
-from letterboxd_stats.web_scraper import Downloader, get_tmdb_id
+from letterboxd_stats import web_scraper as ws
 import os
 from letterboxd_stats import args, config
 
-MOVIE_OPERATIONS = {
-    "Add to diary": "add_film_diary",
-    "Add to watchlist": "add_watchlist",
-    "Remove from watchlist": "remove_watchlist",
-}
+
+def try_command(command, args):
+    try:
+        command(*args)
+    except Exception as e:
+        raise e
 
 
-def get_movie_detail_from_url(df, is_diary=False):
-    df.rename(columns={"Name": "title", "Letterboxd URI": "url"}, inplace=True)
-    link = cli.select_movie(df[["title", "url"]])
-    id = get_tmdb_id(link, is_diary)
-    if id is not None:
-        tmdb.get_movie_detail(id)
+def check_path(path: str):
+    if not os.path.exists(path):
+        raise FileNotFoundError(
+            f"No Letterboxd data was found in {path}. Make sure the path is correct or run -d to download your data"
+        )
+
+
+def get_movie_detail_from_url(letterboxd_url, is_diary=False):
+    if letterboxd_url is not None:
+        id = ws.get_tmdb_id(letterboxd_url, is_diary)
+        if id is not None:
+            tmdb.get_movie_detail(id)
 
 
 def search_person(args_search: str):
-    search_result = tmdb.get_person(args_search)
-    name = search_result["name"]
-    try:
-        df = tmdb.create_person_dataframe(search_result)
-    except ValueError as e:
-        print(e)
-        return
-    path = os.path.join(config["root_folder"], "static", "watched.csv")
-    data.read_watched_films(df, path, name)
-    movie_id = cli.select_movie_id(df[["id", "title"]])
+    df, name = tmdb.get_person(args_search)
+    path = os.path.expanduser(os.path.join(config["root_folder"], "static", "watched.csv"))
+    check_path(path)
+    movie_id = data.read_watched_films(df, path, name)
     if movie_id is not None:
         tmdb.get_movie_detail(movie_id)
 
 
 def search_film(args_search_film: str):
     search_result = tmdb.get_movie(args_search_film)
-    movie_id = search_result["id"]
-    tmdb.get_movie_detail(movie_id)
-    answer = cli.select_value(["Exit"] + list(MOVIE_OPERATIONS.keys()), "Select operation:")
+    answer = ws.select_optional_operation()
     if answer != "Exit":
-        ws = Downloader()
-        ws.login()
-        getattr(ws, MOVIE_OPERATIONS[answer])(search_result["title"])
+        downloader = ws.Downloader()
+        downloader.login()
+        downloader.perform_operation(answer, search_result["title"])
 
 
-def get_wishlist(args_random, args_limit):
-    path = os.path.join(config["root_folder"], "static", "watchlist.csv")
-    df = data.show_wishlist(path, args_random, args_limit)
-    get_movie_detail_from_url(df)
+def get_wishlist(args_limit, args_ascending):
+    path = os.path.expanduser(os.path.join(config["root_folder"], "static", "watchlist.csv"))
+    check_path(path)
+    letterboxd_url = data.open_file("Watchlist", path, args_limit, args_ascending)
+    get_movie_detail_from_url(letterboxd_url)
 
 
-def get_diary(args_limit):
-    path = os.path.join(config["root_folder"], "static", "diary.csv")
-    df = data.show_diary(path, args_limit)
-    get_movie_detail_from_url(df, True)
+def get_diary(args_limit, args_ascending):
+    path = os.path.expanduser(os.path.join(config["root_folder"], "static", "diary.csv"))
+    check_path(path)
+    letterboxd_url = data.open_file("Diary", path, args_limit, args_ascending)
+    get_movie_detail_from_url(letterboxd_url, True)
 
 
-def get_ratings(args_limit):
-    path = os.path.join(config["root_folder"], "static", "ratings.csv")
-    df = data.show_ratings(path, args_limit)
-    get_movie_detail_from_url(df)
+def get_ratings(args_limit, args_ascending):
+    path = os.path.expanduser(os.path.join(config["root_folder"], "static", "ratings.csv"))
+    check_path(path)
+    letterboxd_url = data.open_file("Ratings", path, args_limit, args_ascending)
+    get_movie_detail_from_url(letterboxd_url)
 
 
 def main():
     if args.download:
-        ws = Downloader()
-        ws.login()
-        ws.download_stats()
+        downloader = ws.Downloader()
+        downloader.login()
+        downloader.download_stats()
     if args.search:
-        search_person(args.search)
+        try_command(search_person, (args.search,))
     if args.search_film:
-        search_film(args.search_film)
+        try_command(search_film, (args.search_film,))
     if args.wishlist:
-        get_wishlist(args.random, args.limit)
+        try_command(get_wishlist, (args.limit, args.ascending))
     if args.diary:
-        get_diary(args.limit)
+        try_command(get_diary, (args.limit, args.ascending))
     if args.ratings:
-        get_ratings(args.limit)
+        try_command(get_ratings, (args.limit, args.ascending))
 
 
 if __name__ == "__main__":
