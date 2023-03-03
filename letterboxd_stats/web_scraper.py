@@ -4,6 +4,7 @@ from letterboxd_stats import config
 from letterboxd_stats import cli
 import requests
 from lxml import html
+import re
 
 URL = "https://letterboxd.com"
 LOGIN_PAGE = URL + "/user/login.do"
@@ -86,7 +87,7 @@ class Downloader:
 
 
 def create_movie_url(title: str, operation: str):
-    lowercase_title = "-".join([word.lower() for word in title.split()])
+    lowercase_title = "-".join([re.sub("[^a-zA-Z0-9 ]", "", word.lower()) for word in title.split()])
     url = URL + OPERATIONS_URLS[operation](lowercase_title)
     return url
 
