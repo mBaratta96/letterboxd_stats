@@ -6,6 +6,8 @@ from letterboxd_stats import cli
 def read_watched_films(df: pd.DataFrame, path: str, name: str):
     df_profile = pd.read_csv(path)
     df.insert(0, "watched", np.where(df["title"].isin(df_profile["Name"]), "[X]", "[ ]"))
+    df["release_date"] = pd.to_datetime(df["release_date"])
+    df.sort_values(by="release_date", inplace=True)
     cli.render_table(df, name)
     movie_id = cli.select_movie_id(df[["id", "title"]])
     return movie_id
