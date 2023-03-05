@@ -32,15 +32,13 @@ def get_person(name: str):
     )
     df = df[df["department"] == department]
     df = df.drop("department", axis=1)
-    df["release_date"] = pd.to_datetime(df["release_date"])
-    df.sort_values(by="release_date", inplace=True)
     return df, p["name"]
 
 
 def get_movie(movie_query: str):
     print(f"Searching for movie '{movie_query}'")
     search_results = movie.search(movie_query)
-    titles = [result.title for result in search_results]  # type: ignore
+    titles = [f"{result.title} ({result.release_date})" for result in search_results]  # type: ignore
     if len(titles) == 0:
         raise Exception("No results for your search")
     result_index = cli.select_search_result(titles)  # type: ignore
