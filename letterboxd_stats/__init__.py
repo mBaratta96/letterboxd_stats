@@ -10,17 +10,18 @@ parser = argparse.ArgumentParser(
     description="CLI tool to display Letterboxd statistics",
 )
 parser.add_argument("-s", "--search", help="Search for a director")
+parser.add_argument("-S", "--search-film", help="Search for a film.")
 parser.add_argument(
     "-d",
     "--download",
     help="Download letterboxd data from your account",
     action="store_true",
 )
-parser.add_argument("-w", "--wishlist", help="show wishlist", action="store_true")
-parser.add_argument("-l", "--limit", help="limit the number of items of your wishlist/diary", type=int)
-parser.add_argument("-r", "--random", help="shuffle wishlist", action="store_true")
+parser.add_argument("-W", "--wishlist", help="show wishlist", action="store_true")
 parser.add_argument("-D", "--diary", help="show diary", action="store_true")
 parser.add_argument("-R", "--ratings", help="show ratings", action="store_true")
+parser.add_argument("-l", "--limit", help="limit the number of items of your wishlist/diary", type=int)
+parser.add_argument("-a", "--ascending", help="Use ascending order when you sort the entries", action="store_true")
 parser.add_argument("-c", "--config_folder", help="Specifiy the folder of your config.toml file")
 
 
