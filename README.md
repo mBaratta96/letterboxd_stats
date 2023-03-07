@@ -10,7 +10,7 @@ Search for actors/directors, analyze your diary/watchlist/rating, check which fi
 
 - Python >= 3.8
 - A [TMDb API key](https://www.themoviedb.org/documentation/api): to retrieve all the general information for movies/people
-- A Letterboxd account: to export your Letterboxd activity through webscraping.
+- A Letterboxd account: to export your Letterboxd activity through web-scraping.
 
 ## Installation
 Just run:
@@ -41,18 +41,19 @@ password = "your-password"
 options:
   -h, --help            show this help message and exit
   -s SEARCH, --search SEARCH
-                        Search for a actor/director
+                        Search for a director
+  -S SEARCH_FILM, --search-film SEARCH_FILM
+                        Search for a film.
   -d, --download        Download letterboxd data from your account
-  -w, --wishlist        show wishlist
-  -l LIMIT, --limit LIMIT
-                        limit the number of items of your wishlist/diary
-  -r, --random          shuffle wishlist
+  -W, --wishlist        show wishlist
   -D, --diary           show diary
   -R, --ratings         show ratings
+  -l LIMIT, --limit LIMIT
+                        limit the number of items of your wishlist/diary
+  -a, --ascending       Use ascending order when you sort the entries
   -c CONFIG_FOLDER, --config_folder CONFIG_FOLDER
                         Specifiy the folder of your config.toml file
 ```
-
 ## To do
 _Note: this is something I do during my free time. Therefore, I can't promise consistent support for this project._
 

@@ -134,7 +134,7 @@ def add_film_questions(film: str):
         contains_spoilers = inquirer.confirm(message="The review contains spoilers?").execute()  # type: ignore
     rewatch = inquirer.confirm(message="Have you seen this film before?").execute()  # type: ignore
     payload = {
-        "specifyDate": specify_date,
+        "specifiedDate": specify_date,
         "viewingDateStr": specified_date,
         "rating": stars,
         "liked": liked,
