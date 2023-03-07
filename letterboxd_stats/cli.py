@@ -130,10 +130,9 @@ def add_film_questions(film: str):
         message="Write a review. Press Enter for multiline.", multiline=True
     ).execute()
     contains_spoilers = False
-    rewatch = False
     if len(review) > 0:
         contains_spoilers = inquirer.confirm(message="The review contains spoilers?").execute()  # type: ignore
-        rewatch = inquirer.confirm(message="Have you seen this film before?").execute()  # type: ignore
+    rewatch = inquirer.confirm(message="Have you seen this film before?").execute()  # type: ignore
     payload = {
         "specifyDate": specify_date,
         "viewingDateStr": specified_date,
