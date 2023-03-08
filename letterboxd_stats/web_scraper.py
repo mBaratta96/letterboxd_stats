@@ -54,13 +54,14 @@ class Downloader:
         os.remove(archive)
 
     def add_film_diary(self, title: str):
+        payload = cli.add_film_questions(title)
         url = create_movie_url(title, "diary")
         res = self.session.get(url)
         if res.status_code != 200:
             raise ConnectionError("It's been impossible to retireve the Letterboxd page")
         movie_page = html.fromstring(res.text)
         letterboxd_film_id = movie_page.get_element_by_id("frm-sidebar-rating").get("data-film-id")
-        payload = cli.add_film_questions(title)
+
         payload["filmId"] = letterboxd_film_id
         payload["__csrf"] = self.session.cookies.get("com.xk72.webparts.csrf")
         res = self.session.post(ADD_DIARY_URL, data=payload)

@@ -71,7 +71,7 @@ def select_movie(movie_df: pd.DataFrame) -> str:
 
 def print_film(film):
     grid = Table.grid(expand=True, padding=1)
-    grid.add_column()
+    grid.add_column(style="bold yellow")
     grid.add_column()
     for k, v in film.items():
         grid.add_row(str(k), str(v))
@@ -130,12 +130,11 @@ def add_film_questions(film: str):
         message="Write a review. Press Enter for multiline.", multiline=True
     ).execute()
     contains_spoilers = False
-    rewatch = False
     if len(review) > 0:
         contains_spoilers = inquirer.confirm(message="The review contains spoilers?").execute()  # type: ignore
-        rewatch = inquirer.confirm(message="Have you seen this film before?").execute()  # type: ignore
+    rewatch = inquirer.confirm(message="Have you seen this film before?").execute()  # type: ignore
     payload = {
-        "specifyDate": specify_date,
+        "specifiedDate": specify_date,
         "viewingDateStr": specified_date,
         "rating": stars,
         "liked": liked,
