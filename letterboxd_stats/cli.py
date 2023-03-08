@@ -71,7 +71,7 @@ def select_movie(movie_df: pd.DataFrame) -> str:
 
 def print_film(film):
     grid = Table.grid(expand=True, padding=1)
-    grid.add_column()
+    grid.add_column(style="bold yellow")
     grid.add_column()
     for k, v in film.items():
         grid.add_row(str(k), str(v))
