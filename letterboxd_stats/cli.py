@@ -93,7 +93,7 @@ def render_table(df: pd.DataFrame, name: str):
 def download_poster(poster: str):
     if config["poster_columns"] > 0:
         art = AsciiArt.from_url(IMAGE_URL + poster)
-        art.to_terminal(columns=180)
+        art.to_terminal(columns=int(config["poster_columns"]))
 
 
 def _validate_date(s: str):
