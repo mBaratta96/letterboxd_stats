@@ -19,6 +19,7 @@ OPERATIONS_URLS = {
     "diary": lambda s: f"/csi/film/{s}/sidebar-user-actions/?esiAllowUser=true",
     "add_watchlist": lambda s: f"/film/{s}/add-to-watchlist/",
     "remove_watchlist": lambda s: f"/film/{s}/remove-from-watchlist/",
+    "film_page": lambda s: f"/film/{s}/",
 }
 
 
