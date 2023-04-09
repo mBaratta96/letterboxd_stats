@@ -24,7 +24,7 @@ def open_list(path: str, limit, acending):
     list_names = {
         get_list_name(os.path.join(path, letterboxd_list)): letterboxd_list for letterboxd_list in os.listdir(path)
     }
-    name = cli.select_value(list(list_names.keys()), message="Select your list")
+    name = cli.select_value(sorted(list(list_names.keys())), message="Select your list")
     return open_file("Lists", os.path.join(path, list_names[name]), limit, acending, header=3)
 
 
