@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
 from letterboxd_stats import cli
+import os
+from letterboxd_stats import config
 
 
 def read_watched_films(df: pd.DataFrame, path: str, name: str):
@@ -13,8 +15,21 @@ def read_watched_films(df: pd.DataFrame, path: str, name: str):
     return movie_id
 
 
-def open_file(filetype: str, path: str, limit, ascending):
-    df = pd.read_csv(path)
+def get_list_name(path: str):
+    df = pd.read_csv(path, header=1)
+    return df["Name"].iloc[0]
+
+
+def open_list(path: str, limit, acending):
+    list_names = {
+        get_list_name(os.path.join(path, letterboxd_list)): letterboxd_list for letterboxd_list in os.listdir(path)
+    }
+    name = cli.select_value(list(list_names.keys()), message="Select your list")
+    return open_file("Lists", os.path.join(path, list_names[name]), limit, acending, header=3)
+
+
+def open_file(filetype: str, path: str, limit, ascending, header=0):
+    df = pd.read_csv(path, header=header)
     df.rename(columns={"Name": "Title", "Letterboxd URI": "Url"}, inplace=True)
     df["Year"] = df["Year"].fillna(0).astype(int)
     df = FILE_OPERATIONS[filetype](df, ascending)
@@ -22,6 +37,20 @@ def open_file(filetype: str, path: str, limit, ascending):
         df = df.iloc[:limit, :]
     cli.render_table(df, filetype)
     return cli.select_movie(df[["Title", "Url"]])
+
+
+def _show_lists(df: pd.DataFrame, ascending: bool):
+    ratings_path = os.path.expanduser(os.path.join(config["root_folder"], "static", "ratings.csv"))
+    df_ratings = pd.read_csv(ratings_path)
+    df_ratings.rename(columns={"Letterboxd URI": "URL"}, inplace=True)
+    df = df.merge(df_ratings[["URL", "Rating"]], on="URL", how="inner")
+    df.rename(columns={"URL": "Url"}, inplace=True)
+    df = df.drop("Description", axis=1)
+    sort_column = cli.select_value(df.columns.values.tolist(), "Select the order of your diary entries:")
+    df.sort_values(by=sort_column, ascending=ascending, inplace=True)
+    avg = {"Rating Mean": "{:.2f}".format(df["Rating"].astype(float).mean())}
+    cli.print_film(avg, expand=False)
+    return df
 
 
 def _show_watchlist(df: pd.DataFrame, ascending: bool):
@@ -55,4 +84,4 @@ def _show_ratings(df: pd.DataFrame, ascending: bool):
     return df
 
 
-FILE_OPERATIONS = {"Diary": _show_diary, "Watchlist": _show_watchlist, "Ratings": _show_ratings}
+FILE_OPERATIONS = {"Diary": _show_diary, "Watchlist": _show_watchlist, "Ratings": _show_ratings, "Lists": _show_lists}
