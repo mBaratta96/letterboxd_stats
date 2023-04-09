@@ -71,6 +71,13 @@ def get_ratings(args_limit, args_ascending):
     get_movie_detail_from_url(letterboxd_url)
 
 
+def get_lists(args_limit, args_ascending):
+    path = os.path.expanduser(os.path.join(config["root_folder"], "static", "lists"))
+    check_path(path)
+    letterboxd_url = data.open_list(path, args_limit, args_ascending)
+    get_movie_detail_from_url(letterboxd_url)
+
+
 def main():
     if args.download:
         try_command(download_data, ())
@@ -84,6 +91,8 @@ def main():
         try_command(get_diary, (args.limit, args.ascending))
     if args.ratings:
         try_command(get_ratings, (args.limit, args.ascending))
+    if args.lists:
+        try_command(get_lists, (args.limit, args.ascending))
 
 
 if __name__ == "__main__":
