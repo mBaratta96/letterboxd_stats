@@ -13,6 +13,14 @@ def read_watched_films(df: pd.DataFrame, path: str, name: str):
     return movie_id
 
 
+def open_list(path):
+    df_header = pd.read_csv(path, header=1)
+    list_name = df_header["Name"].iloc[0]
+    df = pd.read_csv(path, header=3)
+    print(list_name)
+    print(df)
+
+
 def open_file(filetype: str, path: str, limit, ascending):
     df = pd.read_csv(path)
     df.rename(columns={"Name": "Title", "Letterboxd URI": "Url"}, inplace=True)
