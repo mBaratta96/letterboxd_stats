@@ -22,7 +22,13 @@ def get_person(name: str):
     known_for_department = p["known_for_department"]
     movie_credits = person.movie_credits(search_result["id"])
     list_of_films = [
-        {"title": m.title, "release_date": m.release_date, "department": m.department, "id": m.id}
+        {
+            "title": m.title,
+            "release_date": m.release_date,
+            "department": m.department,
+            "id": m.id,
+            "duration": movie.details(m.id).runtime,  # type: ignore
+        }
         for m in movie_credits["crew"]
     ]
     if len(list_of_films) == 0:
