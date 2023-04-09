@@ -71,10 +71,11 @@ def get_ratings(args_limit, args_ascending):
     get_movie_detail_from_url(letterboxd_url)
 
 
-def get_lists(args_ascending):
-    path = os.path.expanduser(os.path.join(config["root_folder"], "static", "lists", "anderson.csv"))
+def get_lists(args_limit, args_ascending):
+    path = os.path.expanduser(os.path.join(config["root_folder"], "static", "lists"))
     check_path(path)
-    data.open_list(path)
+    letterboxd_url = data.open_list(path, args_limit, args_ascending)
+    get_movie_detail_from_url(letterboxd_url)
 
 
 def main():
@@ -91,7 +92,7 @@ def main():
     if args.ratings:
         try_command(get_ratings, (args.limit, args.ascending))
     if args.lists:
-        try_command(get_lists, (args.ascending,))
+        try_command(get_lists, (args.limit, args.ascending))
 
 
 if __name__ == "__main__":
