@@ -20,6 +20,7 @@ parser.add_argument(
 parser.add_argument("-W", "--wishlist", help="show wishlist", action="store_true")
 parser.add_argument("-D", "--diary", help="show diary", action="store_true")
 parser.add_argument("-R", "--ratings", help="show ratings", action="store_true")
+parser.add_argument("-L", "--lists", help="show lists", action="store_true")
 parser.add_argument("-l", "--limit", help="limit the number of items of your wishlist/diary", type=int)
 parser.add_argument("-a", "--ascending", help="Use ascending order when you sort the entries", action="store_true")
 parser.add_argument("-c", "--config_folder", help="Specifiy the folder of your config.toml file")
