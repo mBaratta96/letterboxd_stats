@@ -1,4 +1,4 @@
-from tmdbv3api import TMDb, Person, Movie
+from tmdbv3api import TMDb, Person, Movie, Search
 import pandas as pd
 from letterboxd_stats import cli
 from letterboxd_stats import config
@@ -8,11 +8,12 @@ tmdb = TMDb()
 tmdb.api_key = config["TMDB"]["api_key"]
 person = Person()
 movie = Movie()
+search = Search()
 
 
 def get_person(name: str):
     print(f"Searching for '{name}'")
-    search_results = person.search(name)
+    search_results = search.people(name)
     names = [result.name for result in search_results]  # type: ignore
     if len(names) == 0:
         raise Exception("No results for your search")
@@ -23,11 +24,10 @@ def get_person(name: str):
     movie_credits = person.movie_credits(search_result["id"])
     list_of_films = [
         {
-            "title": m.title,
-            "release_date": m.release_date,
-            "department": m.department,
-            "id": m.id,
-            "duration": movie.details(m.id).runtime,  # type: ignore
+            "Title": m.title,
+            "Release Date": m.release_date,
+            "Department": m.department,
+            "Id": m.id,
         }
         for m in movie_credits["crew"]
     ]
@@ -35,16 +35,17 @@ def get_person(name: str):
         raise ValueError("The selected person doesn't have any film.")
     df = pd.DataFrame(list_of_films)
     department = cli.select_value(
-        df["department"].unique(), f"Select a department for {p['name']}", known_for_department
+        df["Department"].unique(), f"Select a department for {p['name']}", known_for_department
     )
-    df = df[df["department"] == department]
-    df = df.drop("department", axis=1)
+    df = df[df["Department"] == department]
+    df = df.drop("Department", axis=1)
+    df["Duration"] = df.apply(lambda row: movie.details(row["Id"]).runtime, axis=1)  # type: ignore
     return df, p["name"]
 
 
 def get_movie(movie_query: str):
     print(f"Searching for movie '{movie_query}'")
-    search_results = movie.search(movie_query)
+    search_results = search.movies(movie_query)
     titles = [f"{result.title} ({result.release_date})" for result in search_results]  # type: ignore
     if len(titles) == 0:
         raise Exception("No results for your search")
@@ -68,3 +69,11 @@ def get_movie_detail(movie_id: int):
         "Letterboxd URL": web_scraper.create_movie_url(movie_details["title"], "film_page"),
     }
     cli.print_film(selected_details)
+
+
+def get_film_duration(film: str, year: int):
+    search_results = search.movies({"query": film, "year": year})
+    if len(search_results) > 0:
+        first_result = search_results[0]
+        return movie.details(first_result.id).runtime  # type: ignore
+    return 0

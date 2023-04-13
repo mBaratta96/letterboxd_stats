@@ -26,10 +26,10 @@ def select_movie_id(movies_info: pd.DataFrame) -> int:
         mandatory=False,
         max_height="25%",
         choices=[
-            Choice(value=id, name=f"{id} - {title}") for id, title in zip(movies_info["id"], movies_info["title"])
+            Choice(value=id, name=f"{id} - {title}") for id, title in zip(movies_info["Id"], movies_info["Title"])
         ],
         keybindings={"skip": [{"key": "escape"}]},
-        validate=lambda result: result in movies_info["id"].values,
+        validate=lambda result: result in movies_info["Id"].values,
         filter=lambda result: None if result is None else int(result),
         invalid_message="Input must be in the resulting IDs",
     ).execute()
@@ -91,9 +91,9 @@ def render_table(df: pd.DataFrame, name: str):
 
 
 def download_poster(poster: str):
-    if config["poster_columns"] > 0:
+    if config["CLI"]["poster_columns"] > 0:
         art = AsciiArt.from_url(IMAGE_URL + poster)
-        art.to_terminal(columns=int(config["poster_columns"]))
+        art.to_terminal(columns=int(config["CLI"]["poster_columns"]))
 
 
 def _validate_date(s: str):
