@@ -13,7 +13,7 @@ search = Search()
 
 def get_person(name: str):
     print(f"Searching for '{name}'")
-    search_results = search.people(name)
+    search_results = search.people({"query": name})
     names = [result.name for result in search_results]  # type: ignore
     if len(names) == 0:
         raise Exception("No results for your search")
@@ -45,7 +45,7 @@ def get_person(name: str):
 
 def get_movie(movie_query: str):
     print(f"Searching for movie '{movie_query}'")
-    search_results = search.movies(movie_query)
+    search_results = search.movies({"query": movie_query})
     titles = [f"{result.title} ({result.release_date})" for result in search_results]  # type: ignore
     if len(titles) == 0:
         raise Exception("No results for your search")
