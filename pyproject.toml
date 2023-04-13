@@ -4,9 +4,9 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "letterboxd_stats"
-version = "0.1.5"
+version = "0.1.6"
 authors = [{ name = "mBaratta96" }]
-description = "A small example package"
+description = "Get information about your Letterboxd activity."
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.8"
