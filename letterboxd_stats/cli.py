@@ -26,10 +26,10 @@ def select_movie_id(movies_info: pd.DataFrame) -> int:
         mandatory=False,
         max_height="25%",
         choices=[
-            Choice(value=id, name=f"{id} - {title}") for id, title in zip(movies_info["id"], movies_info["title"])
+            Choice(value=id, name=f"{id} - {title}") for id, title in zip(movies_info["Id"], movies_info["Title"])
         ],
         keybindings={"skip": [{"key": "escape"}]},
-        validate=lambda result: result in movies_info["id"].values,
+        validate=lambda result: result in movies_info["Id"].values,
         filter=lambda result: None if result is None else int(result),
         invalid_message="Input must be in the resulting IDs",
     ).execute()
