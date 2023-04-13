@@ -1,4 +1,4 @@
-from tmdbv3api import TMDb, Person, Movie
+from tmdbv3api import TMDb, Person, Movie, Search
 import pandas as pd
 from letterboxd_stats import cli
 from letterboxd_stats import config
@@ -8,11 +8,12 @@ tmdb = TMDb()
 tmdb.api_key = config["TMDB"]["api_key"]
 person = Person()
 movie = Movie()
+search = Search()
 
 
 def get_person(name: str):
     print(f"Searching for '{name}'")
-    search_results = person.search(name)
+    search_results = search.people(name)
     names = [result.name for result in search_results]  # type: ignore
     if len(names) == 0:
         raise Exception("No results for your search")
@@ -44,7 +45,7 @@ def get_person(name: str):
 
 def get_movie(movie_query: str):
     print(f"Searching for movie '{movie_query}'")
-    search_results = movie.search(movie_query)
+    search_results = search.movies(movie_query)
     titles = [f"{result.title} ({result.release_date})" for result in search_results]  # type: ignore
     if len(titles) == 0:
         raise Exception("No results for your search")
@@ -68,3 +69,8 @@ def get_movie_detail(movie_id: int):
         "Letterboxd URL": web_scraper.create_movie_url(movie_details["title"], "film_page"),
     }
     cli.print_film(selected_details)
+
+
+def get_film_duration(film: str, year: int):
+    search_result = search.movies({"query": film, "year": year})[0]
+    return movie.details(search_result.id).runtime  # type: ignore

@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from letterboxd_stats import cli
+from letterboxd_stats import tmdb
 import os
 from letterboxd_stats import config
 
@@ -46,9 +47,14 @@ def _show_lists(df: pd.DataFrame, ascending: bool):
     df = df.merge(df_ratings[["URL", "Rating"]], on="URL", how="inner")
     df.rename(columns={"URL": "Url"}, inplace=True)
     df = df.drop("Description", axis=1)
+    df["Rating"] = df["Rating"].astype(float)
+    df["Duration"] = df.apply(lambda row: tmdb.get_film_duration(row["Title"], row["Year"]), axis=1)  # type: ignore
     sort_column = cli.select_value(df.columns.values.tolist(), "Select the order of your diary entries:")
     df.sort_values(by=sort_column, ascending=ascending, inplace=True)
-    avg = {"Rating Mean": "{:.2f}".format(df["Rating"].astype(float).mean())}
+    avg = {
+        "Rating Mean": "{:.2f}".format(df["Rating"].mean()),
+        "Time-weighted Rating Mean": "{:.2f}".format(((df["Duration"] / df["Duration"].sum()) * df["Rating"]).sum()),
+    }
     cli.print_film(avg, expand=False)
     return df
 
