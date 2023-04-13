@@ -86,13 +86,13 @@ def main():
     if args.search_film:
         try_command(search_film, (args.search_film,))
     if args.wishlist:
-        try_command(get_wishlist, (args.limit, args.ascending))
+        try_command(get_wishlist, (args.limit, config["CLI"]["ascending"]))
     if args.diary:
-        try_command(get_diary, (args.limit, args.ascending))
+        try_command(get_diary, (args.limit, config["CLI"]["ascending"]))
     if args.ratings:
-        try_command(get_ratings, (args.limit, args.ascending))
+        try_command(get_ratings, (args.limit, config["CLI"]["ascending"]))
     if args.lists:
-        try_command(get_lists, (args.limit, args.ascending))
+        try_command(get_lists, (args.limit, config["CLI"]["ascending"]))
 
 
 if __name__ == "__main__":

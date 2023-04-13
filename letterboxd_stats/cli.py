@@ -91,9 +91,9 @@ def render_table(df: pd.DataFrame, name: str):
 
 
 def download_poster(poster: str):
-    if config["poster_columns"] > 0:
+    if config["CLI"]["poster_columns"] > 0:
         art = AsciiArt.from_url(IMAGE_URL + poster)
-        art.to_terminal(columns=int(config["poster_columns"]))
+        art.to_terminal(columns=int(config["CLI"]["poster_columns"]))
 
 
 def _validate_date(s: str):

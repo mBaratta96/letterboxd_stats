@@ -72,5 +72,8 @@ def get_movie_detail(movie_id: int):
 
 
 def get_film_duration(film: str, year: int):
-    search_result = search.movies({"query": film, "year": year})[0]
-    return movie.details(search_result.id).runtime  # type: ignore
+    search_results = search.movies({"query": film, "year": year})
+    if len(search_results) > 0:
+        first_result = search_results[0]
+        return movie.details(first_result.id).runtime  # type: ignore
+    return 0
