@@ -39,7 +39,8 @@ def get_person(name: str):
     )
     df = df[df["Department"] == department]
     df = df.drop("Department", axis=1)
-    df["Duration"] = df.apply(lambda row: movie.details(row["Id"]).runtime, axis=1)  # type: ignore
+    if config["TMDB"]["get_list_runtimes"] is True:
+        df["Duration"] = df.apply(lambda row: movie.details(row["Id"]).runtime, axis=1)  # type: ignore
     return df, p["name"]
 
 
