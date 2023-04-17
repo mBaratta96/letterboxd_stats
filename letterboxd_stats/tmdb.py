@@ -2,7 +2,6 @@ from tmdbv3api import TMDb, Person, Movie, Search
 import pandas as pd
 from letterboxd_stats import cli
 from letterboxd_stats import config
-from letterboxd_stats.web_scraper import create_movie_url
 
 tmdb = TMDb()
 tmdb.api_key = config["TMDB"]["api_key"]
