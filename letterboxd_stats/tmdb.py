@@ -2,7 +2,7 @@ from tmdbv3api import TMDb, Person, Movie, Search
 import pandas as pd
 from letterboxd_stats import cli
 from letterboxd_stats import config
-from letterboxd_stats import web_scraper
+from letterboxd_stats.web_scraper import create_movie_url
 
 tmdb = TMDb()
 tmdb.api_key = config["TMDB"]["api_key"]
@@ -56,7 +56,7 @@ def get_movie(movie_query: str):
     return search_results[result_index]
 
 
-def get_movie_detail(movie_id: int):
+def get_movie_detail(movie_id: int, letterboxd_url=None):
     movie_details = movie.details(movie_id)
     poster = movie_details.get("poster_path")
     if poster is not None:
@@ -67,8 +67,9 @@ def get_movie_detail(movie_id: int):
         "Runtime": movie_details["runtime"],
         "Overview": movie_details["overview"],
         "Release Date": movie_details["release_date"],
-        "Letterboxd URL": web_scraper.create_movie_url(movie_details["title"], "film_page"),
     }
+    if letterboxd_url:
+        selected_details["Letterboxd Url"] = create_movie_url(letterboxd_url, "film_page")
     cli.print_film(selected_details)
 
 

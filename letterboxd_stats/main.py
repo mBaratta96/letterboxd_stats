@@ -42,13 +42,13 @@ def search_person(args_search: str):
 
 
 def search_film(args_search_film: str):
-    tmdb_id, film_url = ws.search_film(args_search_film)
-    tmdb.get_movie_detail(tmdb_id)  # type: ignore
+    tmdb_id, film_url, film_title = ws.search_film(args_search_film)
+    tmdb.get_movie_detail(tmdb_id, film_url)  # type: ignore
     answer = ws.select_optional_operation()
     if answer != "Exit":
         downloader = ws.Downloader()
         downloader.login()
-        downloader.perform_operation(answer, film_url)
+        downloader.perform_operation(answer, film_url, film_title)
 
 
 def get_wishlist(args_limit, args_ascending):

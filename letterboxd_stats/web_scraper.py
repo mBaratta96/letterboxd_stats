@@ -55,15 +55,14 @@ class Downloader:
             zip.extractall(path)
         os.remove(archive)
 
-    def add_film_diary(self, title: str):
-        payload = cli.add_film_questions(title)
-        url = create_movie_url(title, "diary")
+    def add_film_diary(self, title_url: str, title: str):
+        payload = cli.add_film_questions(title_url)
+        url = create_movie_url(title_url, "diary")
         res = self.session.get(url)
         if res.status_code != 200:
             raise ConnectionError("It's been impossible to retireve the Letterboxd page")
         movie_page = html.fromstring(res.text)
         letterboxd_film_id = movie_page.get_element_by_id("frm-sidebar-rating").get("data-film-id")
-
         payload["filmId"] = letterboxd_film_id
         payload["__csrf"] = self.session.cookies.get("com.xk72.webparts.csrf")
         res = self.session.post(ADD_DIARY_URL, data=payload)
@@ -71,22 +70,22 @@ class Downloader:
             raise ConnectionError("Add diary request failed.")
         print(f"{title} was added to your diary.")
 
-    def add_watchlist(self, title: str):
-        url = create_movie_url(title, "add_watchlist")
+    def add_watchlist(self, title_url: str, title: str):
+        url = create_movie_url(title_url, "add_watchlist")
         res = self.session.post(url, data={"__csrf": self.session.cookies.get("com.xk72.webparts.csrf")})
         if not (res.status_code == 200 and res.json()["result"] is True):
             raise ConnectionError("Add diary request failed.")
         print(f"{title} added to your watchlist.")
 
-    def remove_watchlist(self, title: str):
-        url = create_movie_url(title, "remove_watchlist")
+    def remove_watchlist(self, title_url: str, title: str):
+        url = create_movie_url(title_url, "remove_watchlist")
         res = self.session.post(url, data={"__csrf": self.session.cookies.get("com.xk72.webparts.csrf")})
         if not (res.status_code == 200 and res.json()["result"] is True):
             raise ConnectionError("Add diary request failed.")
         print(f"{title} removed to your watchlist.")
 
-    def perform_operation(self, answer: str, link: str):
-        getattr(self, MOVIE_OPERATIONS[answer])(link)
+    def perform_operation(self, answer: str, link: str, title: str):
+        getattr(self, MOVIE_OPERATIONS[answer])(link, title)
 
 
 def create_movie_url(title: str, operation: str):
@@ -132,4 +131,4 @@ def search_film(title: str):
     selected_film = cli.select_value(list(title_years_links.keys()), "Select your film")
     title_url = title_years_links[selected_film].split("/")[-2]
     tmdb_id = get_tmdb_id(create_movie_url(title_url, "film_page"), False)
-    return tmdb_id, title_url
+    return tmdb_id, title_url, selected_film.split()[0]
