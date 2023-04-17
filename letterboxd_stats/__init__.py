@@ -31,7 +31,8 @@ folder = args.config_folder or default_folder
 path = os.path.abspath(os.path.join(folder, "config.toml"))
 if not os.path.exists(path):
     raise FileNotFoundError(
-        f"Found no configuration file in {path}. Please, add a config.toml in that folder or specify a custom one with the -c command."
+        f"Found no configuration file in {path}. "
+        + "Please, add a config.toml in that folder or specify a custom one with the -c command."
     )
 with open(path, "rb") as f:
     config = tomli.load(f)
