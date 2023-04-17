@@ -3,7 +3,7 @@ from zipfile import ZipFile
 from letterboxd_stats import config
 from letterboxd_stats import cli
 import requests
-from lxml import html, etree
+from lxml import html
 
 URL = "https://letterboxd.com"
 LOGIN_PAGE = URL + "/user/login.do"
@@ -19,7 +19,7 @@ OPERATIONS_URLS = {
     "diary": lambda s: f"/csi/film/{s}/sidebar-user-actions/?esiAllowUser=true",
     "add_watchlist": lambda s: f"/film/{s}/add-to-watchlist/",
     "remove_watchlist": lambda s: f"/film/{s}/remove-from-watchlist/",
-    "film_page": lambda s: f"/film/{s}/",
+    "film_page": lambda s: f"/film/{s}",
 }
 
 
@@ -54,8 +54,8 @@ class Downloader:
             zip.extractall(path)
         os.remove(archive)
 
-    def add_film_diary(self, title_url: str, title: str):
-        payload = cli.add_film_questions(title_url)
+    def add_film_diary(self, title_url: str):
+        payload = cli.add_film_questions()
         url = create_movie_url(title_url, "diary")
         res = self.session.get(url)
         if res.status_code != 200:
@@ -67,24 +67,24 @@ class Downloader:
         res = self.session.post(ADD_DIARY_URL, data=payload)
         if not (res.status_code == 200 and res.json()["result"] is True):
             raise ConnectionError("Add diary request failed.")
-        print(f"{title} was added to your diary.")
+        print("The movie was added to your diary.")
 
-    def add_watchlist(self, title_url: str, title: str):
+    def add_watchlist(self, title_url: str):
         url = create_movie_url(title_url, "add_watchlist")
         res = self.session.post(url, data={"__csrf": self.session.cookies.get("com.xk72.webparts.csrf")})
         if not (res.status_code == 200 and res.json()["result"] is True):
             raise ConnectionError("Add diary request failed.")
-        print(f"{title} added to your watchlist.")
+        print("Added to your watchlist.")
 
-    def remove_watchlist(self, title_url: str, title: str):
+    def remove_watchlist(self, title_url: str):
         url = create_movie_url(title_url, "remove_watchlist")
         res = self.session.post(url, data={"__csrf": self.session.cookies.get("com.xk72.webparts.csrf")})
         if not (res.status_code == 200 and res.json()["result"] is True):
             raise ConnectionError("Add diary request failed.")
-        print(f"{title} removed to your watchlist.")
+        print("Removed to your watchlist.")
 
-    def perform_operation(self, answer: str, link: str, title: str):
-        getattr(self, MOVIE_OPERATIONS[answer])(link, title)
+    def perform_operation(self, answer: str, link: str):
+        getattr(self, MOVIE_OPERATIONS[answer])(link)
 
 
 def create_movie_url(title: str, operation: str):
@@ -112,22 +112,24 @@ def select_optional_operation():
     return cli.select_value(["Exit"] + list(MOVIE_OPERATIONS.keys()), "Select operation:")
 
 
-def search_film(title: str):
+def search_film(title: str, allow_selection=False):
     search_url = URL + OPERATIONS_URLS["search"](title)
     res = requests.get(search_url)
     if res.status_code != 200:
         raise ConnectionError("It's been impossible to retireve the Letterboxd page")
     search_page = html.fromstring(res.text)
-    titles = search_page.xpath("//div[@class='film-detail-content']")
-    if len(titles) == 0:
-        raise ValueError(f"No film found with search query {title}")
-    title_years_links = {
-        f"{t.xpath('./h2/span/a')[0].text.rstrip()} "
-        + f"({t.xpath('./h2/span//small/a')[0].text}) - "
-        + f"{t.xpath('./p/a')[0].text}": t.xpath("./h2/span/a")[0].get("href")
-        for t in titles
-    }
-    selected_film = cli.select_value(list(title_years_links.keys()), "Select your film")
-    title_url = title_years_links[selected_film].split("/")[-2]
-    tmdb_id = get_tmdb_id(create_movie_url(title_url, "film_page"), False)
-    return tmdb_id, title_url, selected_film.split()[0]
+    if allow_selection:
+        titles = search_page.xpath("//div[@class='film-detail-content']")
+        if len(titles) == 0:
+            raise ValueError(f"No film found with search query {title}")
+        title_years_directors_links = {
+            f"{t.xpath('./h2/span/a')[0].text.rstrip()} "
+            + f"({t.xpath('./h2/span//small/a')[0].text}) - "
+            + f"{t.xpath('./p/a')[0].text}": t.xpath("./h2/span/a")[0].get("href")
+            for t in titles
+        }
+        selected_film = cli.select_value(list(title_years_directors_links.keys()), "Select your film")
+        title_url = title_years_directors_links[selected_film].split("/")[-2]
+    else:
+        title_url = search_page.xpath("//span[@class='film-title-wrapper']/a")[0].get("href")
+    return title_url

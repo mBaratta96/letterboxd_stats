@@ -69,7 +69,7 @@ def get_movie_detail(movie_id: int, letterboxd_url=None):
         "Release Date": movie_details["release_date"],
     }
     if letterboxd_url:
-        selected_details["Letterboxd Url"] = create_movie_url(letterboxd_url, "film_page")
+        selected_details["Letterboxd Url"] = letterboxd_url
     cli.print_film(selected_details)
 
 

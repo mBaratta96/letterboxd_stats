@@ -29,26 +29,29 @@ def get_movie_detail_from_url(letterboxd_url, is_diary=False):
     if letterboxd_url is not None:
         id = ws.get_tmdb_id(letterboxd_url, is_diary)
         if id is not None:
-            tmdb.get_movie_detail(id)
+            tmdb.get_movie_detail(id, letterboxd_url)
 
 
 def search_person(args_search: str):
     df, name = tmdb.get_person(args_search)
     path = os.path.expanduser(os.path.join(config["root_folder"], "static", "watched.csv"))
     check_path(path)
-    movie_id = data.read_watched_films(df, path, name)
+    movie_id, search_film = data.read_watched_films(df, path, name)
+    print(search_film)
+    letterboxd_url = ws.search_film(search_film)
     if movie_id is not None:
-        tmdb.get_movie_detail(movie_id)
+        tmdb.get_movie_detail(movie_id, ws.create_movie_url(letterboxd_url, "film_page"))
 
 
 def search_film(args_search_film: str):
-    tmdb_id, film_url, film_title = ws.search_film(args_search_film)
-    tmdb.get_movie_detail(tmdb_id, film_url)  # type: ignore
+    film_url = ws.search_film(args_search_film, True)
+    film_page_url = ws.create_movie_url(film_url, "film_page")
+    tmdb.get_movie_detail(ws.get_tmdb_id(film_page_url, False), film_page_url)  # type: ignore
     answer = ws.select_optional_operation()
     if answer != "Exit":
         downloader = ws.Downloader()
         downloader.login()
-        downloader.perform_operation(answer, film_url, film_title)
+        downloader.perform_operation(answer, film_url)
 
 
 def get_wishlist(args_limit, args_ascending):
