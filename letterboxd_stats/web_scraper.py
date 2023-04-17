@@ -3,8 +3,7 @@ from zipfile import ZipFile
 from letterboxd_stats import config
 from letterboxd_stats import cli
 import requests
-from lxml import html
-import re
+from lxml import html, etree
 
 URL = "https://letterboxd.com"
 LOGIN_PAGE = URL + "/user/login.do"
@@ -119,14 +118,14 @@ def search_film(title: str):
     if res.status_code != 200:
         raise ConnectionError("It's been impossible to retireve the Letterboxd page")
     search_page = html.fromstring(res.text)
-    titles = search_page.xpath("//span[@class='film-title-wrapper']")
+    titles = search_page.xpath("//div[@class='film-detail-content']")
     if len(titles) == 0:
         raise ValueError(f"No film found with search query {title}")
     title_years_links = {
-        f"{title.xpath('./a')[0].text.rstrip()} ({title.xpath('.//small/a')[0].text})": title.xpath("./a")[0].get(
-            "href"
-        )
-        for title in titles
+        f"{t.xpath('./h2/span/a')[0].text.rstrip()} "
+        + f"({t.xpath('./h2/span//small/a')[0].text}) - "
+        + f"{t.xpath('./p/a')[0].text}": t.xpath("./h2/span/a")[0].get("href")
+        for t in titles
     }
     selected_film = cli.select_value(list(title_years_links.keys()), "Select your film")
     title_url = title_years_links[selected_film].split("/")[-2]
