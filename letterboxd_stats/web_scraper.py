@@ -16,6 +16,7 @@ MOVIE_OPERATIONS = {
     "Remove from watchlist": "remove_watchlist",
 }
 OPERATIONS_URLS = {
+    "search": lambda s: f"/search/films/{s}/?adult",
     "diary": lambda s: f"/csi/film/{s}/sidebar-user-actions/?esiAllowUser=true",
     "add_watchlist": lambda s: f"/film/{s}/add-to-watchlist/",
     "remove_watchlist": lambda s: f"/film/{s}/remove-from-watchlist/",
@@ -89,8 +90,7 @@ class Downloader:
 
 
 def create_movie_url(title: str, operation: str):
-    lowercase_title = "-".join([re.sub("[^a-zA-Z0-9 ]", "", word.lower()) for word in title.split()])
-    url = URL + OPERATIONS_URLS[operation](lowercase_title)
+    url = URL + OPERATIONS_URLS[operation](title)
     return url
 
 
@@ -112,3 +112,24 @@ def get_tmdb_id(link: str, is_diary: bool):
 
 def select_optional_operation():
     return cli.select_value(["Exit"] + list(MOVIE_OPERATIONS.keys()), "Select operation:")
+
+
+def search_film(title: str):
+    search_url = URL + OPERATIONS_URLS["search"](title)
+    res = requests.get(search_url)
+    if res.status_code != 200:
+        raise ConnectionError("It's been impossible to retireve the Letterboxd page")
+    search_page = html.fromstring(res.text)
+    titles = search_page.xpath("//span[@class='film-title-wrapper']")
+    if len(titles) == 0:
+        raise ValueError(f"No film found with search query {title}")
+    title_years_links = {
+        f"{title.xpath('./a')[0].text.rstrip()} ({title.xpath('.//small/a')[0].text})": title.xpath("./a")[0].get(
+            "href"
+        )
+        for title in titles
+    }
+    selected_film = cli.select_value(list(title_years_links.keys()), "Select your film")
+    title_url = title_years_links[selected_film].split("/")[-2]
+    tmdb_id = get_tmdb_id(create_movie_url(title_url, "film_page"), False)
+    return tmdb_id, title_url
