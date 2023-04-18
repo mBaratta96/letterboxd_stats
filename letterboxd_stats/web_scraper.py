@@ -131,5 +131,5 @@ def search_film(title: str, allow_selection=False):
         selected_film = cli.select_value(list(title_years_directors_links.keys()), "Select your film")
         title_url = title_years_directors_links[selected_film].split("/")[-2]
     else:
-        title_url = search_page.xpath("//span[@class='film-title-wrapper']/a")[0].get("href")
+        title_url = search_page.xpath("//span[@class='film-title-wrapper']/a")[0].get("href").split("/")[-2]
     return title_url
