@@ -113,7 +113,7 @@ def select_optional_operation():
 
 
 def search_film(title: str, allow_selection=False):
-    search_url = URL + OPERATIONS_URLS["search"](title)
+    search_url = create_movie_url(title, "search")
     res = requests.get(search_url)
     if res.status_code != 200:
         raise ConnectionError("It's been impossible to retireve the Letterboxd page")
