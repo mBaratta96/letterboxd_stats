@@ -57,7 +57,7 @@ options:
   -S SEARCH_FILM, --search-film SEARCH_FILM
                         Search for a film.
   -d, --download        Download letterboxd data from your account
-  -W, --wishlist        show wishlist
+  -W, --watchlist       show watchlist
   -D, --diary           show diary
   -R, --ratings         show ratings
   -L, --lists           show lists

@@ -4,6 +4,8 @@ from letterboxd_stats import web_scraper as ws
 import os
 from letterboxd_stats import args, config
 
+DATA_FILES = {"Watchlist": "watchlist.csv", "Diary": "diary.csv", "Ratings": "ratings.csv", "Lists": "lists"}
+
 
 def try_command(command, args):
     try:
@@ -37,7 +39,6 @@ def search_person(args_search: str):
     path = os.path.expanduser(os.path.join(config["root_folder"], "static", "watched.csv"))
     check_path(path)
     movie_id, search_film = data.read_watched_films(df, path, name)
-    print(search_film)
     letterboxd_url = ws.search_film(search_film)
     if movie_id is not None:
         tmdb.get_movie_detail(movie_id, ws.create_movie_url(letterboxd_url, "film_page"))
@@ -54,32 +55,15 @@ def search_film(args_search_film: str):
         downloader.perform_operation(answer, film_url)
 
 
-def get_wishlist(args_limit, args_ascending):
-    path = os.path.expanduser(os.path.join(config["root_folder"], "static", "watchlist.csv"))
+def get_data(args_limit, args_ascending, data_type):
+    path = os.path.expanduser(os.path.join(config["root_folder"], "static", DATA_FILES[data_type]))
     check_path(path)
-    letterboxd_url = data.open_file("Watchlist", path, args_limit, args_ascending)
-    get_movie_detail_from_url(letterboxd_url)
-
-
-def get_diary(args_limit, args_ascending):
-    path = os.path.expanduser(os.path.join(config["root_folder"], "static", "diary.csv"))
-    check_path(path)
-    letterboxd_url = data.open_file("Diary", path, args_limit, args_ascending)
-    get_movie_detail_from_url(letterboxd_url, True)
-
-
-def get_ratings(args_limit, args_ascending):
-    path = os.path.expanduser(os.path.join(config["root_folder"], "static", "ratings.csv"))
-    check_path(path)
-    letterboxd_url = data.open_file("Ratings", path, args_limit, args_ascending)
-    get_movie_detail_from_url(letterboxd_url)
-
-
-def get_lists(args_limit, args_ascending):
-    path = os.path.expanduser(os.path.join(config["root_folder"], "static", "lists"))
-    check_path(path)
-    letterboxd_url = data.open_list(path, args_limit, args_ascending)
-    get_movie_detail_from_url(letterboxd_url)
+    letterboxd_url = (
+        data.open_file(data_type, path, args_limit, args_ascending)
+        if data_type != "Lists"
+        else data.open_list(path, args_limit, args_ascending)
+    )
+    get_movie_detail_from_url(letterboxd_url, data_type == "Diary")
 
 
 def main():
@@ -89,14 +73,14 @@ def main():
         try_command(search_person, (args.search,))
     if args.search_film:
         try_command(search_film, (args.search_film,))
-    if args.wishlist:
-        try_command(get_wishlist, (args.limit, config["CLI"]["ascending"]))
+    if args.watchlist:
+        try_command(get_data, (args.limit, config["CLI"]["ascending"], "Watchlist"))
     if args.diary:
-        try_command(get_diary, (args.limit, config["CLI"]["ascending"]))
+        try_command(get_data, (args.limit, config["CLI"]["ascending"], "Diary"))
     if args.ratings:
-        try_command(get_ratings, (args.limit, config["CLI"]["ascending"]))
+        try_command(get_data, (args.limit, config["CLI"]["ascending"], "Ratings"))
     if args.lists:
-        try_command(get_lists, (args.limit, config["CLI"]["ascending"]))
+        try_command(get_data, (args.limit, config["CLI"]["ascending"], "Lists"))
 
 
 if __name__ == "__main__":

@@ -119,14 +119,17 @@ def search_film(title: str, allow_selection=False):
         raise ConnectionError("It's been impossible to retireve the Letterboxd page")
     search_page = html.fromstring(res.text)
     if allow_selection:
-        titles = search_page.xpath("//div[@class='film-detail-content']")
-        if len(titles) == 0:
+        movie_list = search_page.xpath("//div[@class='film-detail-content']")
+        if len(movie_list) == 0:
             raise ValueError(f"No film found with search query {title}")
+        titles = [movie.xpath("./h2/span/a")[0].text.rstrip() for movie in movie_list]
+        years = [
+            f"({year[0].text}) " if len(year := movie.xpath("./h2/span//small/a")) > 0 else "" for movie in movie_list
+        ]
+        directors = [movie.xpath("./p/a")[0].text for movie in movie_list]
+        links = [movie.xpath("./h2/span/a")[0].get("href") for movie in movie_list]
         title_years_directors_links = {
-            f"{t.xpath('./h2/span/a')[0].text.rstrip()} "
-            + f"({t.xpath('./h2/span//small/a')[0].text}) - "
-            + f"{t.xpath('./p/a')[0].text}": t.xpath("./h2/span/a")[0].get("href")
-            for t in titles
+            f"{title} {year}- {director}": link for title, year, director, link in zip(titles, years, directors, links)
         }
         selected_film = cli.select_value(list(title_years_directors_links.keys()), "Select your film")
         title_url = title_years_directors_links[selected_film].split("/")[-2]
