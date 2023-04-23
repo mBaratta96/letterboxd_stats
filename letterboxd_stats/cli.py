@@ -104,8 +104,8 @@ def _validate_date(s: str):
     return True
 
 
-def add_film_questions(film: str):
-    print(f"Set all the infos for {film}:\n")
+def add_film_questions():
+    print("Set all the infos for the film:\n")
     specify_date = inquirer.confirm(message="Specify date?").execute()  # type: ignore
     today = datetime.today().strftime("%Y-%m-%d")
     get_specified_date = inquirer.text(  # type: ignore

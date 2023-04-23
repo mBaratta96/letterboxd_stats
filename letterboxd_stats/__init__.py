@@ -17,7 +17,7 @@ parser.add_argument(
     help="Download letterboxd data from your account",
     action="store_true",
 )
-parser.add_argument("-W", "--wishlist", help="show wishlist", action="store_true")
+parser.add_argument("-W", "--watchlist", help="show watchlist", action="store_true")
 parser.add_argument("-D", "--diary", help="show diary", action="store_true")
 parser.add_argument("-R", "--ratings", help="show ratings", action="store_true")
 parser.add_argument("-L", "--lists", help="show lists", action="store_true")
