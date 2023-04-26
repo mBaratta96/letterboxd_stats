@@ -126,7 +126,7 @@ def search_film(title: str, allow_selection=False):
         years = [
             f"({year[0].text}) " if len(year := movie.xpath("./h2/span//small/a")) > 0 else "" for movie in movie_list
         ]
-        directors = [movie.xpath("./p/a")[0].text for movie in movie_list]
+        directors = [director[0].text if len(director := movie.xpath("./p/a")) > 0 else "" for movie in movie_list]
         links = [movie.xpath("./h2/span/a")[0].get("href") for movie in movie_list]
         title_years_directors_links = {
             f"{title} {year}- {director}": link for title, year, director, link in zip(titles, years, directors, links)
