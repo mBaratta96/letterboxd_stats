@@ -13,6 +13,8 @@ def read_watched_films(df: pd.DataFrame, path: str, name: str):
     df.sort_values(by="Release Date", inplace=True)
     cli.render_table(df, name)
     movie_id = cli.select_movie_id(df[["Id", "Title"]])
+    if movie_id is None:
+        return None, None
     movie_row = df.loc[df["Id"] == movie_id].iloc[0, :]
     return movie_id, f"{movie_row['Title']} {movie_row['Release Date'].year}"
 
