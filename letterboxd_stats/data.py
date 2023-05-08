@@ -55,7 +55,7 @@ def _show_lists(df: pd.DataFrame, ascending: bool):
     df.sort_values(by=sort_column, ascending=ascending, inplace=True)
     avg = {"Rating Mean": "{:.2f}".format(df["Rating"].mean())}
     if config["TMDB"]["get_list_runtimes"] is True:
-        df["Duration"] = df.apply(lambda row: tmdb.get_film_duration(row["Title"], row["Year"]), axis=1)  # type: ignore
+        df["Duration"] = df.apply(lambda row: tmdb.get_film_duration(row["Url"]), axis=1)  # type: ignore
         avg["Time-weighted Rating Mean"] = "{:.2f}".format(
             ((df["Duration"] / df["Duration"].sum()) * df["Rating"]).sum()
         )

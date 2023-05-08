@@ -135,4 +135,4 @@ def search_film(title: str, allow_selection=False):
         title_url = title_years_directors_links[selected_film].split("/")[-2]
     else:
         title_url = search_page.xpath("//span[@class='film-title-wrapper']/a")[0].get("href").split("/")[-2]
-    return title_url
+    return create_movie_url(title_url, "film_page")

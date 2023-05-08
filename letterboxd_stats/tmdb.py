@@ -2,6 +2,7 @@ from tmdbv3api import TMDb, Person, Movie, Search
 import pandas as pd
 from letterboxd_stats import cli
 from letterboxd_stats import config
+from letterboxd_stats.web_scraper import get_tmdb_id
 
 tmdb = TMDb()
 tmdb.api_key = config["TMDB"]["api_key"]
@@ -72,9 +73,6 @@ def get_movie_detail(movie_id: int, letterboxd_url=None):
     cli.print_film(selected_details)
 
 
-def get_film_duration(film: str, year: int):
-    search_results = search.movies({"query": film, "year": year})
-    if len(search_results) > 0:
-        first_result = search_results[0]
-        return movie.details(first_result.id).runtime  # type: ignore
-    return 0
+def get_film_duration(url: str):
+    tmdb_id = get_tmdb_id(url, False)
+    return movie.details(tmdb_id).runtime  # type: ignore
