@@ -54,9 +54,9 @@ class Downloader:
             zip.extractall(path)
         os.remove(archive)
 
-    def add_film_diary(self, title_url: str):
+    def add_film_diary(self, title: str):
         payload = cli.add_film_questions()
-        url = create_movie_url(title_url, "diary")
+        url = create_movie_url(title, "diary")
         res = self.session.get(url)
         if res.status_code != 200:
             raise ConnectionError("It's been impossible to retireve the Letterboxd page")
@@ -69,15 +69,15 @@ class Downloader:
             raise ConnectionError("Add diary request failed.")
         print("The movie was added to your diary.")
 
-    def add_watchlist(self, title_url: str):
-        url = create_movie_url(title_url, "add_watchlist")
+    def add_watchlist(self, title: str):
+        url = create_movie_url(title, "add_watchlist")
         res = self.session.post(url, data={"__csrf": self.session.cookies.get("com.xk72.webparts.csrf")})
         if not (res.status_code == 200 and res.json()["result"] is True):
             raise ConnectionError("Add diary request failed.")
         print("Added to your watchlist.")
 
-    def remove_watchlist(self, title_url: str):
-        url = create_movie_url(title_url, "remove_watchlist")
+    def remove_watchlist(self, title: str):
+        url = create_movie_url(title, "remove_watchlist")
         res = self.session.post(url, data={"__csrf": self.session.cookies.get("com.xk72.webparts.csrf")})
         if not (res.status_code == 200 and res.json()["result"] is True):
             raise ConnectionError("Add diary request failed.")
@@ -135,4 +135,4 @@ def search_film(title: str, allow_selection=False):
         title_url = title_years_directors_links[selected_film].split("/")[-2]
     else:
         title_url = search_page.xpath("//span[@class='film-title-wrapper']/a")[0].get("href").split("/")[-2]
-    return create_movie_url(title_url, "film_page")
+    return title_url, create_movie_url(title_url, "film_page")
