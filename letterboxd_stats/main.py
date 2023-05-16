@@ -45,13 +45,13 @@ def search_person(args_search: str):
 
 
 def search_film(args_search_film: str):
-    film_url = ws.search_film(args_search_film, True)
+    title, film_url = ws.search_film(args_search_film, True)
     tmdb.get_movie_detail(ws.get_tmdb_id(film_url, False), film_url)  # type: ignore
     answer = ws.select_optional_operation()
     if answer != "Exit":
         downloader = ws.Downloader()
         downloader.login()
-        downloader.perform_operation(answer, film_url)
+        downloader.perform_operation(answer, title)
 
 
 def get_data(args_limit, args_ascending, data_type):
