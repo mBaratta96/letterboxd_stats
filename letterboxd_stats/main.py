@@ -41,18 +41,19 @@ def search_person(args_search: str):
     movie = data.read_watched_films(df, path, name)
     if movie is not None:
         search_film_query = f"{movie['Title']} {movie['Release Date'].year}"
-        _, letterboxd_url = ws.search_film(search_film_query)
-        tmdb.get_movie_detail(movie["Id"], letterboxd_url)
+        title_url = ws.search_film(search_film_query)
+        tmdb.get_movie_detail(movie["Id"], ws.create_movie_url(title_url, "film_page"))
 
 
 def search_film(args_search_film: str):
-    title, film_url = ws.search_film(args_search_film, True)
+    title_url = ws.search_film(args_search_film, True)
+    film_url = ws.create_movie_url(title_url, "film_page")
     tmdb.get_movie_detail(ws.get_tmdb_id(film_url, False), film_url)  # type: ignore
     answer = ws.select_optional_operation()
     if answer != "Exit":
         downloader = ws.Downloader()
         downloader.login()
-        downloader.perform_operation(answer, title)
+        downloader.perform_operation(answer, title_url)
 
 
 def get_data(args_limit, args_ascending, data_type):
