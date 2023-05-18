@@ -38,10 +38,11 @@ def search_person(args_search: str):
     df, name = tmdb.get_person(args_search)
     path = os.path.expanduser(os.path.join(config["root_folder"], "static", "watched.csv"))
     check_path(path)
-    movie_id, search_film = data.read_watched_films(df, path, name)
-    if movie_id is not None and search_film is not None:
-        letterboxd_url = ws.search_film(search_film)
-        tmdb.get_movie_detail(movie_id, letterboxd_url)
+    movie = data.read_watched_films(df, path, name)
+    if movie is not None:
+        search_film_query = f"{movie['Title']} {movie['Release Date'].year}"
+        _, letterboxd_url = ws.search_film(search_film_query)
+        tmdb.get_movie_detail(movie["Id"], letterboxd_url)
 
 
 def search_film(args_search_film: str):
