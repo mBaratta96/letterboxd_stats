@@ -78,8 +78,7 @@ def _show_diary(df: pd.DataFrame, ascending: bool):
     df["Watched Date"] = pd.to_datetime(df["Watched Date"])
     sort_column = cli.select_value(df.columns.values.tolist(), "Select the order of your diary entries:")
     df.sort_values(by=sort_column, ascending=ascending, inplace=True)
-    df = df.drop("Rewatch", axis=1)
-    df = df.drop("Tags", axis=1)
+    df = df.drop(["Rewatch", "Tags"], axis=1)
     return df
 
 
