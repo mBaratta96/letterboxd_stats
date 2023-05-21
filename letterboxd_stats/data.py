@@ -14,9 +14,9 @@ def read_watched_films(df: pd.DataFrame, path: str, name: str):
     cli.render_table(df, name)
     movie_id = cli.select_movie_id(df[["Id", "Title"]])
     if movie_id is None:
-        return None, None
+        return None
     movie_row = df.loc[df["Id"] == movie_id].iloc[0, :]
-    return movie_id, f"{movie_row['Title']} {movie_row['Release Date'].year}"
+    return movie_row
 
 
 def get_list_name(path: str):
@@ -78,8 +78,7 @@ def _show_diary(df: pd.DataFrame, ascending: bool):
     df["Watched Date"] = pd.to_datetime(df["Watched Date"])
     sort_column = cli.select_value(df.columns.values.tolist(), "Select the order of your diary entries:")
     df.sort_values(by=sort_column, ascending=ascending, inplace=True)
-    df = df.drop("Rewatch", axis=1)
-    df = df.drop("Tags", axis=1)
+    df = df.drop(["Rewatch", "Tags"], axis=1)
     return df
 
 

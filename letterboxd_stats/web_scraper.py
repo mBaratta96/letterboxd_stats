@@ -88,8 +88,7 @@ class Downloader:
 
 
 def create_movie_url(title: str, operation: str):
-    url = URL + OPERATIONS_URLS[operation](title)
-    return url
+    return URL + OPERATIONS_URLS[operation](title)
 
 
 def get_tmdb_id(link: str, is_diary: bool):
@@ -97,15 +96,16 @@ def get_tmdb_id(link: str, is_diary: bool):
     movie_page = html.fromstring(res.text)
     if is_diary:
         title_link = movie_page.xpath("//span[@class='film-title-wrapper']/a")
-        if len(title_link) > 0:
-            movie_link = title_link[0]
-            movie_url = URL + movie_link.get("href")
-            movie_page = html.fromstring(requests.get(movie_url).text)
+        if len(title_link) == 0:
+            return None
+        movie_link = title_link[0]
+        movie_url = URL + movie_link.get("href")
+        movie_page = html.fromstring(requests.get(movie_url).text)
     tmdb_link = movie_page.xpath("//a[@data-track-action='TMDb']")
-    if len(tmdb_link) > 0:
-        id = tmdb_link[0].get("href").split("/")[-2]
-        return int(id)
-    return None
+    if len(tmdb_link) == 0:
+        return None
+    id = tmdb_link[0].get("href").split("/")[-2]
+    return int(id)
 
 
 def select_optional_operation():
@@ -135,4 +135,4 @@ def search_film(title: str, allow_selection=False):
         title_url = title_years_directors_links[selected_film].split("/")[-2]
     else:
         title_url = search_page.xpath("//span[@class='film-title-wrapper']/a")[0].get("href").split("/")[-2]
-    return title_url, create_movie_url(title_url, "film_page")
+    return title_url
