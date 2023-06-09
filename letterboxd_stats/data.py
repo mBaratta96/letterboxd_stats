@@ -1,14 +1,27 @@
 import pandas as pd
 import numpy as np
 from letterboxd_stats import cli
+from letterboxd_stats.web_scraper import get_tmdb_id
 from letterboxd_stats import tmdb
 import os
 from letterboxd_stats import config
 
 
+def check_if_watched(df: pd.DataFrame, row: pd.Series):
+    if row["Title"] in df["Name"].values:
+        watched_films_same_name = df[df["Name"] == row["Title"]]
+        print(watched_films_same_name)
+        for _, film in watched_films_same_name.iterrows():
+            film_id = get_tmdb_id(film["Letterboxd URI"], False)
+            print(film_id)
+            if film_id == row["Id"]:
+                return True
+    return False
+
+
 def read_watched_films(df: pd.DataFrame, path: str, name: str):
     df_profile = pd.read_csv(path)
-    df.insert(0, "watched", np.where(df["Title"].isin(df_profile["Name"]), "[X]", "[ ]"))
+    df.insert(0, "watched", np.where([check_if_watched(df_profile, row) for _, row in df.iterrows()], "[X]", "[ ]"))
     df["Release Date"] = pd.to_datetime(df["Release Date"])
     df.sort_values(by="Release Date", inplace=True)
     cli.render_table(df, name)
