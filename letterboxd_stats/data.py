@@ -10,10 +10,8 @@ from letterboxd_stats import config
 def check_if_watched(df: pd.DataFrame, row: pd.Series):
     if row["Title"] in df["Name"].values:
         watched_films_same_name = df[df["Name"] == row["Title"]]
-        print(watched_films_same_name)
         for _, film in watched_films_same_name.iterrows():
             film_id = get_tmdb_id(film["Letterboxd URI"], False)
-            print(film_id)
             if film_id == row["Id"]:
                 return True
     return False
