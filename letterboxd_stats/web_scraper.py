@@ -4,6 +4,7 @@ from letterboxd_stats import config
 from letterboxd_stats import cli
 import requests
 from lxml import html
+import pandas as pd
 
 URL = "https://letterboxd.com"
 LOGIN_PAGE = URL + "/user/login.do"
@@ -92,6 +93,10 @@ def create_movie_url(title: str, operation: str):
 
 
 def get_tmdb_id(link: str, is_diary: bool):
+    cache_path = os.path.expanduser(os.path.join(config["root_folder"], "static", "cache.csv"))
+    tmdb_id_df = pd.read_csv(cache_path, header=0, index_col=0)
+    if link in tmdb_id_df.index:
+        return int(tmdb_id_df.loc[link]["Id"])
     res = requests.get(link)
     movie_page = html.fromstring(res.text)
     if is_diary:
@@ -105,6 +110,8 @@ def get_tmdb_id(link: str, is_diary: bool):
     if len(tmdb_link) == 0:
         return None
     id = tmdb_link[0].get("href").split("/")[-2]
+    tmdb_id_df.loc[link] = [id]
+    tmdb_id_df.to_csv(cache_path)
     return int(id)
 
 

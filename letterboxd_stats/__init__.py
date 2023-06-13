@@ -2,6 +2,7 @@ import tomli
 import os
 import platformdirs
 import argparse
+import csv
 
 default_folder = platformdirs.user_config_dir("letterboxd_stats", "mBaratta96")
 
@@ -24,7 +25,6 @@ parser.add_argument("-L", "--lists", help="show lists", action="store_true")
 parser.add_argument("-l", "--limit", help="limit the number of items of your wishlist/diary", type=int)
 parser.add_argument("-c", "--config_folder", help="Specifiy the folder of your config.toml file")
 
-
 args = parser.parse_args()
 
 folder = args.config_folder or default_folder
@@ -36,3 +36,9 @@ if not os.path.exists(path):
     )
 with open(path, "rb") as f:
     config = tomli.load(f)
+
+cache_path = os.path.expanduser(os.path.join(config["root_folder"], "static", "cache.csv"))
+if not os.path.exists(cache_path):
+    with open(cache_path, "w") as csvfile:
+        writer = csv.writer(csvfile, delimiter=",")
+        writer.writerow(["Letterboxd URI", "Id"])
