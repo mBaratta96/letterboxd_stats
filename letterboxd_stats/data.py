@@ -23,6 +23,10 @@ def read_watched_films(df: pd.DataFrame, path: str, name: str):
     df["Release Date"] = pd.to_datetime(df["Release Date"])
     df.sort_values(by="Release Date", inplace=True)
     cli.render_table(df, name)
+    return df
+
+
+def select_film_of_person(df):
     movie_id = cli.select_movie_id(df[["Id", "Title"]])
     if movie_id is None:
         return None
