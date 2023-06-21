@@ -23,6 +23,9 @@ OPERATIONS_URLS = {
     "film_page": lambda s: f"/film/{s}",
 }
 
+cache_path = os.path.expanduser(os.path.join(config["root_folder"], "static", "cache.csv"))
+tmdb_id_df = pd.read_csv(cache_path, header=0, index_col=0)
+
 
 class Downloader:
     def __init__(self):
@@ -93,8 +96,6 @@ def create_movie_url(title: str, operation: str):
 
 
 def get_tmdb_id(link: str, is_diary: bool):
-    cache_path = os.path.expanduser(os.path.join(config["root_folder"], "static", "cache.csv"))
-    tmdb_id_df = pd.read_csv(cache_path, header=0, index_col=0)
     if link in tmdb_id_df.index:
         return int(tmdb_id_df.loc[link]["Id"])
     res = requests.get(link)
