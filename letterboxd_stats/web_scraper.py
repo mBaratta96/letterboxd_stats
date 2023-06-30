@@ -4,7 +4,7 @@ from letterboxd_stats import config
 from letterboxd_stats import cli
 import requests
 from lxml import html
-import pandas as pd
+import pickledb
 
 URL = "https://letterboxd.com"
 LOGIN_PAGE = URL + "/user/login.do"
@@ -23,8 +23,8 @@ OPERATIONS_URLS = {
     "film_page": lambda s: f"/film/{s}",
 }
 
-cache_path = os.path.expanduser(os.path.join(config["root_folder"], "static", "cache.csv"))
-tmdb_id_df = pd.read_csv(cache_path, header=0, index_col=0)
+cache_path = os.path.expanduser(os.path.join(config["root_folder"], "static", "cache.db"))
+tmdb_id_cache = pickledb.load(cache_path, auto_dump=True)
 
 
 class Downloader:
@@ -96,8 +96,8 @@ def create_movie_url(title: str, operation: str):
 
 
 def get_tmdb_id(link: str, is_diary: bool):
-    if link in tmdb_id_df.index:
-        return int(tmdb_id_df.loc[link]["Id"])
+    if tmdb_id_cache.exists(link):
+        return tmdb_id_cache.get(link)
     res = requests.get(link)
     movie_page = html.fromstring(res.text)
     if is_diary:
@@ -111,8 +111,7 @@ def get_tmdb_id(link: str, is_diary: bool):
     if len(tmdb_link) == 0:
         return None
     id = tmdb_link[0].get("href").split("/")[-2]
-    tmdb_id_df.loc[link] = [id]
-    tmdb_id_df.to_csv(cache_path)
+    tmdb_id_cache.set(link, id)
     return int(id)
 
 
