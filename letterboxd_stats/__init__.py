@@ -36,9 +36,3 @@ if not os.path.exists(path):
     )
 with open(path, "rb") as f:
     config = tomli.load(f)
-
-cache_path = os.path.expanduser(os.path.join(config["root_folder"], "static", "cache.csv"))
-if not os.path.exists(cache_path):
-    with open(cache_path, "w") as csvfile:
-        writer = csv.writer(csvfile, delimiter=",")
-        writer.writerow(["Letterboxd URI", "Id"])

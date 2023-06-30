@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "letterboxd_stats"
-version = "0.2.3"
+version = "0.2.4"
 authors = [{ name = "mBaratta96" }]
 description = "Get information about your Letterboxd activity."
 readme = "README.md"
@@ -20,6 +20,7 @@ dependencies = [
   "inquirerpy~=0.3.4",
   "lxml~=4.9.0",
   "pandas~=1.5.1",
+  "pickleDB~=0.9.2",
   "platformdirs~=3.0.0",
   "rich~=13.3.5",
   "tmdbv3api~=1.7.7",
