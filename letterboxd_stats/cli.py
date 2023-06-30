@@ -127,7 +127,10 @@ def add_film_questions():
     ).execute()
     liked = inquirer.confirm(message="Did you like the movie?").execute()  # type: ignore
     review = inquirer.text(  # type: ignore
-        message="Write a review. Press Enter for multiline.", multiline=True
+        message="Write a review. "
+        + "Use HTML tags for formatting (<b>, <i>, <a href='[URL]'>, <blockquote<>). "
+        + "Press Enter for multiline.",
+        multiline=True,
     ).execute()
     contains_spoilers = False
     if len(review) > 0:
