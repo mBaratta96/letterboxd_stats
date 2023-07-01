@@ -4,27 +4,26 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "letterboxd_stats"
-version = "0.2.4"
+version = "0.2.5"
 authors = [{ name = "mBaratta96" }]
 description = "Get information about your Letterboxd activity."
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.8"
 classifiers = [
-  "Programming Language :: Python :: 3",
-  "License :: OSI Approved :: MIT License",
-  "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
 ]
 dependencies = [
-  "ascii_magic~=2.3.0",
-  "inquirerpy~=0.3.4",
-  "lxml~=4.9.0",
-  "pandas~=1.5.1",
-  "pickleDB~=0.9.2",
-  "platformdirs~=3.0.0",
-  "rich~=13.3.5",
-  "tmdbv3api~=1.7.7",
-  "tomli~=2.0.1",
+    "ascii_magic~=2.3.0",
+    "inquirerpy~=0.3.4",
+    "lxml~=4.9.0",
+    "pandas~=1.5.1",
+    "platformdirs~=3.0.0",
+    "rich~=13.3.5",
+    "tmdbv3api~=1.7.7",
+    "tomli~=2.0.1",
 ]
 
 [project.urls]
