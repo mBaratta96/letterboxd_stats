@@ -4,7 +4,7 @@ from letterboxd_stats import config
 from letterboxd_stats import cli
 import requests
 from lxml import html
-import pickledb
+import shelve
 
 URL = "https://letterboxd.com"
 LOGIN_PAGE = URL + "/user/login.do"
@@ -24,7 +24,6 @@ OPERATIONS_URLS = {
 }
 
 cache_path = os.path.expanduser(os.path.join(config["root_folder"], "static", "cache.db"))
-tmdb_id_cache = pickledb.load(cache_path, auto_dump=True)
 
 
 class Downloader:
@@ -95,24 +94,36 @@ def create_movie_url(title: str, operation: str):
     return URL + OPERATIONS_URLS[operation](title)
 
 
-def get_tmdb_id(link: str, is_diary: bool):
-    if tmdb_id_cache.exists(link):
-        return tmdb_id_cache.get(link)
+def _get_tmdb_id_from_web(link: str, is_diary: bool):
     res = requests.get(link)
     movie_page = html.fromstring(res.text)
     if is_diary:
         title_link = movie_page.xpath("//span[@class='film-title-wrapper']/a")
         if len(title_link) == 0:
-            return None
+            raise ValueError("No movie link found.")
         movie_link = title_link[0]
         movie_url = URL + movie_link.get("href")
         movie_page = html.fromstring(requests.get(movie_url).text)
     tmdb_link = movie_page.xpath("//a[@data-track-action='TMDb']")
     if len(tmdb_link) == 0:
-        return None
+        raise ValueError("No Movie link found")
     id = tmdb_link[0].get("href").split("/")[-2]
-    tmdb_id_cache.set(link, id)
     return int(id)
+
+
+def get_tmdb_id(link: str, is_diary: bool):
+    tmdb_id_cache = shelve.open(cache_path, writeback=False, protocol=5)
+    if link in tmdb_id_cache:
+        id = tmdb_id_cache[link]
+    else:
+        try:
+            id = _get_tmdb_id_from_web(link, is_diary)
+            tmdb_id_cache[link] = id
+        except ValueError as e:
+            print(e)
+            id = None
+    tmdb_id_cache.close()
+    return id
 
 
 def select_optional_operation():
