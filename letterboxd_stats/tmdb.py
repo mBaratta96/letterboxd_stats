@@ -3,12 +3,15 @@ import pandas as pd
 from letterboxd_stats import cli
 from letterboxd_stats import config
 from letterboxd_stats.web_scraper import get_tmdb_id
+from pandarallel import pandarallel
+from time import time
 
 tmdb = TMDb()
 tmdb.api_key = config["TMDB"]["api_key"]
 person = Person()
 movie = Movie()
 search = Search()
+pandarallel.initialize()
 
 
 def get_person(name: str):
@@ -37,10 +40,12 @@ def get_person(name: str):
     department = cli.select_value(
         df["Department"].unique(), f"Select a department for {p['name']}", known_for_department
     )
+    start = time.time()
     df = df[df["Department"] == department]
     df = df.drop("Department", axis=1)
     if config["TMDB"]["get_list_runtimes"] is True:
-        df["Duration"] = df.apply(lambda row: movie.details(row["Id"]).runtime, axis=1)  # type: ignore
+        df["Duration"] = df.parallel_apply(lambda row: movie.details(row["Id"]).runtime, axis=1)  # type: ignore
+    print(f"TIME SPENT = {time.time() - start}")
     return df, p["name"]
 
 

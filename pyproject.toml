@@ -20,6 +20,7 @@ dependencies = [
     "inquirerpy~=0.3.4",
     "lxml~=4.9.0",
     "pandas~=1.5.1",
+    "pandarallel~=1.6.5",
     "platformdirs~=3.0.0",
     "rich~=13.3.5",
     "tmdbv3api~=1.7.7",
