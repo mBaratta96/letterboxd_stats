@@ -5,6 +5,9 @@ from letterboxd_stats.web_scraper import get_tmdb_id
 from letterboxd_stats import tmdb
 import os
 from letterboxd_stats import config
+from pandarallel import pandarallel
+
+pandarallel.initialize(verbose=0)
 
 
 def check_if_watched(df: pd.DataFrame, row: pd.Series):
@@ -70,7 +73,7 @@ def _show_lists(df: pd.DataFrame, ascending: bool):
     df.sort_values(by=sort_column, ascending=ascending, inplace=True)
     avg = {"Rating Mean": "{:.2f}".format(df["Rating"].mean())}
     if config["TMDB"]["get_list_runtimes"] is True:
-        df["Duration"] = df.apply(lambda row: tmdb.get_film_duration(row["Url"]), axis=1)  # type: ignore
+        df["Duration"] = df.parallel_apply(lambda row: tmdb.get_film_duration(row["Url"]), axis=1)  # type: ignore
         avg["Time-weighted Rating Mean"] = "{:.2f}".format(
             ((df["Duration"] / df["Duration"].sum()) * df["Rating"]).sum()
         )
