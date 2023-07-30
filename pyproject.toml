@@ -25,6 +25,7 @@ dependencies = [
     "rich~=13.3.5",
     "tmdbv3api~=1.7.7",
     "tomli~=2.0.1",
+    "tqdm~=4.65.0"
 ]
 
 [project.urls]
