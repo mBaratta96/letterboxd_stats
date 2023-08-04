@@ -36,6 +36,17 @@ def select_movie_id(movies_info: pd.DataFrame) -> int:
     return movie_id
 
 
+def select_list(names: list[str]) -> int:
+    name = inquirer.fuzzy(  # type: ignore
+        message="Select your list:",
+        mandatory=True,
+        max_height="25%",
+        choices=names,
+        validate=lambda result: result in names,
+    ).execute()
+    return name
+
+
 def select_search_result(results: list[str]) -> int:
     choices = [Choice(i, name=r) for i, r in enumerate(results)]
     result = inquirer.select(  # type: ignore

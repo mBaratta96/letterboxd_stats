@@ -1,14 +1,16 @@
 from tmdbv3api import TMDb, Person, Movie, Search
+from tmdbv3api.exceptions import TMDbException
 import pandas as pd
 from letterboxd_stats import cli
 from letterboxd_stats import config
-from letterboxd_stats.web_scraper import get_tmdb_id
+from pandarallel import pandarallel
 
 tmdb = TMDb()
 tmdb.api_key = config["TMDB"]["api_key"]
 person = Person()
 movie = Movie()
 search = Search()
+pandarallel.initialize(verbose=0)
 
 
 def get_person(name: str):
@@ -40,7 +42,7 @@ def get_person(name: str):
     df = df[df["Department"] == department]
     df = df.drop("Department", axis=1)
     if config["TMDB"]["get_list_runtimes"] is True:
-        df["Duration"] = df.apply(lambda row: movie.details(row["Id"]).runtime, axis=1)  # type: ignore
+        df["Duration"] = df["Id"].parallel_map(get_film_duration)  # type: ignore
     return df, p["name"]
 
 
@@ -73,6 +75,9 @@ def get_movie_detail(movie_id: int, letterboxd_url=None):
     cli.print_film(selected_details)
 
 
-def get_film_duration(url: str):
-    tmdb_id = get_tmdb_id(url, False)
-    return movie.details(tmdb_id).runtime  # type: ignore
+def get_film_duration(tmdb_id: str):
+    try:
+        runtime = movie.details(int(tmdb_id)).runtime  # type: ignore
+    except TMDbException:
+        runtime = 0
+    return runtime

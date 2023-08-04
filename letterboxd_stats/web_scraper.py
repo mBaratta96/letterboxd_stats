@@ -111,7 +111,7 @@ def _get_tmdb_id_from_web(link: str, is_diary: bool):
     return int(id)
 
 
-def get_tmdb_id(link: str, is_diary: bool):
+def get_tmdb_id(link: str, is_diary=False):
     tmdb_id_cache = shelve.open(cache_path, writeback=False, protocol=5)
     if link in tmdb_id_cache:
         id = tmdb_id_cache[link]

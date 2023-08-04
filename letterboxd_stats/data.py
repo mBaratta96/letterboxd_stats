@@ -5,13 +5,18 @@ from letterboxd_stats.web_scraper import get_tmdb_id
 from letterboxd_stats import tmdb
 import os
 from letterboxd_stats import config
+from pandarallel import pandarallel
+from tqdm import tqdm
+
+pandarallel.initialize(verbose=0)
+tqdm.pandas(desc="Fetching ids...")
 
 
 def check_if_watched(df: pd.DataFrame, row: pd.Series):
     if row["Title"] in df["Name"].values:
         watched_films_same_name = df[df["Name"] == row["Title"]]
         for _, film in watched_films_same_name.iterrows():
-            film_id = get_tmdb_id(film["Letterboxd URI"], False)
+            film_id = get_tmdb_id(film["Letterboxd URI"])
             if film_id == row["Id"]:
                 return True
     return False
@@ -43,7 +48,7 @@ def open_list(path: str, limit, acending):
     list_names = {
         get_list_name(os.path.join(path, letterboxd_list)): letterboxd_list for letterboxd_list in os.listdir(path)
     }
-    name = cli.select_value(sorted(list(list_names.keys())), message="Select your list")
+    name = cli.select_list(sorted(list(list_names.keys())))
     return open_file("Lists", os.path.join(path, list_names[name]), limit, acending, header=3)
 
 
@@ -70,7 +75,8 @@ def _show_lists(df: pd.DataFrame, ascending: bool):
     df.sort_values(by=sort_column, ascending=ascending, inplace=True)
     avg = {"Rating Mean": "{:.2f}".format(df["Rating"].mean())}
     if config["TMDB"]["get_list_runtimes"] is True:
-        df["Duration"] = df.apply(lambda row: tmdb.get_film_duration(row["Url"]), axis=1)  # type: ignore
+        ids = df["Url"].progress_map(get_tmdb_id)
+        df["Duration"] = ids.parallel_map(lambda id: tmdb.get_film_duration(id))  # type: ignore
         avg["Time-weighted Rating Mean"] = "{:.2f}".format(
             ((df["Duration"] / df["Duration"].sum()) * df["Rating"]).sum()
         )

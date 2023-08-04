@@ -50,7 +50,7 @@ def search_person(args_search: str):
 def search_film(args_search_film: str):
     title_url = ws.search_film(args_search_film, True)
     film_url = ws.create_movie_url(title_url, "film_page")
-    tmdb.get_movie_detail(ws.get_tmdb_id(film_url, False), film_url)  # type: ignore
+    tmdb.get_movie_detail(ws.get_tmdb_id(film_url), film_url)  # type: ignore
     answer = ws.select_optional_operation()
     if answer != "Exit":
         downloader = ws.Downloader()
