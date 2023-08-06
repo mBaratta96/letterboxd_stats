@@ -113,12 +113,13 @@ def _get_tmdb_id_from_web(link: str, is_diary: bool):
 
 def get_tmdb_id(link: str, is_diary=False):
     tmdb_id_cache = shelve.open(cache_path, writeback=False, protocol=5)
-    if link in tmdb_id_cache:
-        id = tmdb_id_cache[link]
+    key = link.split("/")[-1]
+    if key in tmdb_id_cache:
+        id = tmdb_id_cache[key]
     else:
         try:
             id = _get_tmdb_id_from_web(link, is_diary)
-            tmdb_id_cache[link] = id
+            tmdb_id_cache[key] = id
         except ValueError as e:
             print(e)
             id = None
@@ -140,15 +141,14 @@ def search_film(title: str, allow_selection=False):
         movie_list = search_page.xpath("//div[@class='film-detail-content']")
         if len(movie_list) == 0:
             raise ValueError(f"No film found with search query {title}")
-        titles = [movie.xpath("./h2/span/a")[0].text.rstrip() for movie in movie_list]
-        years = [
-            f"({year[0].text}) " if len(year := movie.xpath("./h2/span//small/a")) > 0 else "" for movie in movie_list
-        ]
-        directors = [director[0].text if len(director := movie.xpath("./p/a")) > 0 else "" for movie in movie_list]
-        links = [movie.xpath("./h2/span/a")[0].get("href") for movie in movie_list]
-        title_years_directors_links = {
-            f"{title} {year}- {director}": link for title, year, director, link in zip(titles, years, directors, links)
-        }
+        title_years_directors_links = {}
+        for movie in movie_list:
+            title = movie.xpath("./h2/span/a")[0].text.rstrip()
+            director = director[0].text if len(director := movie.xpath("./p/a")) > 0 else ""
+            year = f"({year[0].text}) " if len(year := movie.xpath("./h2/span//small/a")) > 0 else ""
+            link = movie.xpath("./h2/span/a")[0].get("href")
+            title_years_directors_links[f"{title} {year}- {director}"] = link
+
         selected_film = cli.select_value(list(title_years_directors_links.keys()), "Select your film")
         title_url = title_years_directors_links[selected_film].split("/")[-2]
     else:
