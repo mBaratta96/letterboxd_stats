@@ -113,12 +113,13 @@ def _get_tmdb_id_from_web(link: str, is_diary: bool):
 
 def get_tmdb_id(link: str, is_diary=False):
     tmdb_id_cache = shelve.open(cache_path, writeback=False, protocol=5)
-    if link in tmdb_id_cache:
-        id = tmdb_id_cache[link]
+    key = link.split("/")[-1]
+    if key in tmdb_id_cache:
+        id = tmdb_id_cache[key]
     else:
         try:
             id = _get_tmdb_id_from_web(link, is_diary)
-            tmdb_id_cache[link] = id
+            tmdb_id_cache[key] = id
         except ValueError as e:
             print(e)
             id = None
