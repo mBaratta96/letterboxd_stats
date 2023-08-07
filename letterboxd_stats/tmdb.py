@@ -77,9 +77,9 @@ def get_movie_detail(movie_id: int, letterboxd_url=None):
     cli.print_film(selected_details)
 
 
-def get_film_duration(tmdb_id: str) -> int:
+def get_film_duration(tmdb_id: int) -> int:
     try:
-        runtime = movie.details(int(tmdb_id)).runtime  # type: ignore
+        runtime = movie.details(tmdb_id).runtime  # type: ignore
     except TMDbException:
         runtime = 0
     return runtime

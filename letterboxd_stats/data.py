@@ -32,10 +32,10 @@ def read_watched_films(df: pd.DataFrame, path: str, name: str) -> pd.DataFrame:
 
 
 def select_film_of_person(df: pd.DataFrame) -> pd.Series | None:
-    movie_id = cli.select_movie(df["Title"], df.index.to_series().parallel_map(str))
+    movie_id = cli.select_movie(df["Title"], df.index.to_series())
     if movie_id is None:
         return None
-    movie_row = df.loc[int(movie_id)]
+    movie_row = df.loc[movie_id]
     return movie_row
 
 
