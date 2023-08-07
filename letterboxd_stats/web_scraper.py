@@ -115,8 +115,7 @@ def _get_tmdb_id_from_web(link: str, is_diary: bool):
 
 def get_tmdb_id(link: str, is_diary=False):
     tmdb_id_cache = shelve.open(cache_path, writeback=False, protocol=5)
-    splitted = link.split("/")  # to separate boxd.it and letterboxd.com urls
-    prefix, key = "/".join(splitted[:-1]), splitted[-1]
+    prefix, key = link.rsplit("/", 1)
     if prefix in tmdb_id_cache and key in tmdb_id_cache[prefix]:
         id = tmdb_id_cache[prefix][key]
     else:
