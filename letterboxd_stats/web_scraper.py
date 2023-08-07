@@ -1,5 +1,7 @@
 import os
 from zipfile import ZipFile
+
+from numpy import who
 from letterboxd_stats import config
 from letterboxd_stats import cli
 import requests
@@ -113,13 +115,15 @@ def _get_tmdb_id_from_web(link: str, is_diary: bool):
 
 def get_tmdb_id(link: str, is_diary=False):
     tmdb_id_cache = shelve.open(cache_path, writeback=False, protocol=5)
-    key = link.split("/")[-1]
-    if key in tmdb_id_cache:
-        id = tmdb_id_cache[key]
+    prefix, key = link.rsplit("/", 1)
+    if prefix in tmdb_id_cache and key in tmdb_id_cache[prefix]:
+        id = tmdb_id_cache[prefix][key]
     else:
         try:
             id = _get_tmdb_id_from_web(link, is_diary)
-            tmdb_id_cache[key] = id
+            prefix_dict = tmdb_id_cache.get(prefix) or {}
+            prefix_dict[key] = id
+            tmdb_id_cache[prefix] = prefix_dict
         except ValueError as e:
             print(e)
             id = None
