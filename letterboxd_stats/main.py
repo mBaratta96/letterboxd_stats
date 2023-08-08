@@ -27,7 +27,7 @@ def download_data():
     downloader.download_stats()
 
 
-def get_movie_detail_from_url(letterboxd_url, is_diary=False):
+def get_movie_detail_from_url(letterboxd_url: str, is_diary=False):
     if letterboxd_url is not None:
         id = ws.get_tmdb_id(letterboxd_url, is_diary)
         if id is not None:
@@ -41,9 +41,9 @@ def search_person(args_search: str):
     df = data.read_watched_films(df, path, name)
     movie = data.select_film_of_person(df)
     while movie is not None:
-        search_film_query = f"{movie['Title']} {movie['Release Date'].year}"
+        search_film_query = f"{movie['Title']} {movie['Release Date'].year}"  # type: ignore
         title_url = ws.search_film(search_film_query)
-        tmdb.get_movie_detail(movie["Id"], ws.create_movie_url(title_url, "film_page"))
+        tmdb.get_movie_detail(int(movie.name), ws.create_movie_url(title_url, "film_page"))  # type: ignore
         movie = data.select_film_of_person(df)
 
 
@@ -58,7 +58,7 @@ def search_film(args_search_film: str):
         downloader.perform_operation(answer, title_url)
 
 
-def get_data(args_limit, args_ascending, data_type):
+def get_data(args_limit: int, args_ascending: bool, data_type: str):
     path = os.path.expanduser(os.path.join(config["root_folder"], "static", DATA_FILES[data_type]))
     check_path(path)
     letterboxd_url = (

@@ -11,7 +11,7 @@ from datetime import datetime
 IMAGE_URL = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2"
 
 
-def select_value(values: list[str], message: str, default: str | None = None):
+def select_value(values: list[str], message: str, default: str | None = None) -> str:
     value = inquirer.select(  # type: ignore
         message=message,
         choices=values,
@@ -20,23 +20,20 @@ def select_value(values: list[str], message: str, default: str | None = None):
     return value
 
 
-def select_movie_id(movies_info: pd.DataFrame) -> int:
-    movie_id = inquirer.fuzzy(  # type: ignore
-        message="Write movie id for more information",
+def select_movie(movies: pd.Series, results: pd.Series) -> str:
+    result = inquirer.fuzzy(  # type: ignore
+        message="Select movie for more information",
         mandatory=False,
         max_height="25%",
-        choices=[
-            Choice(value=id, name=f"{id} - {title}") for id, title in zip(movies_info["Id"], movies_info["Title"])
-        ],
+        choices=[Choice(value=result, name=title) for result, title in zip(results, movies)],
         keybindings={"skip": [{"key": "escape"}]},
-        validate=lambda result: result in movies_info["Id"].values,
-        filter=lambda result: None if result is None else int(result),
-        invalid_message="Input must be in the resulting IDs",
+        invalid_message="Input not in list of movies.",
+        validate=lambda result: result in results.values,
     ).execute()
-    return movie_id
+    return result
 
 
-def select_list(names: list[str]) -> int:
+def select_list(names: list[str]) -> str:
     name = inquirer.fuzzy(  # type: ignore
         message="Select your list:",
         mandatory=True,
@@ -68,19 +65,7 @@ def select_range(options: list[str]) -> list[str]:
     return result
 
 
-def select_movie(movie_df: pd.DataFrame) -> str:
-    result = inquirer.fuzzy(  # type: ignore
-        message="Select movie for more information",
-        mandatory=False,
-        max_height="25%",
-        choices=[Choice(value=url, name=f"{title}") for url, title in zip(movie_df["Url"], movie_df["Title"])],
-        keybindings={"skip": [{"key": "escape"}]},
-        invalid_message="Input must be in the resulting IDs",
-    ).execute()
-    return result
-
-
-def print_film(film, expand=True):
+def print_film(film: dict, expand=True):
     grid = Table.grid(expand=expand, padding=1)
     grid.add_column(style="bold yellow")
     grid.add_column()
@@ -107,7 +92,7 @@ def download_poster(poster: str):
         art.to_terminal(columns=int(config["CLI"]["poster_columns"]))
 
 
-def _validate_date(s: str):
+def _validate_date(s: str) -> bool:
     try:
         datetime.strptime(s, "%Y-%m-%d")
     except ValueError:
@@ -115,7 +100,7 @@ def _validate_date(s: str):
     return True
 
 
-def add_film_questions():
+def add_film_questions() -> dict[str, str]:
     print("Set all the infos for the film:\n")
     specify_date = inquirer.confirm(message="Specify date?").execute()  # type: ignore
     today = datetime.today().strftime("%Y-%m-%d")

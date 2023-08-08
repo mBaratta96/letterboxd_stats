@@ -92,11 +92,11 @@ class Downloader:
         getattr(self, MOVIE_OPERATIONS[answer])(link)
 
 
-def create_movie_url(title: str, operation: str):
+def create_movie_url(title: str, operation: str) -> str:
     return URL + OPERATIONS_URLS[operation](title)
 
 
-def _get_tmdb_id_from_web(link: str, is_diary: bool):
+def _get_tmdb_id_from_web(link: str, is_diary: bool) -> int:
     res = requests.get(link)
     movie_page = html.fromstring(res.text)
     if is_diary:
@@ -113,7 +113,7 @@ def _get_tmdb_id_from_web(link: str, is_diary: bool):
     return int(id)
 
 
-def get_tmdb_id(link: str, is_diary=False):
+def get_tmdb_id(link: str, is_diary=False) -> int | None:
     tmdb_id_cache = shelve.open(cache_path, writeback=False, protocol=5)
     prefix, key = link.rsplit("/", 1)
     if prefix in tmdb_id_cache and key in tmdb_id_cache[prefix]:
@@ -131,11 +131,11 @@ def get_tmdb_id(link: str, is_diary=False):
     return id
 
 
-def select_optional_operation():
+def select_optional_operation() -> str:
     return cli.select_value(["Exit"] + list(MOVIE_OPERATIONS.keys()), "Select operation:")
 
 
-def search_film(title: str, allow_selection=False):
+def search_film(title: str, allow_selection=False) -> str:
     search_url = create_movie_url(title, "search")
     res = requests.get(search_url)
     if res.status_code != 200:
