@@ -50,6 +50,7 @@ def get_list_name(path: str) -> str:
 
 
 def open_list(path: str, limit: int, acending: bool) -> str:
+    """Select a list from the saved ones."""
     list_names = {
         get_list_name(os.path.join(path, letterboxd_list)): letterboxd_list for letterboxd_list in os.listdir(path)
     }
@@ -58,6 +59,12 @@ def open_list(path: str, limit: int, acending: bool) -> str:
 
 
 def open_file(filetype: str, path: str, limit, ascending, header=0) -> str:
+    """There are some operations that are the same for all the .csv files. So isolate those similar operations,
+    and then we proceed to perform the particular operation for a certain file (watchlist, list, diary...).
+    FILE_OPERATIONS selects those particular operations according to the file we opened. Mainly they do
+    ordering and column filtering operations.
+
+    """
     df = pd.read_csv(path, header=header)
     df.rename(columns={"Name": "Title", "Letterboxd URI": "Url"}, inplace=True)
     df["Year"] = df["Year"].fillna(0).astype(int)

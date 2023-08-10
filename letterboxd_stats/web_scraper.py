@@ -68,6 +68,8 @@ class Downloader:
         if res.status_code != 200:
             raise ConnectionError("It's been impossible to retireve the Letterboxd page")
         movie_page = html.fromstring(res.text)
+        # Not the TMDB id, but the Letterboxd ID to use to add the movie to diary.
+        # Reference: https://letterboxd.com/film/seven-samurai/
         letterboxd_film_id = movie_page.get_element_by_id("frm-sidebar-rating").get("data-film-id")
         payload["filmId"] = letterboxd_film_id
         payload["__csrf"] = self.session.cookies.get("com.xk72.webparts.csrf")
@@ -91,6 +93,7 @@ class Downloader:
         print("Removed to your watchlist.")
 
     def perform_operation(self, answer: str, link: str):
+        """Depending on what the user has chosen, add to diary, add/remove watchlist."""
         getattr(self, MOVIE_OPERATIONS[answer])(link)
 
 

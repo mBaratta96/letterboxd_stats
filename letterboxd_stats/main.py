@@ -32,11 +32,6 @@ def download_data():
 def get_movie_detail_from_url(letterboxd_url: str, is_diary=False):
     """Since Letterboxd hasn't an API, we must retrieve the TMDB id from the Letterboxd page of the movie."""
 
-    if letterboxd_url is not None:
-        id = ws.get_tmdb_id(letterboxd_url, is_diary)
-        if id is not None:
-            tmdb.get_movie_detail(id, letterboxd_url)
-
 
 def search_person(args_search: str):
     """Search for a director, list his/her movies and check if you have watched them."""
@@ -66,6 +61,7 @@ def search_film(args_search_film: str):
 
 
 def get_data(args_limit: int, args_ascending: bool, data_type: str):
+    """Load and show on the CLI different .csv files that you have downloaded with the -d flag."""
     path = os.path.expanduser(os.path.join(config["root_folder"], "static", DATA_FILES[data_type]))
     check_path(path)
     letterboxd_url = (
@@ -73,7 +69,11 @@ def get_data(args_limit: int, args_ascending: bool, data_type: str):
         if data_type != "Lists"
         else data.open_list(path, args_limit, args_ascending)
     )
-    get_movie_detail_from_url(letterboxd_url, data_type == "Diary")
+    # If you select a movie, show its details.
+    if letterboxd_url is not None:
+        id = ws.get_tmdb_id(letterboxd_url, data_type == "diary")
+        if id is not None:
+            tmdb.get_movie_detail(id, letterboxd_url)
 
 
 def main():
