@@ -16,6 +16,11 @@ pandarallel.initialize(verbose=0)
 
 
 def get_person(name: str) -> Tuple[pd.DataFrame, str]:
+    """Search the director with the TMDB api. Get all the movies.
+    https://developer.themoviedb.org/reference/person-details
+    https://developer.themoviedb.org/reference/person-movie-credits
+    """
+
     print(f"Searching for '{name}'")
     search_results = search.people({"query": name})
     names = [result.name for result in search_results]  # type: ignore
@@ -43,6 +48,8 @@ def get_person(name: str) -> Tuple[pd.DataFrame, str]:
     )
     df = df[df["Department"] == department]
     df = df.drop("Department", axis=1)
+    # person.details provides movies without time duration. If the user wants
+    # (since this slows down the process) get with the movie.details API.
     if config["TMDB"]["get_list_runtimes"] is True:
         df["Duration"] = df.index.to_series().parallel_map(get_film_duration)  # type: ignore
     return df, p["name"]
@@ -77,9 +84,13 @@ def get_movie_detail(movie_id: int, letterboxd_url=None):
     cli.print_film(selected_details)
 
 
-def get_film_duration(tmdb_id: str) -> int:
+def get_film_duration(tmdb_id: int) -> int:
+    """Get film duration from the TMDB api.
+    https://developer.themoviedb.org/reference/movie-details
+    """
+
     try:
-        runtime = movie.details(int(tmdb_id)).runtime  # type: ignore
+        runtime = movie.details(tmdb_id).runtime  # type: ignore
     except TMDbException:
         runtime = 0
     return runtime

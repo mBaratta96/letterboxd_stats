@@ -1,7 +1,5 @@
 import os
 from zipfile import ZipFile
-
-from numpy import who
 from letterboxd_stats import config
 from letterboxd_stats import cli
 import requests
@@ -31,6 +29,7 @@ cache_path = os.path.expanduser(os.path.join(config["root_folder"], "static", "c
 class Downloader:
     def __init__(self):
         self.session = requests.Session()
+        # get home page to set cookies in the session.
         self.session.get(URL)
 
     def login(self):
@@ -44,6 +43,9 @@ class Downloader:
             raise ConnectionError("Impossible to login")
 
     def download_stats(self):
+        """Download and extract data of the import/export section.
+        .CSV file will be extracted in the folder specified in the config file."""
+
         res = self.session.get(DATA_PAGE)
         if res.status_code != 200 or "application/zip" not in res.headers["Content-Type"]:
             raise ConnectionError(f"Impossible to download data. Response headers:\n{res.headers}")
@@ -66,6 +68,8 @@ class Downloader:
         if res.status_code != 200:
             raise ConnectionError("It's been impossible to retireve the Letterboxd page")
         movie_page = html.fromstring(res.text)
+        # Not the TMDB id, but the Letterboxd ID to use to add the movie to diary.
+        # Reference: https://letterboxd.com/film/seven-samurai/
         letterboxd_film_id = movie_page.get_element_by_id("frm-sidebar-rating").get("data-film-id")
         payload["filmId"] = letterboxd_film_id
         payload["__csrf"] = self.session.cookies.get("com.xk72.webparts.csrf")
@@ -89,6 +93,8 @@ class Downloader:
         print("Removed to your watchlist.")
 
     def perform_operation(self, answer: str, link: str):
+        """Depending on what the user has chosen, add to diary, add/remove watchlist."""
+
         getattr(self, MOVIE_OPERATIONS[answer])(link)
 
 
@@ -97,8 +103,13 @@ def create_movie_url(title: str, operation: str) -> str:
 
 
 def _get_tmdb_id_from_web(link: str, is_diary: bool) -> int:
+    """Scraping the TMDB link from a Letterboxd film page.
+    Inpect this HTML for reference: https://letterboxd.com/film/seven-samurai/
+    """
+
     res = requests.get(link)
     movie_page = html.fromstring(res.text)
+    # Diary links sends you to a different page with no link to TMDB. Redirect to the actual page.
     if is_diary:
         title_link = movie_page.xpath("//span[@class='film-title-wrapper']/a")
         if len(title_link) == 0:
@@ -114,6 +125,13 @@ def _get_tmdb_id_from_web(link: str, is_diary: bool) -> int:
 
 
 def get_tmdb_id(link: str, is_diary=False) -> int | None:
+    """Find the TMDB id from a letterboxd page.
+
+    A link to a Letterboxd film usually starts with either https://letterboxd.com/
+    or https://boxd.it/ (usually all .csv files have this prefix). We structure the cache dict accordingly.
+    The cache is meant to avoid bottleneck of constantly retrieving the Id from an HTML page.
+    """
+
     tmdb_id_cache = shelve.open(cache_path, writeback=False, protocol=5)
     prefix, key = link.rsplit("/", 1)
     if prefix in tmdb_id_cache and key in tmdb_id_cache[prefix]:
@@ -136,11 +154,16 @@ def select_optional_operation() -> str:
 
 
 def search_film(title: str, allow_selection=False) -> str:
+    """Search a movie a get its Letterboxd link.
+    For reference: https://letterboxd.com/search/seven+samurai/?adult
+    """
+
     search_url = create_movie_url(title, "search")
     res = requests.get(search_url)
     if res.status_code != 200:
         raise ConnectionError("It's been impossible to retireve the Letterboxd page")
     search_page = html.fromstring(res.text)
+    # If we want to select movies from the seach page, get more data to print the selection prompt.
     if allow_selection:
         movie_list = search_page.xpath("//div[@class='film-detail-content']")
         if len(movie_list) == 0:
@@ -152,7 +175,6 @@ def search_film(title: str, allow_selection=False) -> str:
             year = f"({year[0].text}) " if len(year := movie.xpath("./h2/span//small/a")) > 0 else ""
             link = movie.xpath("./h2/span/a")[0].get("href")
             title_years_directors_links[f"{title} {year}- {director}"] = link
-
         selected_film = cli.select_value(list(title_years_directors_links.keys()), "Select your film")
         title_url = title_years_directors_links[selected_film].split("/")[-2]
     else:
