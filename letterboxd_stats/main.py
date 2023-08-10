@@ -29,10 +29,6 @@ def download_data():
     downloader.download_stats()
 
 
-def get_movie_detail_from_url(letterboxd_url: str, is_diary=False):
-    """Since Letterboxd hasn't an API, we must retrieve the TMDB id from the Letterboxd page of the movie."""
-
-
 def search_person(args_search: str):
     """Search for a director, list his/her movies and check if you have watched them."""
 
