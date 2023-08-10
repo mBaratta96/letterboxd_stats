@@ -94,6 +94,7 @@ class Downloader:
 
     def perform_operation(self, answer: str, link: str):
         """Depending on what the user has chosen, add to diary, add/remove watchlist."""
+
         getattr(self, MOVIE_OPERATIONS[answer])(link)
 
 

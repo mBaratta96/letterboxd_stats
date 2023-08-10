@@ -58,6 +58,7 @@ def search_film(args_search_film: str):
 
 def get_data(args_limit: int, args_ascending: bool, data_type: str):
     """Load and show on the CLI different .csv files that you have downloaded with the -d flag."""
+
     path = os.path.expanduser(os.path.join(config["root_folder"], "static", DATA_FILES[data_type]))
     check_path(path)
     letterboxd_url = (

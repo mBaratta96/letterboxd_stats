@@ -17,6 +17,7 @@ def check_if_watched(df: pd.DataFrame, row: pd.Series) -> bool:
     This creates the risk of mismatch when two movies have the same title. To avoid this,
     we must retrieve the TMDB id of the watched movie.
     """
+
     if row["Title"] in df["Name"].values:
         watched_films_same_name = df[df["Name"] == row["Title"]]
         for _, film in watched_films_same_name.iterrows():
@@ -28,6 +29,7 @@ def check_if_watched(df: pd.DataFrame, row: pd.Series) -> bool:
 
 def read_watched_films(df: pd.DataFrame, path: str, name: str) -> pd.DataFrame:
     """Check which film of a director you have seen. Add a column to show on the CLI."""
+
     df_profile = pd.read_csv(path)
     df.insert(0, "watched", np.where([check_if_watched(df_profile, row) for _, row in df.iterrows()], "[X]", "[ ]"))
     df["Release Date"] = pd.to_datetime(df["Release Date"])
@@ -51,6 +53,7 @@ def get_list_name(path: str) -> str:
 
 def open_list(path: str, limit: int, acending: bool) -> str:
     """Select a list from the saved ones."""
+
     list_names = {
         get_list_name(os.path.join(path, letterboxd_list)): letterboxd_list for letterboxd_list in os.listdir(path)
     }
@@ -63,8 +66,8 @@ def open_file(filetype: str, path: str, limit, ascending, header=0) -> str:
     and then we proceed to perform the particular operation for a certain file (watchlist, list, diary...).
     FILE_OPERATIONS selects those particular operations according to the file we opened. Mainly they do
     ordering and column filtering operations.
-
     """
+
     df = pd.read_csv(path, header=header)
     df.rename(columns={"Name": "Title", "Letterboxd URI": "Url"}, inplace=True)
     df["Year"] = df["Year"].fillna(0).astype(int)
