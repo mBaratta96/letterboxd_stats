@@ -13,6 +13,10 @@ tqdm.pandas(desc="Fetching ids...")
 
 
 def check_if_watched(df: pd.DataFrame, row: pd.Series) -> bool:
+    """watched.csv hasn't the TMDB id, so comparison can be done only by title.
+    This creates the risk of mismatch when two movies have the same title. To avoid this,
+    we must retrieve the TMDB id of the watched movie.
+    """
     if row["Title"] in df["Name"].values:
         watched_films_same_name = df[df["Name"] == row["Title"]]
         for _, film in watched_films_same_name.iterrows():
@@ -23,6 +27,7 @@ def check_if_watched(df: pd.DataFrame, row: pd.Series) -> bool:
 
 
 def read_watched_films(df: pd.DataFrame, path: str, name: str) -> pd.DataFrame:
+    """Check which film of a director you have seen. Add a column to show on the CLI."""
     df_profile = pd.read_csv(path)
     df.insert(0, "watched", np.where([check_if_watched(df_profile, row) for _, row in df.iterrows()], "[X]", "[ ]"))
     df["Release Date"] = pd.to_datetime(df["Release Date"])

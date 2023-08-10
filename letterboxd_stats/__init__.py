@@ -2,7 +2,6 @@ import tomli
 import os
 import platformdirs
 import argparse
-import csv
 
 default_folder = platformdirs.user_config_dir("letterboxd_stats", "mBaratta96")
 
