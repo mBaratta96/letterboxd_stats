@@ -11,7 +11,7 @@ def try_command(command, args):
     try:
         command(*args)
     except Exception as e:
-        print(e)
+        raise e
 
 
 def check_path(path: str):
