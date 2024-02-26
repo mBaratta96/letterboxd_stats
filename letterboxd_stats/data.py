@@ -5,10 +5,8 @@ from letterboxd_stats.web_scraper import get_tmdb_id
 from letterboxd_stats import tmdb
 import os
 from letterboxd_stats import config
-from pandarallel import pandarallel
 from tqdm import tqdm
 
-pandarallel.initialize(verbose=0)
 tqdm.pandas(desc="Fetching ids...")
 
 
@@ -91,7 +89,7 @@ def _show_lists(df: pd.DataFrame, ascending: bool) -> pd.DataFrame:
     avg = {"Rating Mean": "{:.2f}".format(df["Rating"].mean())}
     if config["TMDB"]["get_list_runtimes"] is True:
         ids = df["Url"].progress_map(get_tmdb_id)
-        df["Duration"] = ids.parallel_map(lambda id: tmdb.get_film_duration(id))  # type: ignore
+        df["Duration"] = ids.map(lambda id: tmdb.get_film_duration(id))  # type: ignore
         avg["Time-weighted Rating Mean"] = "{:.2f}".format(
             ((df["Duration"] / df["Duration"].sum()) * df["Rating"]).sum()
         )
