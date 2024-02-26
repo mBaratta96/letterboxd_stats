@@ -5,14 +5,12 @@ import pandas as pd
 from tmdbv3api.objs.account import AsObj
 from letterboxd_stats import cli
 from letterboxd_stats import config
-from pandarallel import pandarallel
 
 tmdb = TMDb()
 tmdb.api_key = config["TMDB"]["api_key"]
 person = Person()
 movie = Movie()
 search = Search()
-pandarallel.initialize(verbose=0)
 
 
 def get_person(name: str) -> Tuple[pd.DataFrame, str]:
@@ -48,10 +46,10 @@ def get_person(name: str) -> Tuple[pd.DataFrame, str]:
     )
     df = df[df["Department"] == department]
     df = df.drop("Department", axis=1)
-    # person.details provides movies without time duration. If the user wants
+    # person.details provides movies without time duration. If the user wants<S-D-A>
     # (since this slows down the process) get with the movie.details API.
     if config["TMDB"]["get_list_runtimes"] is True:
-        df["Duration"] = df.index.to_series().parallel_map(get_film_duration)  # type: ignore
+        df["Duration"] = df.index.to_series().map(get_film_duration)  # type: ignore
     return df, p["name"]
 
 
