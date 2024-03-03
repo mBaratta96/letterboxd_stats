@@ -1,4 +1,5 @@
 import pandas as pd
+from pandarallel import pandarallel
 import numpy as np
 from letterboxd_stats import cli
 from letterboxd_stats.web_scraper import get_tmdb_id
@@ -8,6 +9,7 @@ from letterboxd_stats import config
 from tqdm import tqdm
 
 tqdm.pandas(desc="Fetching ids...")
+pandarallel.initialize(progress_bar=False, verbose=1)
 
 
 def check_if_watched(df: pd.DataFrame, row: pd.Series) -> bool:
@@ -29,7 +31,15 @@ def read_watched_films(df: pd.DataFrame, path: str, name: str) -> pd.DataFrame:
     """Check which film of a director you have seen. Add a column to show on the CLI."""
 
     df_profile = pd.read_csv(path)
-    df.insert(0, "watched", np.where([check_if_watched(df_profile, row) for _, row in df.iterrows()], "[X]", "[ ]"))
+    df.insert(
+        0,
+        "watched",
+        np.where(
+            [check_if_watched(df_profile, row) for _, row in df.iterrows()],
+            "[X]",
+            "[ ]",
+        ),
+    )
     df["Release Date"] = pd.to_datetime(df["Release Date"])
     df.sort_values(by="Release Date", inplace=True)
     cli.render_table(df, name)
@@ -88,8 +98,8 @@ def _show_lists(df: pd.DataFrame, ascending: bool) -> pd.DataFrame:
     df.sort_values(by=sort_column, ascending=ascending, inplace=True)
     avg = {"Rating Mean": "{:.2f}".format(df["Rating"].mean())}
     if config["TMDB"]["get_list_runtimes"] is True:
-        ids = df["Url"].progress_map(get_tmdb_id)
-        df["Duration"] = ids.map(lambda id: tmdb.get_film_duration(id))  # type: ignore
+        ids = df["Url"].parallel_map(get_tmdb_id)
+        df["Duration"] = ids.parallel_map(lambda id: tmdb.get_film_duration(id))  # type: ignore
         avg["Time-weighted Rating Mean"] = "{:.2f}".format(
             ((df["Duration"] / df["Duration"].sum()) * df["Rating"]).sum()
         )
@@ -99,7 +109,8 @@ def _show_lists(df: pd.DataFrame, ascending: bool) -> pd.DataFrame:
 
 def _show_watchlist(df: pd.DataFrame, ascending: bool) -> pd.DataFrame:
     sort_column = cli.select_value(
-        df.columns.values.tolist() + ["Shuffle"], "Select the order of your watchlist entries:"
+        df.columns.values.tolist() + ["Shuffle"],
+        "Select the order of your watchlist entries:",
     )
     if sort_column == "Shuffle":
         df = df.sample(frac=1)
@@ -127,4 +138,9 @@ def _show_ratings(df: pd.DataFrame, ascending: bool) -> pd.DataFrame:
     return df
 
 
-FILE_OPERATIONS = {"Diary": _show_diary, "Watchlist": _show_watchlist, "Ratings": _show_ratings, "Lists": _show_lists}
+FILE_OPERATIONS = {
+    "Diary": _show_diary,
+    "Watchlist": _show_watchlist,
+    "Ratings": _show_ratings,
+    "Lists": _show_lists,
+}
