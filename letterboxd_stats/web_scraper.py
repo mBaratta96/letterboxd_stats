@@ -16,7 +16,7 @@ MOVIE_OPERATIONS = {
     "Remove from watchlist": "remove_watchlist",
 }
 OPERATIONS_URLS = {
-    "search": lambda s: f"/search/films/{s}/?adult",
+    "search": lambda s: f"/s/search/{s}/",
     "diary": lambda s: f"/csi/film/{s}/sidebar-user-actions/?esiAllowUser=true",
     "add_watchlist": lambda s: f"/film/{s}/add-to-watchlist/",
     "remove_watchlist": lambda s: f"/film/{s}/remove-from-watchlist/",
