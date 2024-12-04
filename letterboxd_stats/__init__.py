@@ -2,8 +2,9 @@ import tomli
 import os
 import platformdirs
 import argparse
+import getpass
 
-default_folder = platformdirs.user_config_dir("letterboxd_stats", "mBaratta96")
+default_folder = platformdirs.user_config_dir("letterboxd_stats", getpass.getuser())
 
 parser = argparse.ArgumentParser(
     prog="Letterboxd Stats",
