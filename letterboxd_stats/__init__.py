@@ -3,6 +3,7 @@ import os
 import platformdirs
 import argparse
 import getpass
+import sys
 
 default_folder = platformdirs.user_config_dir("letterboxd_stats", getpass.getuser())
 
@@ -24,6 +25,10 @@ parser.add_argument("-R", "--ratings", help="show ratings", action="store_true")
 parser.add_argument("-L", "--lists", help="show lists", action="store_true")
 parser.add_argument("-l", "--limit", help="limit the number of items of your wishlist/diary", type=int)
 parser.add_argument("-c", "--config_folder", help="Specifiy the folder of your config.toml file")
+
+if len(sys.argv)==1:
+    parser.print_help(sys.stderr)
+    sys.exit(1)
 
 args = parser.parse_args()
 
