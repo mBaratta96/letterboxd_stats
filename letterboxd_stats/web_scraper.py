@@ -81,21 +81,21 @@ class Downloader:
                 f"Response Content: {res.text}\n"
                 f"Payload: {payload}\n"
             )
-            raise ConnectionError(f"{error_details}\nAdd diary request failed.")
+            raise ConnectionError(f"Add to diary request failed.")
         print("The movie was added to your diary.")
 
     def add_watchlist(self, title: str):
         url = create_movie_url(title, "add_watchlist")
         res = self.session.post(url, data={"__csrf": self.session.cookies.get("com.xk72.webparts.csrf")})
         if not (res.status_code == 200 and res.json()["result"] is True):
-            raise ConnectionError("Add diary request failed.")
+            raise ConnectionError("Add to watchlist request failed.")
         print("Added to your watchlist.")
 
     def remove_watchlist(self, title: str):
         url = create_movie_url(title, "remove_watchlist")
         res = self.session.post(url, data={"__csrf": self.session.cookies.get("com.xk72.webparts.csrf")})
         if not (res.status_code == 200 and res.json()["result"] is True):
-            raise ConnectionError("Add diary request failed.")
+            raise ConnectionError("Remove from watchlist request failed.")
         print("Removed to your watchlist.")
 
     def perform_operation(self, answer: str, link: str):
