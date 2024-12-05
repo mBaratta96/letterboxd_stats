@@ -56,7 +56,7 @@ def search_film(args_search_film: str):
         downloader.perform_operation(answer, title_url)
 
 
-def get_data(args_limit: int, args_ascending: bool, data_type: str):
+def display_data(args_limit: int, args_ascending: bool, data_type: str):
     """Load and show on the CLI different .csv files that you have downloaded with the -d flag."""
 
     path = os.path.expanduser(os.path.join(config["root_folder"], "static", DATA_FILES[data_type]))
@@ -81,13 +81,13 @@ def main():
     if args.search_film:
         try_command(search_film, (args.search_film,))
     if args.watchlist:
-        try_command(get_data, (args.limit, config["CLI"]["ascending"], "Watchlist"))
+        try_command(display_data, (args.limit, config["CLI"]["ascending"], "Watchlist"))
     if args.diary:
-        try_command(get_data, (args.limit, config["CLI"]["ascending"], "Diary"))
+        try_command(display_data, (args.limit, config["CLI"]["ascending"], "Diary"))
     if args.ratings:
-        try_command(get_data, (args.limit, config["CLI"]["ascending"], "Ratings"))
+        try_command(display_data, (args.limit, config["CLI"]["ascending"], "Ratings"))
     if args.lists:
-        try_command(get_data, (args.limit, config["CLI"]["ascending"], "Lists"))
+        try_command(display_data, (args.limit, config["CLI"]["ascending"], "Lists"))
 
 
 if __name__ == "__main__":
