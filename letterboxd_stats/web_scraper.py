@@ -70,12 +70,18 @@ class Downloader:
         movie_page = html.fromstring(res.text)
         # Not the TMDB id, but the Letterboxd ID to use to add the movie to diary.
         # Reference: https://letterboxd.com/film/seven-samurai/
-        letterboxd_film_id = movie_page.get_element_by_id("frm-sidebar-rating").get("data-film-id")
+        letterboxd_film_id = movie_page.get_element_by_id("frm-sidebar-rating").get("data-rateable-uid").split(":", 1)[1]
         payload["filmId"] = letterboxd_film_id
         payload["__csrf"] = self.session.cookies.get("com.xk72.webparts.csrf")
         res = self.session.post(ADD_DIARY_URL, data=payload)
         if not (res.status_code == 200 and res.json()["result"] is True):
-            raise ConnectionError("Add diary request failed.")
+            error_details = (
+                f"Error during POST request to {ADD_DIARY_URL}\n"
+                f"Status Code: {res.status_code}\n"
+                f"Response Content: {res.text}\n"
+                f"Payload: {payload}\n"
+            )
+            raise ConnectionError(f"{error_details}\nAdd diary request failed.")
         print("The movie was added to your diary.")
 
     def add_watchlist(self, title: str):
