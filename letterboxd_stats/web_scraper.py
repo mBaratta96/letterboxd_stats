@@ -153,7 +153,7 @@ def select_optional_operation() -> str:
     return cli.select_value(["Exit"] + list(MOVIE_OPERATIONS.keys()), "Select operation:")
 
 
-def search_film(title: str, allow_selection=False) -> str:
+def get_lb_title(title: str, allow_selection=False) -> str:
     """Search a movie a get its Letterboxd link.
     For reference: https://letterboxd.com/search/seven+samurai/?adult
     """
