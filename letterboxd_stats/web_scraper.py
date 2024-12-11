@@ -75,12 +75,6 @@ class Connector:
         payload["__csrf"] = self.session.cookies.get("com.xk72.webparts.csrf")
         res = self.session.post(ADD_DIARY_URL, data=payload)
         if not (res.status_code == 200 and res.json()["result"] is True):
-            error_details = (
-                f"Error during POST request to {ADD_DIARY_URL}\n"
-                f"Status Code: {res.status_code}\n"
-                f"Response Content: {res.text}\n"
-                f"Payload: {payload}\n"
-            )
             raise ConnectionError(f"Failed to add to diary.")
         print(f"{title} was added to your diary.")
 
