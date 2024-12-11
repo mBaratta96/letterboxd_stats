@@ -40,7 +40,7 @@ class Connector:
         }
         res = self.session.post(LOGIN_PAGE, data=request_payload)
         if res.json()["result"] != "success":
-            raise ConnectionError("Impossible to login")
+            raise ConnectionError("Failed to login")
 
     def download_stats(self):
         """Download and extract data of the import/export section.
@@ -48,7 +48,7 @@ class Connector:
 
         res = self.session.get(DATA_PAGE)
         if res.status_code != 200 or "application/zip" not in res.headers["Content-Type"]:
-            raise ConnectionError(f"Impossible to download data. Response headers:\n{res.headers}")
+            raise ConnectionError(f"Failed to download data. Response headers:\n{res.headers}")
         print("Data download successful.")
         filename = res.headers["content-disposition"].split()[-1].split("=")[-1]
         path = os.path.expanduser(os.path.join(config["root_folder"], "static"))
@@ -66,7 +66,7 @@ class Connector:
         url = create_lb_url(title, "diary")
         res = self.session.get(url)
         if res.status_code != 200:
-            raise ConnectionError("It's been impossible to retrieve the Letterboxd page")
+            raise ConnectionError("Failed to retrieve the Letterboxd page")
         film_page = html.fromstring(res.text)
         # Not the TMDB id, but the Letterboxd ID to use to add the film to diary.
         # Reference: https://letterboxd.com/film/seven-samurai/
@@ -81,22 +81,22 @@ class Connector:
                 f"Response Content: {res.text}\n"
                 f"Payload: {payload}\n"
             )
-            raise ConnectionError(f"Add to diary request failed.")
-        print("The film was added to your diary.")
+            raise ConnectionError(f"Failed to add to diary.")
+        print(f"{title} was added to your diary.")
 
     def add_watchlist_entry(self, title: str):
         url = create_lb_url(title, "add_watchlist")
         res = self.session.post(url, data={"__csrf": self.session.cookies.get("com.xk72.webparts.csrf")})
         if not (res.status_code == 200 and res.json()["result"] is True):
-            raise ConnectionError("Add to watchlist request failed.")
-        print("Added to your watchlist.")
+            raise ConnectionError("Failed to add to watchlist.")
+        print(f"{title} was added to your watchlist.")
 
     def remove_watchlist_entry(self, title: str):
         url = create_lb_url(title, "remove_watchlist")
         res = self.session.post(url, data={"__csrf": self.session.cookies.get("com.xk72.webparts.csrf")})
         if not (res.status_code == 200 and res.json()["result"] is True):
-            raise ConnectionError("Remove from watchlist request failed.")
-        print("Removed to your watchlist.")
+            raise ConnectionError("Failed to remove from watchlist.")
+        print(f"{title} was removed from your watchlist.")
 
     def perform_operation(self, operation: str, link: str):
         """Depending on what the user has chosen, add to diary, add/remove watchlist."""
@@ -165,15 +165,16 @@ def get_lb_title(title: str, allow_selection=False) -> str:
     """
 
     search_url = create_lb_url(title, "search")
+    print(f"Searching for '{title}'")
     res = requests.get(search_url)
     if res.status_code != 200:
-        raise ConnectionError("It's been impossible to retrieve the Letterboxd page")
+        raise ConnectionError("Failed to retrieve the Letterboxd page.")
     search_page = html.fromstring(res.text)
     # If we want to select films from the search page, get more data to print the selection prompt.
     if allow_selection:
         film_list = search_page.xpath("//div[@class='film-detail-content']")
         if len(film_list) == 0:
-            raise ValueError(f"No film found with search query {title}")
+            raise ValueError(f"No results found for your Letterboxd film search.")
         title_years_directors_links = {}
         for film in film_list:
             title = film.xpath("./h2/span/a")[0].text.rstrip()

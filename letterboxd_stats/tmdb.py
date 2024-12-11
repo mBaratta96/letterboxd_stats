@@ -25,7 +25,7 @@ def get_person(name: str) -> Tuple[pd.DataFrame, str]:
     search_results = search.people({"query": name})
     names = [result.name for result in search_results]  # type: ignore
     if len(names) == 0:
-        raise Exception("No results for your search")
+        raise Exception("No results found for your TMDB person search.")
     result_index = cli.select_search_result(names)  # type: ignore
     search_result = search_results[result_index]
     p = person.details(search_result["id"])
@@ -60,7 +60,7 @@ def get_movie(movie_query: str) -> Any | AsObj:
     search_results = search.movies({"query": movie_query})
     titles = [f"{result.title} ({result.release_date})" for result in search_results]  # type: ignore
     if len(titles) == 0:
-        raise Exception("No results for your search")
+        raise Exception("No results found for your TMDB movie search.")
     result_index = cli.select_search_result(titles)  # type: ignore
     movie_id = search_results[result_index]["id"]
     get_movie_detail(movie_id)
