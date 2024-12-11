@@ -25,8 +25,13 @@ def load_config(file_path, defaults):
     else:
         user_config = {}
 
-    # Merge user_config with defaults (user_config takes precedence)
-    return merge_dicts(defaults, user_config)
+    # Merge user_config with defaults
+    merged_config = merge_dicts(defaults, user_config)
+
+    # Override with environment variables if available
+    merged_config = apply_env_variables(merged_config)
+
+    return merged_config
 
 def merge_dicts(defaults, overrides):
     """Recursively merge two dictionaries."""
@@ -37,6 +42,33 @@ def merge_dicts(defaults, overrides):
         else:
             merged[key] = value
     return merged
+
+def apply_env_variables(config):
+    """Override configuration with environment variables."""
+    env_mapping = {
+        "LBSTATS_CLI_POSTER_COLUMNS": ("CLI", "poster_columns"),
+        "LBSTATS_CLI_ASCENDING": ("CLI", "ascending"),
+        "LBSTATS_TMDB_GET_LIST_RUNTIMES": ("TMDB", "get_list_runtimes"),
+        "LBSTATS_TMDB_API_KEY": ("TMDB", "api_key"),
+        "LBSTATS_USERNAME": ("Letterboxd", "username"),
+        "LBSTATS_PASSWORD": ("Letterboxd", "password"),
+    }
+
+    for env_var, keys in env_mapping.items():
+        if env_var in os.environ:
+            section, key = keys
+            value = os.environ[env_var]
+            # Convert boolean strings to actual booleans
+            if value.lower() in ["true", "false"]:
+                value = value.lower() == "true"
+            elif value.isdigit():
+                value = int(value)
+            config[section][key] = value
+            
+            # Print a message indicating the environment variable is being used
+            print(f"Using environment variable {env_var} for config: {section}.{key} = {value}")
+        
+    return config
 
 parser = argparse.ArgumentParser(
     prog="Letterboxd Stats",
@@ -57,7 +89,7 @@ parser.add_argument("-L", "--lists", help="show lists", action="store_true")
 parser.add_argument("-l", "--limit", help="limit the number of items of your wishlist/diary", type=int)
 parser.add_argument("-c", "--config_folder", help="Specify the folder of your config.toml file")
 
-if len(sys.argv)==1:
+if len(sys.argv) == 1:
     parser.print_help(sys.stderr)
     sys.exit(1)
 
@@ -70,6 +102,6 @@ if not os.path.exists(config_path):
         f"Found no configuration file in {config_path}. "
         + "Please, add a config.toml in that folder or specify a custom one with the -c command."
     )
-    
+
 config = load_config(config_path, CONFIG_DEFAULTS)
 
