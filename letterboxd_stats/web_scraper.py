@@ -11,9 +11,9 @@ LOGIN_PAGE = URL + "/user/login.do"
 DATA_PAGE = URL + "/data/export"
 ADD_DIARY_URL = URL + "/s/save-diary-entry"
 MOVIE_OPERATIONS = {
-    "Add to diary": "add_film_diary",
-    "Add to watchlist": "add_watchlist",
-    "Remove from watchlist": "remove_watchlist",
+    "Add to diary": "add_diary_entry",
+    "Add to watchlist": "add_watchlist_entry",
+    "Remove from watchlist": "remove_watchlist_entry",
 }
 OPERATIONS_URLS = {
     "search": lambda s: f"/s/search/{s}/",
@@ -61,9 +61,9 @@ class Downloader:
             zip.extractall(path)
         os.remove(archive)
 
-    def add_film_diary(self, title: str):
+    def add_diary_entry(self, title: str):
         payload = cli.add_film_questions()
-        url = create_movie_url(title, "diary")
+        url = create_lb_url(title, "diary")
         res = self.session.get(url)
         if res.status_code != 200:
             raise ConnectionError("It's been impossible to retireve the Letterboxd page")
@@ -75,18 +75,24 @@ class Downloader:
         payload["__csrf"] = self.session.cookies.get("com.xk72.webparts.csrf")
         res = self.session.post(ADD_DIARY_URL, data=payload)
         if not (res.status_code == 200 and res.json()["result"] is True):
+            error_details = (
+                f"Error during POST request to {ADD_DIARY_URL}\n"
+                f"Status Code: {res.status_code}\n"
+                f"Response Content: {res.text}\n"
+                f"Payload: {payload}\n"
+            )
             raise ConnectionError(f"Add to diary request failed.")
         print("The movie was added to your diary.")
 
-    def add_watchlist(self, title: str):
-        url = create_movie_url(title, "add_watchlist")
+    def add_watchlist_entry(self, title: str):
+        url = create_lb_url(title, "add_watchlist")
         res = self.session.post(url, data={"__csrf": self.session.cookies.get("com.xk72.webparts.csrf")})
         if not (res.status_code == 200 and res.json()["result"] is True):
             raise ConnectionError("Add to watchlist request failed.")
         print("Added to your watchlist.")
 
-    def remove_watchlist(self, title: str):
-        url = create_movie_url(title, "remove_watchlist")
+    def remove_watchlist_entry(self, title: str):
+        url = create_lb_url(title, "remove_watchlist")
         res = self.session.post(url, data={"__csrf": self.session.cookies.get("com.xk72.webparts.csrf")})
         if not (res.status_code == 200 and res.json()["result"] is True):
             raise ConnectionError("Remove from watchlist request failed.")
@@ -98,7 +104,7 @@ class Downloader:
         getattr(self, MOVIE_OPERATIONS[answer])(link)
 
 
-def create_movie_url(title: str, operation: str) -> str:
+def create_lb_url(title: str, operation: str) -> str:
     return URL + OPERATIONS_URLS[operation](title)
 
 
@@ -158,7 +164,7 @@ def get_lb_title(title: str, allow_selection=False) -> str:
     For reference: https://letterboxd.com/search/seven+samurai/?adult
     """
 
-    search_url = create_movie_url(title, "search")
+    search_url = create_lb_url(title, "search")
     res = requests.get(search_url)
     if res.status_code != 200:
         raise ConnectionError("It's been impossible to retireve the Letterboxd page")

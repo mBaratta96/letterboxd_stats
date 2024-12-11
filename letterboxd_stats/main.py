@@ -41,13 +41,13 @@ def search_person(args_search: str):
     while movie is not None:
         search_film_query = f"{movie['Title']} {movie['Release Date'].year}"  # type: ignore
         title_url = ws.get_lb_title(search_film_query)
-        tmdb.get_movie_detail(int(movie.name), ws.create_movie_url(title_url, "film_page"))  # type: ignore
+        tmdb.get_movie_detail(int(movie.name), ws.create_lb_url(title_url, "film_page"))  # type: ignore
         movie = data.select_film_of_person(df)
 
 
 def search_film(args_search_film: str):
     title_url = ws.get_lb_title(args_search_film, True)
-    film_url = ws.create_movie_url(title_url, "film_page")
+    film_url = ws.create_lb_url(title_url, "film_page")
     tmdb.get_movie_detail(ws.get_tmdb_id(film_url), film_url)  # type: ignore
     answer = ws.select_optional_operation()
     if answer != "Exit":
