@@ -31,7 +31,7 @@ def get_person(name: str) -> Tuple[pd.DataFrame, str]:
     p = person.details(search_result["id"])
     known_for_department = p["known_for_department"]
     movie_credits = person.movie_credits(search_result["id"])
-    list_of_films = [
+    list_of_movies = [
         {
             "Id": m.id,
             "Title": m.title,
@@ -40,9 +40,9 @@ def get_person(name: str) -> Tuple[pd.DataFrame, str]:
         }
         for m in movie_credits["crew"]
     ]
-    if len(list_of_films) == 0:
+    if len(list_of_movies) == 0:
         raise ValueError("The selected person doesn't have any film.")
-    df = pd.DataFrame(list_of_films).set_index("Id")
+    df = pd.DataFrame(list_of_movies).set_index("Id")
     department = cli.select_value(
         df["Department"].unique(), f"Select a department for {p['name']}", known_for_department
     )
@@ -51,7 +51,7 @@ def get_person(name: str) -> Tuple[pd.DataFrame, str]:
     # person.details provides movies without time duration. If the user wants<S-D-A>
     # (since this slows down the process) get with the movie.details API.
     if config["TMDB"]["get_list_runtimes"] is True:
-        df["Duration"] = df.index.to_series().parallel_map(get_film_duration)  # type: ignore
+        df["Duration"] = df.index.to_series().parallel_map(get_movie_duration)  # type: ignore
     return df, p["name"]
 
 
@@ -84,8 +84,8 @@ def get_movie_detail(movie_id: int, letterboxd_url=None):
     cli.print_film(selected_details)
 
 
-def get_film_duration(tmdb_id: int) -> int:
-    """Get film duration from the TMDB api.
+def get_movie_duration(tmdb_id: int) -> int:
+    """Get movie duration from the TMDB api.
     https://developer.themoviedb.org/reference/movie-details
     """
 
