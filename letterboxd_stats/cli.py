@@ -121,7 +121,7 @@ def add_film_questions() -> dict[str, str]:
         replace_mode=True,
         filter=lambda n: int(2 * float(n)),
     ).execute()
-    liked = inquirer.confirm(message="Did you like the movie?").execute()  # type: ignore
+    liked = inquirer.confirm(message="Add to your ""Liked"" movies?").execute()  # type: ignore
     review = inquirer.text(  # type: ignore
         message="Write a review. "
         + "Use HTML tags for formatting (<b>, <i>, <a href='[URL]'>, <blockquote<>). "
