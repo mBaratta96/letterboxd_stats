@@ -98,10 +98,10 @@ class Connector:
             raise ConnectionError("Remove from watchlist request failed.")
         print("Removed to your watchlist.")
 
-    def perform_operation(self, answer: str, link: str):
+    def perform_operation(self, operation: str, link: str):
         """Depending on what the user has chosen, add to diary, add/remove watchlist."""
 
-        getattr(self, MOVIE_OPERATIONS[answer])(link)
+        getattr(self, MOVIE_OPERATIONS[operation])(link)
 
 
 def create_lb_url(title: str, operation: str) -> str:
