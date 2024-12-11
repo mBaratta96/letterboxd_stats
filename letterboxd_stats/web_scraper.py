@@ -26,7 +26,7 @@ OPERATIONS_URLS = {
 cache_path = os.path.expanduser(os.path.join(config["root_folder"], "static", "cache.db"))
 
 
-class Downloader:
+class Connector:
     def __init__(self):
         self.session = requests.Session()
         # get home page to set cookies in the session.

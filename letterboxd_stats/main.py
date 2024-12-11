@@ -24,9 +24,9 @@ def check_path(path: str):
 def download_data():
     """Download exported data you find in the import/esport section of your Letterboxd profile"""
 
-    downloader = ws.Downloader()
-    downloader.login()
-    downloader.download_stats()
+    connector = ws.Connector()
+    connector.login()
+    connector.download_stats()
 
 
 def search_person(args_search: str):
@@ -51,9 +51,9 @@ def search_film(args_search_film: str):
     tmdb.get_movie_detail(ws.get_tmdb_id(film_url), film_url)  # type: ignore
     answer = ws.select_optional_operation()
     if answer != "Exit":
-        downloader = ws.Downloader()
-        downloader.login()
-        downloader.perform_operation(answer, title_url)
+        connector = ws.Connector()
+        connector.login()
+        connector.perform_operation(answer, title_url)
 
 
 def display_data(args_limit: int, args_ascending: bool, data_type: str):
