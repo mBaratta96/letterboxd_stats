@@ -30,19 +30,19 @@ def download_data():
 
 
 def search_person(args_search: str):
-    """Search for a director, list his/her movies and check if you have watched them."""
+    """Search for a director, list his/her films and check if you have watched them."""
 
     df, name = tmdb.get_person(args_search)
     path = os.path.expanduser(os.path.join(config["root_folder"], "static", "watched.csv"))
     check_path(path)
     df = data.read_watched_films(df, path, name)
-    movie = data.select_film_of_person(df)
-    # We want to print the link of the selected movie. This has to be retrieved from the search page.
-    while movie is not None:
-        search_film_query = f"{movie['Title']} {movie['Release Date'].year}"  # type: ignore
+    film = data.select_film_of_person(df)
+    # We want to print the link of the selected film. This has to be retrieved from the search page.
+    while film is not None:
+        search_film_query = f"{film['Title']} {film['Release Date'].year}"  # type: ignore
         title_url = ws.get_lb_title(search_film_query)
-        tmdb.get_movie_detail(int(movie.name), ws.create_lb_url(title_url, "film_page"))  # type: ignore
-        movie = data.select_film_of_person(df)
+        tmdb.get_movie_detail(int(film.name), ws.create_lb_url(title_url, "film_page"))  # type: ignore
+        film = data.select_film_of_person(df)
 
 
 def search_film(args_search_film: str):
@@ -66,7 +66,7 @@ def display_data(args_limit: int, args_ascending: bool, data_type: str):
         if data_type != "Lists"
         else data.open_list(path, args_limit, args_ascending)
     )
-    # If you select a movie, show its details.
+    # If you select a film, show its details.
     if letterboxd_url is not None:
         id = ws.get_tmdb_id(letterboxd_url, data_type == "diary")
         if id is not None:

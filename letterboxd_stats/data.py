@@ -14,8 +14,8 @@ pandarallel.initialize(progress_bar=False, verbose=1)
 
 def check_if_watched(df: pd.DataFrame, row: pd.Series) -> bool:
     """watched.csv hasn't the TMDB id, so comparison can be done only by title.
-    This creates the risk of mismatch when two movies have the same title. To avoid this,
-    we must retrieve the TMDB id of the watched movie.
+    This creates the risk of mismatch when two films have the same title. To avoid this,
+    we must retrieve the TMDB id of the watched film.
     """
 
     if row["Title"] in df["Name"].values:
@@ -47,11 +47,11 @@ def read_watched_films(df: pd.DataFrame, path: str, name: str) -> pd.DataFrame:
 
 
 def select_film_of_person(df: pd.DataFrame) -> pd.Series | None:
-    movie_id = cli.select_movie(df["Title"], df.index.to_series())
-    if movie_id is None:
+    film_id = cli.select_film(df["Title"], df.index.to_series())
+    if film_id is None:
         return None
-    movie_row = df.loc[movie_id]
-    return movie_row
+    film_row = df.loc[film_id]
+    return film_row
 
 
 def get_list_name(path: str) -> str:
@@ -83,7 +83,7 @@ def open_file(filetype: str, path: str, limit, ascending, header=0) -> str:
     if limit is not None:
         df = df.iloc[:limit, :]
     cli.render_table(df, filetype)
-    return cli.select_movie(df["Title"], df["Url"])
+    return cli.select_film(df["Title"], df["Url"])
 
 
 def _show_lists(df: pd.DataFrame, ascending: bool) -> pd.DataFrame:

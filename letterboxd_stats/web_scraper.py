@@ -10,7 +10,7 @@ URL = "https://letterboxd.com"
 LOGIN_PAGE = URL + "/user/login.do"
 DATA_PAGE = URL + "/data/export"
 ADD_DIARY_URL = URL + "/s/save-diary-entry"
-MOVIE_OPERATIONS = {
+FILM_OPERATIONS = {
     "Add to diary": "add_diary_entry",
     "Add to watchlist": "add_watchlist_entry",
     "Remove from watchlist": "remove_watchlist_entry",
@@ -67,10 +67,10 @@ class Connector:
         res = self.session.get(url)
         if res.status_code != 200:
             raise ConnectionError("It's been impossible to retrieve the Letterboxd page")
-        movie_page = html.fromstring(res.text)
-        # Not the TMDB id, but the Letterboxd ID to use to add the movie to diary.
+        film_page = html.fromstring(res.text)
+        # Not the TMDB id, but the Letterboxd ID to use to add the film to diary.
         # Reference: https://letterboxd.com/film/seven-samurai/
-        letterboxd_film_id = movie_page.get_element_by_id("frm-sidebar-rating").get("data-rateable-uid").split(":", 1)[1]
+        letterboxd_film_id = film_page.get_element_by_id("frm-sidebar-rating").get("data-rateable-uid").split(":", 1)[1]
         payload["filmId"] = letterboxd_film_id
         payload["__csrf"] = self.session.cookies.get("com.xk72.webparts.csrf")
         res = self.session.post(ADD_DIARY_URL, data=payload)
@@ -82,7 +82,7 @@ class Connector:
                 f"Payload: {payload}\n"
             )
             raise ConnectionError(f"Add to diary request failed.")
-        print("The movie was added to your diary.")
+        print("The film was added to your diary.")
 
     def add_watchlist_entry(self, title: str):
         url = create_lb_url(title, "add_watchlist")
@@ -101,7 +101,7 @@ class Connector:
     def perform_operation(self, operation: str, link: str):
         """Depending on what the user has chosen, add to diary, add/remove watchlist."""
 
-        getattr(self, MOVIE_OPERATIONS[operation])(link)
+        getattr(self, FILM_OPERATIONS[operation])(link)
 
 
 def create_lb_url(title: str, operation: str) -> str:
@@ -114,18 +114,18 @@ def _get_tmdb_id_from_web(link: str, is_diary: bool) -> int:
     """
 
     res = requests.get(link)
-    movie_page = html.fromstring(res.text)
+    film_page = html.fromstring(res.text)
     # Diary links sends you to a different page with no link to TMDB. Redirect to the actual page.
     if is_diary:
-        title_link = movie_page.xpath("//span[@class='film-title-wrapper']/a")
+        title_link = film_page.xpath("//span[@class='film-title-wrapper']/a")
         if len(title_link) == 0:
-            raise ValueError("No movie link found.")
-        movie_link = title_link[0]
-        movie_url = URL + movie_link.get("href")
-        movie_page = html.fromstring(requests.get(movie_url).text)
-    tmdb_link = movie_page.xpath("//a[@data-track-action='TMDb']")
+            raise ValueError("No link found for film.")
+        film_link = title_link[0]
+        film_url = URL + film_link.get("href")
+        film_page = html.fromstring(requests.get(film_url).text)
+    tmdb_link = film_page.xpath("//a[@data-track-action='TMDb']")
     if len(tmdb_link) == 0:
-        raise ValueError("No Movie link found")
+        raise ValueError("No link found for film")
     id = tmdb_link[0].get("href").split("/")[-2]
     return int(id)
 
@@ -156,11 +156,11 @@ def get_tmdb_id(link: str, is_diary=False) -> int | None:
 
 
 def select_optional_operation() -> str:
-    return cli.select_value(["Exit"] + list(MOVIE_OPERATIONS.keys()), "Select operation:")
+    return cli.select_value(["Exit"] + list(FILM_OPERATIONS.keys()), "Select operation:")
 
 
 def get_lb_title(title: str, allow_selection=False) -> str:
-    """Search a movie a get its Letterboxd link.
+    """Search a film and get its Letterboxd link.
     For reference: https://letterboxd.com/search/seven+samurai/?adult
     """
 
@@ -169,17 +169,17 @@ def get_lb_title(title: str, allow_selection=False) -> str:
     if res.status_code != 200:
         raise ConnectionError("It's been impossible to retrieve the Letterboxd page")
     search_page = html.fromstring(res.text)
-    # If we want to select movies from the search page, get more data to print the selection prompt.
+    # If we want to select films from the search page, get more data to print the selection prompt.
     if allow_selection:
-        movie_list = search_page.xpath("//div[@class='film-detail-content']")
-        if len(movie_list) == 0:
+        film_list = search_page.xpath("//div[@class='film-detail-content']")
+        if len(film_list) == 0:
             raise ValueError(f"No film found with search query {title}")
         title_years_directors_links = {}
-        for movie in movie_list:
-            title = movie.xpath("./h2/span/a")[0].text.rstrip()
-            director = director[0].text if len(director := movie.xpath("./p/a")) > 0 else ""
-            year = f"({year[0].text}) " if len(year := movie.xpath("./h2/span//small/a")) > 0 else ""
-            link = movie.xpath("./h2/span/a")[0].get("href")
+        for film in film_list:
+            title = film.xpath("./h2/span/a")[0].text.rstrip()
+            director = director[0].text if len(director := film.xpath("./p/a")) > 0 else ""
+            year = f"({year[0].text}) " if len(year := film.xpath("./h2/span//small/a")) > 0 else ""
+            link = film.xpath("./h2/span/a")[0].get("href")
             title_years_directors_links[f"{title} {year}- {director}"] = link
         selected_film = cli.select_value(list(title_years_directors_links.keys()), "Select your film")
         title_url = title_years_directors_links[selected_film].split("/")[-2]
