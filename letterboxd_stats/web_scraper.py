@@ -66,7 +66,7 @@ class Connector:
         url = create_lb_url(title, "diary")
         res = self.session.get(url)
         if res.status_code != 200:
-            raise ConnectionError("It's been impossible to retireve the Letterboxd page")
+            raise ConnectionError("It's been impossible to retrieve the Letterboxd page")
         movie_page = html.fromstring(res.text)
         # Not the TMDB id, but the Letterboxd ID to use to add the movie to diary.
         # Reference: https://letterboxd.com/film/seven-samurai/
@@ -110,7 +110,7 @@ def create_lb_url(title: str, operation: str) -> str:
 
 def _get_tmdb_id_from_web(link: str, is_diary: bool) -> int:
     """Scraping the TMDB link from a Letterboxd film page.
-    Inpect this HTML for reference: https://letterboxd.com/film/seven-samurai/
+    Inspect this HTML for reference: https://letterboxd.com/film/seven-samurai/
     """
 
     res = requests.get(link)
@@ -167,9 +167,9 @@ def get_lb_title(title: str, allow_selection=False) -> str:
     search_url = create_lb_url(title, "search")
     res = requests.get(search_url)
     if res.status_code != 200:
-        raise ConnectionError("It's been impossible to retireve the Letterboxd page")
+        raise ConnectionError("It's been impossible to retrieve the Letterboxd page")
     search_page = html.fromstring(res.text)
-    # If we want to select movies from the seach page, get more data to print the selection prompt.
+    # If we want to select movies from the search page, get more data to print the selection prompt.
     if allow_selection:
         movie_list = search_page.xpath("//div[@class='film-detail-content']")
         if len(movie_list) == 0:

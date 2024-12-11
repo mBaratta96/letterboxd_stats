@@ -22,7 +22,7 @@ def check_path(path: str):
 
 
 def download_data():
-    """Download exported data you find in the import/esport section of your Letterboxd profile"""
+    """Download exported data you find in the import/export section of your Letterboxd profile"""
 
     connector = ws.Connector()
     connector.login()
@@ -37,7 +37,7 @@ def search_person(args_search: str):
     check_path(path)
     df = data.read_watched_films(df, path, name)
     movie = data.select_film_of_person(df)
-    # We want to print the link of the selected movie. This has to be retrived from the search page.
+    # We want to print the link of the selected movie. This has to be retrieved from the search page.
     while movie is not None:
         search_film_query = f"{movie['Title']} {movie['Release Date'].year}"  # type: ignore
         title_url = ws.get_lb_title(search_film_query)

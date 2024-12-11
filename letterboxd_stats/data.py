@@ -59,14 +59,14 @@ def get_list_name(path: str) -> str:
     return df["Name"].iloc[0]
 
 
-def open_list(path: str, limit: int, acending: bool) -> str:
+def open_list(path: str, limit: int, ascending: bool) -> str:
     """Select a list from the saved ones."""
 
     list_names = {
         get_list_name(os.path.join(path, letterboxd_list)): letterboxd_list for letterboxd_list in os.listdir(path)
     }
     name = cli.select_list(sorted(list(list_names.keys())))
-    return open_file("Lists", os.path.join(path, list_names[name]), limit, acending, header=3)
+    return open_file("Lists", os.path.join(path, list_names[name]), limit, ascending, header=3)
 
 
 def open_file(filetype: str, path: str, limit, ascending, header=0) -> str:
