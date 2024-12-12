@@ -62,7 +62,7 @@ class Connector:
         os.remove(archive)
 
     def add_diary_entry(self, title: str):
-        payload = cli.add_film_questions()
+        payload = cli.get_input_add_diary_entry()
         url = create_lb_url(title, "diary")
         res = self.session.get(url)
         if res.status_code != 200:

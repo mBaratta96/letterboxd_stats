@@ -100,7 +100,7 @@ def _validate_date(s: str) -> bool:
     return True
 
 
-def add_film_questions() -> dict[str, str]:
+def get_input_add_diary_entry() -> dict[str, str]:
     print("Set all the infos for the film:\n")
     specify_date = inquirer.confirm(message="Specify date?").execute()  # type: ignore
     today = datetime.today().strftime("%Y-%m-%d")
