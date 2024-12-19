@@ -121,13 +121,14 @@ def get_input_add_diary_entry() -> dict[str, str]:
         replace_mode=True,
         filter=lambda n: int(2 * float(n)),
     ).execute()
-    liked = inquirer.confirm(message="Add to your ""Liked"" films?").execute()  # type: ignore
+    liked = inquirer.confirm(message="Give this film a ♥?").execute()  # type: ignore
+    leave_review = inquirer.confirm(message="Leave a review?").execute()  # type: ignore
     review = inquirer.text(  # type: ignore
         message="Write a review. "
         + "Use HTML tags for formatting (<b>, <i>, <a href='[URL]'>, <blockquote<>). "
         + "Press Enter for multiline.",
         multiline=True,
-    ).execute()
+    ).execute() if leave_review else ""
     contains_spoilers = False
     if len(review) > 0:
         contains_spoilers = inquirer.confirm(message="The review contains spoilers?").execute()  # type: ignore
