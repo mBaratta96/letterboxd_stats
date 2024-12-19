@@ -1,21 +1,34 @@
-__pycache__/
-.vscode/
+# System files
 .DS_Store
 Thumbs.db
+
+# Development artifacts
+__pycache__/
 *.egg-info/
+dist/
+build/
 docs/_build/
-.env*
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
 instance/
 .pytest_cache/
 .coverage
-dist/
-build/
-static/
-config.toml
 *.log
+
+# Virtual environments
+env/
+env.bak/
+venv/
+venv.bak/
+ENV/
+ENV.bak/
+.env/
+.env.bak/
+.venv/
+.venv.bak/
+
+# Tools and editor settings
+.vscode/
+.cspell/
+
+# Program files
+config.toml
+static/

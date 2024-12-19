@@ -38,7 +38,7 @@ ascending = false
 [TMDB]
 api_key = "YOUR_TMDB_API_KEY"
 # When you get your lists (-L options), also get all the runtimes from TMDB
-# and compute the mean of the ratings weigthed on the durations. This slows the process.
+# and compute the mean of the ratings weighted on the durations. This slows the process.
 get_list_runtimes = false
 
 
@@ -64,7 +64,7 @@ options:
   -l LIMIT, --limit LIMIT
                         limit the number of items of your wishlist/diary
   -c CONFIG_FOLDER, --config_folder CONFIG_FOLDER
-                        Specifiy the folder of your config.toml file
+                        Specify the folder of your config.toml file
 
 ```
 

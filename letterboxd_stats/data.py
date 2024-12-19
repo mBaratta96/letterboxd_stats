@@ -14,8 +14,8 @@ pandarallel.initialize(progress_bar=False, verbose=1)
 
 def check_if_watched(df: pd.DataFrame, row: pd.Series) -> bool:
     """watched.csv hasn't the TMDB id, so comparison can be done only by title.
-    This creates the risk of mismatch when two movies have the same title. To avoid this,
-    we must retrieve the TMDB id of the watched movie.
+    This creates the risk of mismatch when two films have the same title. To avoid this,
+    we must retrieve the TMDB id of the watched film.
     """
 
     if row["Title"] in df["Name"].values:
@@ -47,11 +47,11 @@ def read_watched_films(df: pd.DataFrame, path: str, name: str) -> pd.DataFrame:
 
 
 def select_film_of_person(df: pd.DataFrame) -> pd.Series | None:
-    movie_id = cli.select_movie(df["Title"], df.index.to_series())
-    if movie_id is None:
+    film_id = cli.select_film(df["Title"], df.index.to_series())
+    if film_id is None:
         return None
-    movie_row = df.loc[movie_id]
-    return movie_row
+    film_row = df.loc[film_id]
+    return film_row
 
 
 def get_list_name(path: str) -> str:
@@ -59,14 +59,14 @@ def get_list_name(path: str) -> str:
     return df["Name"].iloc[0]
 
 
-def open_list(path: str, limit: int, acending: bool) -> str:
+def open_list(path: str, limit: int, ascending: bool) -> str:
     """Select a list from the saved ones."""
 
     list_names = {
         get_list_name(os.path.join(path, letterboxd_list)): letterboxd_list for letterboxd_list in os.listdir(path)
     }
     name = cli.select_list(sorted(list(list_names.keys())))
-    return open_file("Lists", os.path.join(path, list_names[name]), limit, acending, header=3)
+    return open_file("Lists", os.path.join(path, list_names[name]), limit, ascending, header=3)
 
 
 def open_file(filetype: str, path: str, limit, ascending, header=0) -> str:
@@ -83,7 +83,7 @@ def open_file(filetype: str, path: str, limit, ascending, header=0) -> str:
     if limit is not None:
         df = df.iloc[:limit, :]
     cli.render_table(df, filetype)
-    return cli.select_movie(df["Title"], df["Url"])
+    return cli.select_film(df["Title"], df["Url"])
 
 
 def _show_lists(df: pd.DataFrame, ascending: bool) -> pd.DataFrame:
@@ -99,7 +99,7 @@ def _show_lists(df: pd.DataFrame, ascending: bool) -> pd.DataFrame:
     avg = {"Rating Mean": "{:.2f}".format(df["Rating"].mean())}
     if config["TMDB"]["get_list_runtimes"] is True:
         ids = df["Url"].parallel_map(get_tmdb_id)
-        df["Duration"] = ids.parallel_map(lambda id: tmdb.get_film_duration(id))  # type: ignore
+        df["Duration"] = ids.parallel_map(lambda id: tmdb.get_movie_duration(id))  # type: ignore
         avg["Time-weighted Rating Mean"] = "{:.2f}".format(
             ((df["Duration"] / df["Duration"].sum()) * df["Rating"]).sum()
         )
