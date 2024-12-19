@@ -120,6 +120,12 @@ def _get_tmdb_id_from_web(link: str, is_diary: bool) -> int:
     tmdb_link = film_page.xpath("//a[@data-track-action='TMDb']")
     if len(tmdb_link) == 0:
         raise ValueError("No link found for film")
+    
+    tmdb_category = tmdb_link[0].get("href").split("/")[-3]
+    
+    if tmdb_category != "movie":
+        raise ValueError(f"Tool does not currently support TMDB category \"{tmdb_category}\": {tmdb_link[0].get("href")}")
+
     id = tmdb_link[0].get("href").split("/")[-2]
     return int(id)
 
