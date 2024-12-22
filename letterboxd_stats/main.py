@@ -1,7 +1,9 @@
+import os
+import sys
+
 from letterboxd_stats import tmdb
 from letterboxd_stats import data
 from letterboxd_stats import web_scraper as ws
-import os
 from letterboxd_stats import args, config
 
 DATA_FILES = {"Watchlist": "watchlist.csv", "Diary": "diary.csv", "Ratings": "ratings.csv", "Lists": "lists"}
@@ -74,20 +76,25 @@ def display_data(args_limit: int, args_ascending: bool, data_type: str):
 
 
 def main():
-    if args.download:
-        try_command(download_data, ())
-    if args.search:
-        try_command(search_person, (args.search,))
-    if args.search_film:
-        try_command(search_film, (args.search_film,))
-    if args.watchlist:
-        try_command(display_data, (args.limit, config["CLI"]["ascending"], "Watchlist"))
-    if args.diary:
-        try_command(display_data, (args.limit, config["CLI"]["ascending"], "Diary"))
-    if args.ratings:
-        try_command(display_data, (args.limit, config["CLI"]["ascending"], "Ratings"))
-    if args.lists:
-        try_command(display_data, (args.limit, config["CLI"]["ascending"], "Lists"))
+    try:
+        if args.download:
+            try_command(download_data, ())
+        if args.search:
+            try_command(search_person, (args.search,))
+        if args.search_film:
+            try_command(search_film, (args.search_film,))
+        if args.watchlist:
+            try_command(display_data, (args.limit, config["CLI"]["ascending"], "Watchlist"))
+        if args.diary:
+            try_command(display_data, (args.limit, config["CLI"]["ascending"], "Diary"))
+        if args.ratings:
+            try_command(display_data, (args.limit, config["CLI"]["ascending"], "Ratings"))
+        if args.lists:
+            try_command(display_data, (args.limit, config["CLI"]["ascending"], "Lists"))
+        
+    except KeyboardInterrupt:
+        print('\nProgram interrupted. Exiting.')
+        sys.exit(0)
 
 
 if __name__ == "__main__":
