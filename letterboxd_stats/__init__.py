@@ -4,6 +4,7 @@ import platformdirs
 import argparse
 import getpass
 import sys
+import logging
 
 default_folder = platformdirs.user_config_dir("letterboxd_stats", getpass.getuser())
 
@@ -34,7 +35,8 @@ def load_config(file_path, defaults):
     return merged_config
 
 def merge_dicts(defaults, overrides):
-    """Recursively merge two dictionaries."""
+    """Recursively merge two dictionaries.
+    """
     merged = defaults.copy()
     for key, value in overrides.items():
         if isinstance(value, dict) and key in merged and isinstance(merged[key], dict):
@@ -44,7 +46,8 @@ def merge_dicts(defaults, overrides):
     return merged
 
 def apply_env_variables(config):
-    """Override configuration with environment variables."""
+    """Override configuration with environment variables.
+    """
     env_mapping = {
         "LBSTATS_CLI_POSTER_COLUMNS": ("CLI", "poster_columns"),
         "LBSTATS_CLI_ASCENDING": ("CLI", "ascending"),
@@ -72,20 +75,20 @@ def apply_env_variables(config):
 
 parser = argparse.ArgumentParser(
     prog="Letterboxd Stats",
-    description="CLI tool to display Letterboxd statistics",
+    description="CLI tool to view and interact with Letterboxd",
 )
-parser.add_argument("-s", "--search", help="Search for a director")
-parser.add_argument("-S", "--search-film", help="Search for a film.")
+parser.add_argument("-s", "--search", help="Search for a person")
+parser.add_argument("-S", "--search-film", help="Search for a film")
 parser.add_argument(
     "-d",
     "--download",
     help="Download letterboxd data from your account",
     action="store_true",
 )
-parser.add_argument("-W", "--watchlist", help="show watchlist", action="store_true")
-parser.add_argument("-D", "--diary", help="show diary", action="store_true")
-parser.add_argument("-R", "--ratings", help="show ratings", action="store_true")
-parser.add_argument("-L", "--lists", help="show lists", action="store_true")
+parser.add_argument("-W", "--watchlist", help="View downloaded Letterboxd watchlist", action="store_true")
+parser.add_argument("-D", "--diary", help="View downloaded Letterboxd diary entries", action="store_true")
+parser.add_argument("-R", "--ratings", help="View downloaded Letterboxd ratings", action="store_true")
+parser.add_argument("-L", "--lists", help="View downloaded Letterboxd lists", action="store_true")
 parser.add_argument("-l", "--limit", help="limit the number of items of your wishlist/diary", type=int)
 parser.add_argument("-c", "--config_folder", help="Specify the folder of your config.toml file")
 
