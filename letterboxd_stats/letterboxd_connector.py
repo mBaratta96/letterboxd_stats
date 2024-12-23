@@ -5,13 +5,11 @@ from lxml import html
 from zipfile import ZipFile
 from letterboxd_stats import config
 
-URL = "https://letterboxd.com"
-
-LOGIN_URL = URL + "/user/login.do"
-DATA_EXPORT_URL = URL + "/data/export"
-METADATA_URL = URL +"/ajax/letterboxd-metadata/"
-ADD_DIARY_URL = URL + "/s/save-diary-entry"
-
+LB_BASE_URL = "https://letterboxd.com"
+LOGIN_URL = LB_BASE_URL + "/user/login.do"
+DATA_EXPORT_URL = LB_BASE_URL + "/data/export"
+METADATA_URL = LB_BASE_URL +"/ajax/letterboxd-metadata/"
+ADD_DIARY_URL = LB_BASE_URL + "/s/save-diary-entry"
 
 FILM_OPERATIONS = {
     "Rate film": "rate_film",
@@ -38,8 +36,7 @@ LB_ID_URL_TEMPLATES = {
 
 cache_path = os.path.expanduser(os.path.join(config["root_folder"], "static", "cache.db"))
 
-
-class Connector:
+class LBConnector:
     
     # Constructors
     ##########################
@@ -49,7 +46,7 @@ class Connector:
         self.__password = config["Letterboxd"]["password"]  # Private attribute
         self.session = requests.Session()
         self.logged_in = False
-        self.session.get(URL)
+        self.session.get(LB_BASE_URL)
         self.login()  # Automatically login during initialization
         
     def __init__(self, username: str, password: str):     
@@ -57,7 +54,7 @@ class Connector:
         self.__password = password  # Private attribute
         self.session = requests.Session()
         self.logged_in = False
-        self.session.get(URL)
+        self.session.get(LB_BASE_URL)
         self.login()  # Automatically login during initialization
 
     # Initialization
@@ -95,10 +92,37 @@ class Connector:
         with ZipFile(archive, "r") as zip:
             zip.extractall(path)
         os.remove(archive)
+        
+        return res.status_code
 
         
     # Web Scraping + API Calls
     ###########################
+    
+    def search_lb_by_title(self, title: str):
+        """Search a film and return the results.
+        For reference: https://letterboxd.com/search/seven+samurai/?adult
+        """
+        search_url = create_lb_operation_url_with_title(title, "search")
+        print(f"Searching for '{title}'")
+        res = requests.get(search_url)
+        if res.status_code != 200:
+            raise ConnectionError("Failed to retrieve the Letterboxd page.")
+        search_page = html.fromstring(res.text)
+        # If we want to select films from the search page, get more data to print the selection prompt.
+        film_list = search_page.xpath("//div[@class='film-detail-content']")
+        if len(film_list) == 0:
+            raise ValueError(f"No results found for your Letterboxd film search.")
+        title_years_directors_links = {}
+        for film in film_list:
+            title = film.xpath("./h2/span/a")[0].text.rstrip()
+            director = director[0].text if len(director := film.xpath("./p/a")) > 0 else ""
+            year = f"({year[0].text}) " if len(year := film.xpath("./h2/span//small/a")) > 0 else ""
+            link = film.xpath("./h2/span/a")[0].get("href")
+            title_years_directors_links[f"{title} {year}- {director}"] = link
+            
+        return title_years_directors_links
+
     
     def get_lb_film_id(self, lb_title: str):
         """
@@ -140,11 +164,12 @@ class Connector:
         """
         film_id = self.get_lb_film_id(lb_title)
 
+        film_str = f"film:{film_id}"
         payload= { 
-            "posters": f"film:{film_id}",  # posters retrieves "watchlist" status
-            "likeables": f"film:{film_id}",
-            "watchables": f"film:{film_id}",
-            "ratables": f"film:{film_id}"
+            "posters": film_str,  # posters retrieves "watchlist" status
+            "likeables": film_str,
+            "watchables": film_str,
+            "ratables": film_str,
             }
         
             # Construct headers
@@ -195,9 +220,7 @@ class Connector:
             ConnectionError: If the request to update the like status fails.
         """
         lb_id = self.get_lb_film_id(title)
-        print(self.fetch_lb_film_user_metadata(title))
         url = create_lb_operation_url_with_id(lb_id, "like")
-        print(f"Operation URL: {url}")
         payload = {
             "liked": "true" if liked else "false",  # Mark as liked or unliked
             "__csrf": self.session.cookies.get("com.xk72.webparts.csrf"),
@@ -321,11 +344,14 @@ class Connector:
         
 
 
+# Non-Object Functions
+##########################
+
 def create_lb_operation_url_with_title(title: str, operation: str) -> str:
-    return URL + LB_TITLE_URL_TEMPLATES[operation](title)
+    return LB_BASE_URL + LB_TITLE_URL_TEMPLATES[operation](title)
 
 def create_lb_operation_url_with_id(id: str, operation: str) -> str:
-    return URL + LB_ID_URL_TEMPLATES[operation](id)
+    return LB_BASE_URL + LB_ID_URL_TEMPLATES[operation](id)
 
 def _get_tmdb_id_from_lb_html(link: str, is_diary: bool) -> int:
     """Scraping the TMDB link from a Letterboxd film page.
@@ -340,7 +366,7 @@ def _get_tmdb_id_from_lb_html(link: str, is_diary: bool) -> int:
         if len(title_link) == 0:
             raise ValueError("No link found for film.")
         film_link = title_link[0]
-        film_url = URL + film_link.get("href")
+        film_url = LB_BASE_URL + film_link.get("href")
         film_page = html.fromstring(requests.get(film_url).text)
     tmdb_link = film_page.xpath("//a[@data-track-action='TMDb']")
     if len(tmdb_link) == 0:
@@ -378,12 +404,3 @@ def get_tmdb_id_from_lb(link: str, is_diary=False) -> int | None:
             id = None
     tmdb_id_cache.close()
     return id
-
-def get_search_results_from_lb(title: str):
-    search_url = create_lb_operation_url_with_title(title, "search")
-    print(f"Searching for '{title}'")
-    res = requests.get(search_url)
-    if res.status_code != 200:
-        raise ConnectionError("Failed to retrieve the Letterboxd page.")
-    search_page = html.fromstring(res.text)
-    return search_page
