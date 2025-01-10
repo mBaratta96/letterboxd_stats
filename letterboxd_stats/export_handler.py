@@ -21,17 +21,17 @@ def check_path_exists(path: str):
             f"No Letterboxd data was found in {path}. Make sure the path is correct or run -d to download your data"
         )
 
-def check_if_watched(df: pd.DataFrame, row: pd.Series) -> bool:
+def check_if_watched(watched_csv_df: pd.DataFrame, film_row: pd.Series) -> bool:
     """watched.csv hasn't the TMDB id, so comparison can be done only by title.
     This creates the risk of mismatch when two films have the same title. To avoid this,
     we must retrieve the TMDB id of the watched film.
     """
 
-    if row["Title"] in df["Name"].values:
-        watched_films_same_name = df[df["Name"] == row["Title"]]
+    if film_row["Title"] in watched_csv_df["Name"].values:
+        watched_films_same_name = watched_csv_df[watched_csv_df["Name"] == film_row["Title"]]
         for _, film in watched_films_same_name.iterrows():
             film_id = get_tmdb_id_from_lb(film["Letterboxd URI"])
-            if film_id == row.name:
+            if film_id == film_row.name:
                 return True
     return False
 
@@ -54,6 +54,6 @@ def add_lb_watched_status_column(df: pd.DataFrame, watched_csv: str) -> pd.DataF
     df.sort_values(by="Release Date", inplace=True)
     return df
 
-def get_list_name(path: str) -> str:
-    df = pd.read_csv(path, header=1)
+def get_list_name(list_csv_path: str) -> str:
+    df = pd.read_csv(list_csv_path, header=1)
     return df["Name"].iloc[0]

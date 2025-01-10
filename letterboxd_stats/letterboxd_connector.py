@@ -162,51 +162,41 @@ class LBConnector:
             ValueError: If the required user cookie is missing.
             ConnectionError: If the metadata API call fails.
         """
-        film_id = self.get_lb_film_id(lb_title)
 
-        film_str = f"film:{film_id}"
-        payload= { 
-            "posters": film_str,  # posters retrieves "watchlist" status
-            "likeables": film_str,
-            "watchables": film_str,
-            "ratables": film_str,
-            }
-        
-            # Construct headers
+ 
+        # Construct headers
         user_cookie = self.session.cookies.get("letterboxd.user.CURRENT")
         if not user_cookie:
             raise ValueError("Missing `letterboxd.user.CURRENT` cookie in session.")
-        headers = {
-            "Cookie": f"letterboxd.user.CURRENT={user_cookie}",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:133.0) Gecko/20100101 Firefox/133.0",
-            "X-Requested-With": "XMLHttpRequest",
-            "Content-Type": "application/x-www-form-urlencoded",
-        }
+        
+        headers = {"Cookie": f"letterboxd.user.CURRENT={user_cookie}"}
+
+        payload= {}
+        film_id = self.get_lb_film_id(lb_title)
+        details = [ "posters", "likeables", "watchables", "ratables"]
+        for detail in details:
+            payload[detail] = f"film:{film_id}"
 
         res = self.session.post(METADATA_URL, headers=headers, data=payload)
 
         try:
-            metadata = res.json()
+            metadata_json = res.json()
         except ValueError:
             print("Response JSON: Unable to parse as JSON.")
 
         # Validate the response
         if not (res.status_code == 200 and res.json().get("result") is True):
             raise ConnectionError("Failed to update watched status.")
-  
-        # Extract data
-        watched = any(item.get("watched", False) for item in metadata.get("watchables", []))
-        liked = any(item.get("liked", False) for item in metadata.get("likeables", []))
-        watchlisted = bool(metadata.get("filmsInWatchlist"))
-        rating = next((item.get("rating") for item in metadata.get("rateables", []) if "rating" in item), None)
 
         # Return the simplified dictionary
-        return {
-            "Watched": watched,
-            "Liked": liked,
-            "Watchlisted": watchlisted,
-            "Rating": rating,
+        metadata = {
+            "Watched": any(item.get("watched", False) for item in metadata_json.get("watchables", [])),
+            "Liked": any(item.get("liked", False) for item in metadata_json.get("likeables", [])),
+            "Watchlisted": bool(metadata_json.get("filmsInWatchlist")),
+            "Rating": next((item.get("rating") for item in metadata_json.get("rateables", []) if "rating" in item), None),
         }
+        
+        return metadata
     
     def set_film_liked_status(self, title: str, liked: bool = True):
         """

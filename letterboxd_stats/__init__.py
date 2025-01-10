@@ -18,7 +18,16 @@ CONFIG_DEFAULTS = {
     },
 }
 
-def load_config(file_path, defaults):
+ENV_CONFIG_MAPPING = {
+    "LBSTATS_CLI_POSTER_COLUMNS": ("CLI", "poster_columns"),
+    "LBSTATS_CLI_ASCENDING": ("CLI", "ascending"),
+    "LBSTATS_TMDB_GET_LIST_RUNTIMES": ("TMDB", "get_list_runtimes"),
+    "LBSTATS_TMDB_API_KEY": ("TMDB", "api_key"),
+    "LBSTATS_USERNAME": ("Letterboxd", "username"),
+    "LBSTATS_PASSWORD": ("Letterboxd", "password"),
+}
+
+def load_config(file_path):
     # Load the TOML file if it exists
     if os.path.exists(file_path):
         with open(file_path, "rb") as f:
@@ -27,10 +36,10 @@ def load_config(file_path, defaults):
         user_config = {}
 
     # Merge user_config with defaults
-    merged_config = merge_dicts(defaults, user_config)
+    merged_config = merge_dicts(CONFIG_DEFAULTS, user_config)
 
     # Override with environment variables if available
-    merged_config = apply_env_variables(merged_config)
+    merged_config = apply_env_variables(merged_config, ENV_CONFIG_MAPPING)
 
     return merged_config
 
@@ -45,19 +54,11 @@ def merge_dicts(defaults, overrides):
             merged[key] = value
     return merged
 
-def apply_env_variables(config):
+def apply_env_variables(config, env_config_mapping):
     """Override configuration with environment variables.
     """
-    env_mapping = {
-        "LBSTATS_CLI_POSTER_COLUMNS": ("CLI", "poster_columns"),
-        "LBSTATS_CLI_ASCENDING": ("CLI", "ascending"),
-        "LBSTATS_TMDB_GET_LIST_RUNTIMES": ("TMDB", "get_list_runtimes"),
-        "LBSTATS_TMDB_API_KEY": ("TMDB", "api_key"),
-        "LBSTATS_USERNAME": ("Letterboxd", "username"),
-        "LBSTATS_PASSWORD": ("Letterboxd", "password"),
-    }
-
-    for env_var, keys in env_mapping.items():
+    
+    for env_var, keys in env_config_mapping.items():
         if env_var in os.environ:
             section, key = keys
             value = os.environ[env_var]
@@ -106,5 +107,5 @@ if not os.path.exists(config_path):
         + "Please, add a config.toml in that folder or specify a custom one with the -c command."
     )
 
-config = load_config(config_path, CONFIG_DEFAULTS)
+config = load_config(config_path)
 
