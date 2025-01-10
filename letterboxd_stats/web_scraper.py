@@ -124,7 +124,8 @@ def _get_tmdb_id_from_web(link: str, is_diary: bool) -> int:
     tmdb_category = tmdb_link[0].get("href").split("/")[-3]
     
     if tmdb_category != "movie":
-        raise ValueError(f"Tool does not currently support TMDB category \"{tmdb_category}\": {tmdb_link[0].get("href")}")
+        full_link = tmdb_link[0].get("href")
+        raise ValueError(f"Tool does not currently support TMDB category \"{tmdb_category}\": {full_link}")
 
     id = tmdb_link[0].get("href").split("/")[-2]
     return int(id)
