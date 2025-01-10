@@ -89,9 +89,9 @@ parser.add_argument("-L", "--lists", help="show lists", action="store_true")
 parser.add_argument("-l", "--limit", help="limit the number of items of your wishlist/diary", type=int)
 parser.add_argument("-c", "--config_folder", help="Specify the folder of your config.toml file")
 
-if len(sys.argv) == 1:
-    parser.print_help(sys.stderr)
-    sys.exit(1)
+#if len(sys.argv) == 1:
+#    parser.print_help(sys.stderr)
+#    sys.exit(1)
 
 args = parser.parse_args()
 
