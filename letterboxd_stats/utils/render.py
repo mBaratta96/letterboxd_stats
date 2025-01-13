@@ -1,4 +1,8 @@
 import pandas as pd
+import tempfile
+import img2unicode
+import requests
+from io import BytesIO
 
 from rich.console import Console
 from rich.table import Table
@@ -79,3 +83,32 @@ class CLIRenderer:
         """
         art = AsciiArt.from_url(poster_url)
         art.to_terminal(columns=poster_columns)
+        
+    @staticmethod
+    def render_unicode_poster(poster_url: str, poster_columns: int = 80, max_height: int = 60, block_mode: bool = True):
+        """
+        Render a poster as Unicode art in the console.
+
+        Parameters:
+        - poster_url: URL of the poster image.
+        - poster_columns: Width of the Unicode art in characters.
+        - max_height: Maximum height of the Unicode art in characters.
+        - block_mode: Whether to use Unicode block elements for rendering.
+        """
+        # Fetch the poster image from the URL
+        response = requests.get(poster_url)
+        if response.status_code != 200:
+            raise ValueError(f"Failed to fetch image from URL: {poster_url}")
+        
+        # Save the image to a temporary file
+        with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as temp_file:
+            temp_file.write(response.content)
+            temp_file_path = temp_file.name
+        
+        # Load the image into img2unicode
+        image_data = BytesIO(response.content)
+        optimizer = img2unicode.FastGenericDualOptimizer("block") if block_mode else img2unicode.FastGammaOptimizer("no_block")
+        renderer = img2unicode.Renderer(default_optimizer=optimizer, max_h=max_height, max_w=poster_columns)
+        
+        # Render the poster directly to the terminal
+        renderer.render_terminal(temp_file_path, "test.txt")

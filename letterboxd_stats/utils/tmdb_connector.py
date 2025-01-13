@@ -1,12 +1,12 @@
 import pandas as pd
+
+from typing import Any, Tuple
+from tmdbv3api import TMDb, Person, Movie, Search
 from pandarallel import pandarallel
 from tmdbv3api.exceptions import TMDbException
 from tmdbv3api.objs.account import AsObj
-from typing import Any, Tuple
-from tmdbv3api import TMDb, Person, Movie, Search
 
 POSTER_URL_PREFIX = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2"
-
 
 class TMDbAPI:
     def __init__(self, api_key: str):
@@ -29,7 +29,7 @@ class TMDbAPI:
             return None
         return POSTER_URL_PREFIX + poster_path
 
-    def get_movie_runtime(self, tmdb_id: int) -> int:
+    def fetch_movie_runtime(self, tmdb_id: int) -> int:
         """
         Fetch the runtime of a movie using its TMDB ID.
         """
@@ -44,7 +44,7 @@ class TMDbAPI:
         """
         Search for people on TMDB by name. Returns all search results.
         """
-        print(f"Searching for '{person_query}'")
+        print(f"Searching for person named '{person_query}'")
         search_results = self.search.people({"query": person_query})
         if len([result.name for result in search_results]) == 0:
             raise Exception("No results found for your TMDB person search.")
@@ -59,7 +59,7 @@ class TMDbAPI:
             raise Exception("No results found for your TMDB movie search.")
         return search_results
 
-    def get_tmdb_person_and_movies(self, tmdb_person_id: str) -> Tuple[pd.DataFrame, str, str]:
+    def fetch_tmdb_person_details(self, tmdb_person_id: str) -> Tuple[pd.DataFrame, str, str]:
         """
         Fetch detailed information about a person. Returns list of movies, name, and most known-for department.
         https://developer.themoviedb.org/reference/person-details
@@ -82,7 +82,7 @@ class TMDbAPI:
         return df, person_["name"], person_["known_for_department"]
 
 
-    def get_all_tmdb_movie_details(self, tmdb_id: int, letterboxd_url=None) -> dict:
+    def fetch_all_movie_details(self, tmdb_id: int, letterboxd_url=None) -> dict:
         """Creates dict of movie details fetched from TMDB API. Optionally include Letterboxd URL
         """
         movie_details = self.movie.details(tmdb_id)

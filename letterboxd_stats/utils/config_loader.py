@@ -2,6 +2,7 @@ import getpass
 import os
 import platformdirs
 import tomli
+from decouple import config as env_config, UndefinedValueError
 
 default_config_dir = platformdirs.user_config_dir("letterboxd_stats", getpass.getuser())
 
@@ -40,38 +41,53 @@ def load_config(file_path=None):
         with open(file_path, "rb") as f:
             user_config = tomli.load(f)
     else:
+        print(
+            f"No config file found at {file_path}. "
+            + "Please add a config.toml in that folder or specify a custom one with the -c command."
+        )
         user_config = {}
 
-    # Merge user_config with defaults
-    merged_config = merge_dicts(CONFIG_DEFAULTS, user_config)
+    # MApply defaults
+    merged_config = _merge_dicts(CONFIG_DEFAULTS, user_config)
 
     # Override with environment variables if available
-    merged_config = apply_env_variables(merged_config, ENV_CONFIG_MAPPING)
+    merged_config = _apply_env_variables(merged_config, ENV_CONFIG_MAPPING)
 
     _config_cache = merged_config  # Cache the config
 
     return merged_config
 
-def merge_dicts(defaults, overrides):
+def _merge_dicts(defaults, overrides):
     """Recursively merge two dictionaries."""
     merged = defaults.copy()
     for key, value in overrides.items():
         if isinstance(value, dict) and key in merged and isinstance(merged[key], dict):
-            merged[key] = merge_dicts(merged[key], value)
+            merged[key] = _merge_dicts(merged[key], value)
         else:
             merged[key] = value
     return merged
 
-def apply_env_variables(config, env_config_mapping):
-    """Override config with environment variables."""
-    for env_var, keys in env_config_mapping.items():
-        if env_var in os.environ:
-            section, key = keys
-            value = os.environ[env_var]
-            # Convert boolean strings to actual booleans
-            if value.lower() in ["true", "false"]:
+def _apply_env_variables(config, env_config_mapping):
+    """
+    Override config with environment variables using python-decouple.
+    
+    Args:
+        config (dict): Existing configuration.
+        env_config_mapping (dict): Mapping of environment variables to config keys.
+        
+    Returns:
+        dict: Updated configuration.
+    """
+    for env_var, (section, key) in env_config_mapping.items():
+        try:
+            value = env_config(env_var)
+            # Handle type conversions
+            if isinstance(config[section][key], bool):
                 value = value.lower() == "true"
-            elif value.isdigit():
+            elif isinstance(config[section][key], int):
                 value = int(value)
             config[section][key] = value
+        except UndefinedValueError:
+            # Skip if the environment variable is not set
+            pass
     return config

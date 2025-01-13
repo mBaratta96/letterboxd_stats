@@ -1,25 +1,67 @@
 import os
 import pandas as pd
+from tqdm import tqdm
+from pandarallel import pandarallel
+
+
+from ..utils.render import CLIRenderer
+from ..utils.tmdb_connector import TMDbAPI
+from ..lb.auth_connector import LBAuthConnector
+from ..lb.public_connector import LBPublicConnector
+
+
 from .user_input_handler import UserInputHandler
-from ..core.export_handler import get_export_path, get_list_name
-from ..core.render import CLIRenderer
-from ..core.letterboxd_connector import LBConnector
-from ..core.tmdb_connector import TMDbAPI
+
+tqdm.pandas(desc="Fetching ids...")
+pandarallel.initialize(progress_bar=False, verbose=1)
+
+LB_DATA_FILES = {
+    "Watchlist": "watchlist.csv", 
+    "Diary": "diary.csv", 
+    "Ratings": "ratings.csv",
+    "Watched": "watched.csv", 
+    "Lists": "lists"
+    }
+
 
 
 class ExportViewer:
     
-    def __init__(self, root_folder: str, renderer:CLIRenderer, get_list_runtimes: bool = False, tmdb_api:TMDbAPI=None, lb_connector:LBConnector=None):
+    def __init__(self, root_folder: str, renderer:CLIRenderer, get_list_runtimes: bool = False, tmdb_api:TMDbAPI=None, lb_connector:LBAuthConnector=None):
         """
-        Initialize the LetterboxdCLI with optional configuration.
+        Initialize the ExportViewer with optional configuration.
+
+        Args:
+            root_folder (str): The root directory where Letterboxd export files are located.
+            renderer (CLIRenderer): An instance of `CLIRenderer` responsible for managing 
+                command-line interface output.
+            get_list_runtimes (bool, optional): Flag indicating whether to retrieve runtime 
+                information for movies in lists using the TMDB API. Defaults to `False`.
+            tmdb_api (TMDbAPI, optional): An instance of `TMDbAPI` used to interact with The 
+                Movie Database (TMDB) API. Only required if `get_list_runtimes` is set to `True`. 
+                If not provided, this should be initialized elsewhere in the application.
+            lb_connector (LBConnector, optional): An instance of `LBConnector` used for managing 
+                connections to Letterboxd data. Only required if `get_list_runtimes` is set to `True`. 
+                Defaults to a new instance of `LBConnector` if not provided.
+
+        Attributes:
+            renderer (CLIRenderer): Stores the provided `CLIRenderer` instance for output handling.
+            root_folder (str): Stores the root directory path for Letterboxd export files.
+            get_list_runtimes (bool): Indicates whether runtime retrieval is enabled.
+            lb_connector (LBConnector): Instance of `LBConnector` for managing Letterboxd connections. 
+                Only initialized if `get_list_runtimes` is `True`.
+            tmdb_api (TMDbAPI): Instance of `TMDbAPI` for accessing TMDB data. 
+                Only initialized if `get_list_runtimes` is `True`.
+            user_operations_by_export_type (dict): A mapping of export types (e.g., "Diary", 
+                "Watchlist") to the corresponding processing functions.
         """
         self.renderer = renderer
-        self.root_folder = root_folder
+        self.exports_folder = os.path.expanduser(os.path.join(root_folder, "static"))
 
         self.get_list_runtimes = get_list_runtimes
         
         if self.get_list_runtimes:
-            self.lb_connector = lb_connector or LBConnector()
+            self.lb_connector = lb_connector or LBPublicConnector()
             self.tmdb_api = tmdb_api              
         
         self.user_operations_by_export_type = {
@@ -62,7 +104,7 @@ class ExportViewer:
 
     def _process_lists_df(self, df: pd.DataFrame, sort_ascending: bool = False) -> pd.DataFrame:
         
-        ratings_path = get_export_path(self.root_folder, "Ratings")
+        ratings_path = self.get_export_path("Ratings")
         df_ratings = pd.read_csv(ratings_path)
         df_ratings.rename(columns={"Letterboxd URI": "URL"}, inplace=True)
         df = df.merge(df_ratings[["URL", "Rating"]], on="URL", how="inner")
@@ -76,15 +118,13 @@ class ExportViewer:
         if self.get_list_runtimes is True:
             print("Fetching movie runtimes...")
             ids = df["Url"].parallel_map(self.lb_connector.get_tmdb_id_from_lb_page)
-            df["Duration"] = ids.parallel_map(self.tmdb_api.get_movie_runtime)  # type: ignore
+            df["Duration"] = ids.parallel_map(self.tmdb_api.fetch_movie_runtime)  # type: ignore
             avg["Time-weighted Rating Mean"] = "{:.2f}".format(
                 ((df["Duration"] / df["Duration"].sum()) * df["Rating"]).sum()
             )
         
         self.renderer.render_dict(avg, expand=False)
         return df
-    
-    
     
     def view_lb_export_lists_directory(self, lists_dir_path: str, limit: int = None) -> str:
         """Select a list from the saved ones."""
@@ -95,7 +135,7 @@ class ExportViewer:
         name = UserInputHandler.user_choose_option_lb_lists(sorted(list(list_names.keys())))
         return self.view_lb_export_csv("Lists", os.path.join(lists_dir_path, list_names[name]), limit, header=3)
 
-    def view_lb_export_csv(self, filetype: str, path: str, limit: int = None, header=0) -> str:
+    def view_lb_export_csv(self, export_type: str, path: str, limit: int = None, header=0) -> str:
         """There are some operations that are the same for all the .csv files. So isolate those similar operations,
         and then we proceed to perform the particular operation for a certain file (watchlist, list, diary...).
         OPERATIONS_BY_EXPORT_TYPE selects those particular operations according to the file we opened. Mainly they do
@@ -106,12 +146,79 @@ class ExportViewer:
 
         df["Year"] = df["Year"].fillna(0).astype(int)
         
-        df = self.user_operations_by_export_type[filetype](df, self.renderer.sort_ascending)
+        df = self.user_operations_by_export_type[export_type](df, self.renderer.sort_ascending)
 
-        print("Test", df)
+        #print("Test", df)
 
         if limit is not None:
             df = df.iloc[:limit, :]
-        self.renderer.render_table(df, filetype)
+        self.renderer.render_table(df, export_type)
         return UserInputHandler.user_choose_film_from_list(df["Title"], df["Url"])
     
+
+    # def _check_if_watched(self, watched_csv_df: pd.DataFrame, film_row: pd.Series) -> bool:
+    #     """watched.csv hasn't the TMDB id, so comparison can be done only by title.
+    #     This creates the risk of mismatch when two films have the same title. To avoid this,
+    #     we must retrieve the TMDB id of the watched film.
+    #     """
+
+    #     matched_films = watched_csv_df[watched_csv_df["Name"] == film_row["Title"]]
+    #     for _, film in matched_films.iterrows():
+    #         film_id = self.lb_connector.get_tmdb_id_from_lb_page(film["Letterboxd URI"])
+    #         if film_id == film_row.name:
+    #             return True
+            
+    #     return False
+
+
+    def add_lb_watched_status_column(self, df: pd.DataFrame, watched_csv: str) -> pd.DataFrame:
+        """Check which film of a director you have seen. Add a column to show on the CLI.
+        """
+        
+        df_profile = pd.read_csv(watched_csv)
+        
+        matching_watched_films = df_profile[df_profile["Name"].isin(df["Title"])].copy()      
+        matching_watched_films["TMDB_ID"] = matching_watched_films["Letterboxd URI"].map(
+            lambda uri: self.lb_connector.get_tmdb_id_from_lb_page(uri)
+        )
+        
+        watched_ids = set(matching_watched_films["TMDB_ID"].dropna())
+        
+        df["watched"] = df.index.map(lambda idx: "[X]" if idx in watched_ids else "[ ]")
+        
+        df["Release Date"] = pd.to_datetime(df["Release Date"])
+        df.sort_values(by="Release Date", inplace=True)
+        return df
+    
+
+    def get_export_path(self, export_type: str) -> str:
+        if export_type not in LB_DATA_FILES:
+            raise ValueError(f"Invalid export type: {export_type}. Available types: {list(LB_DATA_FILES.keys())}")
+        
+        path = os.path.expanduser(os.path.join(self.exports_folder, LB_DATA_FILES[export_type]))
+        
+        if not os.path.exists(path):
+            raise FileNotFoundError(
+                f"No Letterboxd data was found in {path}. Make sure the path is correct or run -d to download your data"
+            )
+            
+        return path
+
+    def export_exists(self) -> bool:
+        """
+        Check if the export data has already been downloaded and extracted.
+        Returns:
+            bool: True if all expected files are present, False otherwise.
+        """        
+        for file_name in LB_DATA_FILES.values():
+            file_path = os.path.join(self.exports_folder, file_name)  # Update path if needed
+            if not os.path.exists(file_path):
+                return False
+        return True
+
+def get_list_name(list_csv_path: str) -> str:
+    df = pd.read_csv(list_csv_path, header=1)
+    if "Name" not in df.columns or df.empty:
+            raise ValueError(f"The list CSV at {list_csv_path} is missing a 'Name' column or is empty.")
+    return df["Name"].iloc[0]
+
