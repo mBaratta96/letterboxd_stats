@@ -2,10 +2,10 @@
 Letterboxd Stats CLI Entry Point
 ================================
 
-This script serves as the entry point for the Letterboxd Stats CLI application. It allows users to
-interact with their Letterboxd data, perform searches, update metadata, and explore export files,
-all from the command line. The script uses an `argparse` interface to provide a variety of commands
-and options.
+This script serves as the entry point for the Letterboxd Stats CLI application.
+It allows users to interact with their Letterboxd data, perform searches, update
+metadata, and explore export files, all from the command line. The script uses
+an `argparse` interface to provide a variety of commands and options.
 
 Features:
 ---------
@@ -24,6 +24,7 @@ Features:
    - Update metadata such as watched status, ratings, and diary entries directly from the CLI.
 
 """
+
 import argparse
 import logging
 import logging.config
@@ -71,6 +72,7 @@ logging.config.dictConfig(LOGGING_CONFIG)
 
 logger = logging.getLogger(__name__)
 
+
 def _create_parser():
     parser = argparse.ArgumentParser(
         prog="Letterboxd Stats",
@@ -78,14 +80,41 @@ def _create_parser():
     )
     parser.add_argument("-s", "--search-person", help="Search for a person")
     parser.add_argument("-S", "--search-film", help="Search for a film")
-    parser.add_argument("-d", "--download", help="Download letterboxd data", action="store_true")
-    parser.add_argument("-W", "--watchlist", help="View downloaded Letterboxd watchlist", action="store_true")
-    parser.add_argument("-D", "--diary", help="View downloaded Letterboxd diary entries", action="store_true")
-    parser.add_argument("-R", "--ratings", help="View downloaded Letterboxd ratings", action="store_true")
-    parser.add_argument("-L", "--lists", help="View downloaded Letterboxd lists", action="store_true")
-    parser.add_argument("-l", "--limit", help="Limit the number of items of your wishlist/diary", type=int)
-    parser.add_argument("-c", "--config_folder", help="Specify the folder of your config.toml file")
+    parser.add_argument(
+        "-d", "--download", help="Download letterboxd data", action="store_true"
+    )
+    parser.add_argument(
+        "-W",
+        "--watchlist",
+        help="View downloaded Letterboxd watchlist",
+        action="store_true",
+    )
+    parser.add_argument(
+        "-D",
+        "--diary",
+        help="View downloaded Letterboxd diary entries",
+        action="store_true",
+    )
+    parser.add_argument(
+        "-R",
+        "--ratings",
+        help="View downloaded Letterboxd ratings",
+        action="store_true",
+    )
+    parser.add_argument(
+        "-L", "--lists", help="View downloaded Letterboxd lists", action="store_true"
+    )
+    parser.add_argument(
+        "-l",
+        "--limit",
+        help="Limit the number of items of your wishlist/diary",
+        type=int,
+    )
+    parser.add_argument(
+        "-c", "--config_folder", help="Specify the folder of your config.toml file"
+    )
     return parser
+
 
 def _parse_args():
     parser = _create_parser()
@@ -98,13 +127,48 @@ def _parse_args():
 
     return args
 
+
 def _try_command(command, args):
     try:
         command(*args)
     except Exception as e:
         logger.error(e)
+        raise
+
 
 def main():
+    """
+    Main entry point for the Letterboxd Stats CLI application.
+
+    This function initializes the logging system, parses command-line arguments,
+    loads the configuration, and executes the requested commands. The commands
+    allow users to interact with Letterboxd data such as downloading export
+    files, searching for films or people, and viewing Watchlist, Diary, Ratings,
+    or Lists.
+
+    Key Responsibilities:
+    ----------------------
+    1. **Argument Parsing**:
+       - Handles user input via command-line arguments using argparse.
+       - Prints help information if no arguments are provided.
+
+    2. **Configuration Loading**:
+       - Loads settings from a `config.toml` file or an environment variable.
+       - Validates the presence of critical keys like the TMDB API key.
+
+    3. **Command Execution**:
+       - Downloads Letterboxd data, performs searches, or views exports.
+       - Gracefully handles errors during command execution with proper logging.
+
+    4. **Graceful Exit**:
+       - Handles `KeyboardInterrupt` (Ctrl+C) to ensure a clean exit.
+
+    Raises:
+    -------
+    - SystemExit:
+        If required arguments are missing or if the program is interrupted.
+    """
+
     logger.info("Letterboxd Stats started.")
 
     # Get CLI arguments
@@ -118,7 +182,9 @@ def main():
     tmdb_api_key = config.get("TMDB", {}).get("api_key")
 
     if tmdb_api_key is None:
-        logger.error("TMDB API key is required, but was not found in configuration or environment.")
+        logger.error(
+            "TMDB API key is required, but was not found in configuration or environment."
+        )
         return
 
     lb_cli_kwargs = {
@@ -129,7 +195,7 @@ def main():
         "cli_poster_columns": config.get("CLI", {}).get("poster_columns"),
         "cli_ascending": config.get("CLI", {}).get("ascending"),
         "tmdb_get_list_runtimes": config.get("TMDB", {}).get("get_list_runtimes"),
-        "limit": args.limit
+        "limit": args.limit,
     }
 
     filtered_kwargs = {k: v for k, v in lb_cli_kwargs.items() if v is not None}
@@ -153,8 +219,9 @@ def main():
             _try_command(cli.view_exported_lb_data, ("Lists",))
 
     except KeyboardInterrupt:
-        logger.info('\nProgram interrupted. Exiting.')
+        logger.info("\nProgram interrupted. Exiting.")
         sys.exit(0)
+
 
 if __name__ == "__main__":
     main()

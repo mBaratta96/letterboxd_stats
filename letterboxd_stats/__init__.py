@@ -2,9 +2,10 @@
 Letterboxd Stats Package Exports
 ===============
 
-This module exposes the key modules and functions from the package, making them available for import
-when the package is accessed as a whole. It simplifies the import process for users of the package
-by providing a central location for core functionality.
+This module exposes the key modules and functions from the package, making them
+available for import when the package is accessed as a whole. It simplifies the
+import process for users of the package by providing a central location for core
+functionality.
 
 Metadata:
 ---------
@@ -17,7 +18,7 @@ from .cli.letterboxd_cli import LetterboxdCLI
 from .lb.auth_connector import LBAuthConnector
 from .lb.data_exporter import LBUserDataExporter
 from .lb.public_connector import LBPublicConnector
-from .utils.tmdb_connector import TMDbAPI
+from .utils.tmdb_api import TMDbAPI
 
 __version__ = "0.3.0"
 __author__ = "mBaratta96"

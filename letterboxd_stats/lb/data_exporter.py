@@ -2,9 +2,9 @@
 LBUserDataExporter Module
 =========================
 
-This module provides the `LBUserDataExporter` class, which is responsible for downloading
-and extracting user-specific data exports from Letterboxd. It requires an authenticated
-session to perform its operations.
+This module provides the `LBUserDataExporter` class, which is responsible for
+downloading and extracting user-specific data exports from Letterboxd. It requires
+an authenticated session to perform its operations.
 
 Classes:
 --------
@@ -34,6 +34,27 @@ logger = logging.getLogger(__name__)
 DATA_EXPORT_URL = LB_BASE_URL + "/data/export"
 
 class LBUserDataExporter:
+    """
+    Handles downloading and extracting user-specific data exports from Letterboxd.
+
+    This class uses an authenticated session to fetch data as a ZIP archive,
+    extracts its contents, and cleans up temporary files. It ensures proper
+    error handling for login status, response validation, and file operations.
+
+    Attributes:
+    -----------
+    - auth (LBAuth): Authenticated session handler.
+
+    Example:
+    --------
+    ```python
+    auth = LBAuth(username="user", password="pass")
+    auth.login()
+    exporter = LBUserDataExporter(auth)
+    path = exporter.download_and_extract_data("/path/to/extract")
+    print(f"Data extracted to: {path}")
+    ```
+    """
     def __init__(self, auth):
         """
         Initialize the LBDataExporter with an authentication handler.

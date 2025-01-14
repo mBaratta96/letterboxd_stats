@@ -2,9 +2,9 @@
 GeneralCache Module
 ===================
 
-This module provides a lightweight SQLite-based caching system for storing and retrieving
-key-value pairs within a specified namespace (prefix). It is useful for reducing redundant
-operations, such as repeated API calls or computation.
+This module provides a lightweight SQLite-based caching system for storing and
+retrieving key-value pairs within a specified namespace (prefix). It is useful
+for reducing redundant operations, such as repeated API calls or computation.
 
 Classes:
 --------
@@ -23,21 +23,50 @@ Features:
    - `save`: Store or update a value in the cache.
    - `clear`: Remove entries from the cache, either globally or within a specific namespace.
 
-SQLite Schema:
---------------
-The cache is stored in a single table with the following structure:
-- `prefix` (TEXT): The namespace for the cached value.
-- `key` (TEXT): The unique key within the namespace.
-- `id` (INTEGER): The cached value (e.g., an ID or similar data).
-- Primary Key: Combination of `prefix` and `key`.
-
 """
+
 import logging
 import sqlite3
 
 logger = logging.getLogger(__name__)
 
+
 class GeneralCache:
+    """
+    A lightweight SQLite-based caching system for managing key-value pairs across namespaces.
+
+    Attributes:
+    -----------
+    - db_path (str): The path to the SQLite database file. Defaults to "cache.db".
+
+    Notes:
+    ------
+    - Cached data is stored in a table named `cache` with the following schema:
+      - `prefix` (TEXT): Namespace for the cache entry.
+      - `key` (TEXT): Unique key within the namespace.
+      - `id` (INTEGER): Cached value associated with the key.
+      - Primary Key: Combination of `prefix` and `key`.
+    - The `clear` method supports partial or full cache clearing.
+
+    Example Usage:
+    --------------
+    ```python
+    cache = GeneralCache("my_cache.db")
+
+    # Save a value
+    cache.save("movies", "inception", 12345)
+
+    # Retrieve the value
+    movie_id = cache.get("movies", "inception")
+    print(movie_id)  # Output: 12345
+
+    # Clear the cache for a specific namespace
+    cache.clear("movies")
+
+    # Clear the entire cache
+    cache.clear()
+    ```
+    """
     def __init__(self, db_path="cache.db"):
         self.db_path = db_path
         self._initialize_db()
@@ -46,30 +75,40 @@ class GeneralCache:
         """Ensure the cache table exists."""
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
-            cursor.execute("""
+            cursor.execute(
+                """
                 CREATE TABLE IF NOT EXISTS cache (
                     prefix TEXT,
                     key TEXT,
                     id INTEGER,
                     PRIMARY KEY (prefix, key)
                 )
-            """)
+            """
+            )
             conn.commit()
 
     def get(self, prefix, key):
+        """Basic CRUD Operation: READ"""
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
-            cursor.execute("SELECT id FROM cache WHERE prefix = ? AND key = ?", (prefix, key))
+            cursor.execute(
+                "SELECT id FROM cache WHERE prefix = ? AND key = ?", (prefix, key)
+            )
             result = cursor.fetchone()
             return result[0] if result else None
 
     def save(self, prefix, key, tmdb_id):
+        """Basic CRUD Operation: CREATE/UPDATE"""
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
-            cursor.execute("INSERT OR REPLACE INTO cache (prefix, key, id) VALUES (?, ?, ?)", (prefix, key, tmdb_id))
+            cursor.execute(
+                "INSERT OR REPLACE INTO cache (prefix, key, id) VALUES (?, ?, ?)",
+                (prefix, key, tmdb_id),
+            )
             conn.commit()
 
     def clear(self, namespace=None):
+        """Basic CRUD Operation: DELETE"""
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             if namespace:

@@ -2,8 +2,9 @@
 Configuration Loader Module
 ===========================
 
-This module provides functionality to load and manage configuration settings for the Letterboxd Stats application.
-It supports hierarchical configuration merging from default settings, user-provided TOML files, and environment variables.
+This module provides functionality to load and manage configuration settings
+for the Letterboxd Stats application. It supports hierarchical configuration
+merging from default settings, user-provided TOML files, and environment variables.
 
 Features:
 ---------
@@ -18,6 +19,7 @@ Features:
    - Overrides configuration values with environment variables defined in `ENV_CONFIG_MAPPING`.
 
 """
+
 import getpass
 import logging
 import os
@@ -50,6 +52,7 @@ ENV_CONFIG_MAPPING = {
     "LBSTATS_PASSWORD": ("Letterboxd", "password"),
 }
 
+
 def load_config(file_path=None):
     """Load config from a file and merge with defaults and environment variables."""
     logger.info("Loading configuration...")
@@ -69,8 +72,9 @@ def load_config(file_path=None):
                 raise
     else:
         logger.warning(
-            f"No config file found at {file_path}. "
-            + "Please add a config.toml in that folder or specify a custom one with the -c command."
+            "No config file found at %s. Please add a config.toml in that \
+                folder or specify a custom one with the -c command.",
+            file_path,
         )
         user_config = {}
 
@@ -80,12 +84,12 @@ def load_config(file_path=None):
     merged_config = _merge_dicts(CONFIG_DEFAULTS, user_config)
     logger.debug("Merged configuration with defaults: %s", merged_config)
 
-
     # Override with environment variables if available
     merged_config = _apply_env_variables(merged_config, ENV_CONFIG_MAPPING)
 
     logger.info("Configuration loading complete.")
     return merged_config
+
 
 def _merge_dicts(defaults, overrides):
     """Recursively merge two dictionaries."""
@@ -98,6 +102,7 @@ def _merge_dicts(defaults, overrides):
 
     logger.debug("Merged configuration: %s", merged)
     return merged
+
 
 def _apply_env_variables(config, env_config_mapping):
     """
@@ -120,9 +125,10 @@ def _apply_env_variables(config, env_config_mapping):
             elif isinstance(config[section][key], int):
                 value = int(value)
             config[section][key] = value
-            logger.info("Overrode %s.%s with environment variable %s", section, key, env_var)
+            logger.info(
+                "Overrode %s.%s with environment variable %s", section, key, env_var
+            )
         except UndefinedValueError:
             logger.debug("Environment variable %s not set. Skipping.", env_var)
-            pass
     logger.debug("Configuration after environment variable overrides: %s", config)
     return config

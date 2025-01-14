@@ -2,14 +2,15 @@
 LBPublicConnector Module
 ========================
 
-This module provides the `LBPublicConnector` class, which serves as an interface for accessing public Letterboxd
-data without requiring user authentication. It includes methods for searching films, retrieving metadata,
-and interacting with related third-party services like TMDb.
+This module provides the `LBPublicConnector` class, which serves as an
+interface for accessing public Letterboxd data without requiring user
+authentication. It includes methods for searching films, retrieving
+metadata, and interacting with related third-party services like TMDb.
 
 Classes:
 --------
-- LBPublicConnector: A connector for accessing public Letterboxd data and performing operations such as
-  film searches and metadata retrieval.
+- LBPublicConnector: A connector for accessing public Letterboxd data
+    and performing operations such as film searches and metadata retrieval.
 
 Notable Imports:
 --------
@@ -33,6 +34,7 @@ Features:
      or unsupported TMDb categories.
 
 """
+
 import logging
 
 import requests
@@ -44,7 +46,65 @@ from .utilities import (LB_BASE_URL, create_lb_operation_url_with_title,
 
 logger = logging.getLogger(__name__)
 
+
 class LBPublicConnector:
+    """
+    The `LBPublicConnector` class provides methods to interact with publicly accessible Letterboxd
+    data without requiring user authentication.
+
+    Attributes:
+    -----------
+    - session (requests.Session):
+        A persistent HTTP session for making requests to Letterboxd.
+    - cache (GeneralCache):
+        An instance of the `GeneralCache` class for storing and retrieving cached data.
+
+    Methods:
+    --------
+    - __init__(cache_path="cache.db"):
+        Initializes the connector, setting up the HTTP session and cache system.
+
+    - search_lb_by_title(search_query: str) -> dict:
+        Searches Letterboxd for films by title and retrieves a dictionary of results,
+        including titles and corresponding links.
+
+    - get_lb_film_id(lb_title: str) -> str:
+        Retrieves the Letterboxd film ID for a given title, using cached data if available.
+
+    - get_tmdb_id(lb_title: str) -> int | None:
+        Fetches the TMDb ID for a film using its Letterboxd title.
+
+    - get_tmdb_id_from_lb(lb_url: str, is_diary=False) -> int | None:
+        Scrapes a Letterboxd film page to retrieve the associated TMDb ID.
+
+    - _get_tmdb_id_from_lb_page(lb_url: str, is_diary: bool) -> int:
+        Internal method to scrape the TMDb link from a Letterboxd page,
+        ensuring the film is categorized as a "movie" on TMDb.
+
+    Notes:
+    ------
+    - TMDb links on Letterboxd pages are only supported for films categorized as "movies" in TMDb.
+    - Diary links on Letterboxd are redirected to the main film page before processing.
+
+    Example Usage:
+    --------------
+    ```python
+    connector = LBPublicConnector(cache_path="letterboxd_cache.db")
+
+    # Search for a film by title
+    results = connector.search_lb_by_title("Inception")
+    print(results)
+
+    # Get Letterboxd film ID
+    film_id = connector.get_lb_film_id("inception")
+    print(film_id)
+
+    # Get TMDb ID
+    tmdb_id = connector.get_tmdb_id("inception")
+    print(tmdb_id)
+    ```
+    """
+
     def __init__(self, cache_path="cache.db"):
         logger.info("Initializing LBPublicConnector with cache path: %s", cache_path)
         self.session = requests.Session()
@@ -70,8 +130,8 @@ class LBPublicConnector:
             res = self.session.get(search_url)
             res.raise_for_status()  # Raise an HTTPError for bad responses
         except requests.RequestException as e:
-            raise ConnectionError(f"Failed to retrieve search results: {e}")
-
+            logger.error("Failed to retrieve search results: %s", e)
+            raise
 
         # Parse the search page
         search_page = html.fromstring(res.text)
@@ -85,8 +145,14 @@ class LBPublicConnector:
         results = {}
         for film in film_list:
             search_query = film.xpath("./h2/span/a")[0].text.rstrip()
-            director = director[0].text if len(director := film.xpath("./p/a")) > 0 else ""
-            year = f"({year[0].text}) " if len(year := film.xpath("./h2/span//small/a")) > 0 else ""
+            director = (
+                director[0].text if len(director := film.xpath("./p/a")) > 0 else ""
+            )
+            year = (
+                f"({year[0].text}) "
+                if len(year := film.xpath("./h2/span//small/a")) > 0
+                else ""
+            )
             link = film.xpath("./h2/span/a")[0].get("href")
             display_string = f"{search_query} {year}- {director}"
 
@@ -108,10 +174,10 @@ class LBPublicConnector:
             ConnectionError: If the page cannot be retrieved.
         """
         # Check if the film ID is already cached
-        NAMESPACE = "lb_title_to_lb_id"
+        namespace = "lb_title_to_lb_id"
         logger.info("Retrieving Letterboxd film ID for title: %s", lb_title)
 
-        cached_id = self.cache.get(NAMESPACE, lb_title)
+        cached_id = self.cache.get(namespace, lb_title)
         if cached_id:
             logger.debug("Cache hit for title: %s, ID: %s", lb_title, cached_id)
             return cached_id
@@ -123,70 +189,82 @@ class LBPublicConnector:
             res = self.session.get(lb_url)
             res.raise_for_status()
         except requests.RequestException as e:
-            raise ValueError(f"Failed to fetch URL: {e}")
+            logger.error("Failed to fetch URL: %s", e)
+            raise
 
         # Parse the HTML to find the film ID
         film_page = html.fromstring(res.text)
-        letterboxd_film_id = film_page.get_element_by_id("frm-sidebar-rating").get("data-rateable-uid").split(":", 1)[1]
+        letterboxd_film_id = (
+            film_page.get_element_by_id("frm-sidebar-rating")
+            .get("data-rateable-uid")
+            .split(":", 1)[1]
+        )
 
         # Save the retrieved ID to the cache
-        self.cache.save(NAMESPACE, lb_title, letterboxd_film_id)
-        logger.info("Successfully retrieved and cached Letterboxd ID: %s for URL: %s", id, lb_url)
+        self.cache.save(namespace, lb_title, letterboxd_film_id)
+        logger.info(
+            "Successfully retrieved and cached Letterboxd ID: %s for URL: %s",
+            id,
+            lb_url,
+        )
 
         return letterboxd_film_id
 
     def get_tmdb_id(self, lb_title: str) -> int | None:
+        """Fetch TMDB ID using the Letterboxd Title"""
         film_url = create_lb_operation_url_with_title(lb_title, "film_page")
-        return self.get_tmdb_id_from_lb_page(film_url)
+        return self.get_tmdb_id_from_lb(film_url)
 
-
-    def get_tmdb_id_from_lb_page(self, lb_url: str, is_diary=False) -> int | None:
-        """Find the TMDB id from a letterboxd page.
-
-        A link to a Letterboxd film usually starts with either https://letterboxd.com/
-        or https://boxd.it/ (usually all .csv files have this prefix). We structure the cache dict accordingly.
-        The cache is meant to avoid bottleneck of constantly retrieving the Id from an HTML page.
+    def get_tmdb_id_from_lb(self, lb_url: str, is_diary=False) -> int | None:
+        """Fetch TMDB ID using the Letterboxd film page URL. Uses cache is possible.
         """
 
-        NAMESPACE = "lb_title_to_tmdb_id"
-        key = lb_url.rsplit("/", 1)[1]
+        namespace = "lb_title_to_tmdb_id"
+        # key = lb_url.rsplit("/", 1)[1]
         logger.info("Retrieving TMDb ID for URL: %s", lb_url)
 
-        cached_id = self.cache.get(NAMESPACE, key)
+        cached_id = self.cache.get(namespace, lb_url)
 
         if cached_id:
             logger.debug("Cache hit for URL: %s, TMDb ID: %s", lb_url, cached_id)
             return cached_id
 
-        logger.debug("Cache miss for URL: %s. Attempting to fetch from Letterboxd.", lb_url)
+        logger.debug(
+            "Cache miss for URL: %s. Attempting to fetch from Letterboxd.", lb_url
+        )
 
         try:
-            id = self._get_tmdb_id_from_lb(lb_url, is_diary)
-            if id:
-                self.cache.save(NAMESPACE, key, id)
-                logger.info("Successfully retrieved and cached TMDb ID: %s for URL: %s", id, lb_url)
-            return id
+            tmdb_id = self._get_tmdb_id_from_lb_page(lb_url, is_diary)
+            if tmdb_id:
+                self.cache.save(namespace, lb_url, tmdb_id)
+                logger.info(
+                    "Successfully retrieved and cached TMDb ID: %s for URL: %s",
+                    tmdb_id,
+                    lb_url,
+                )
+            return tmdb_id
         except ValueError as e:
             logger.warning("Failed to retrieve TMDb ID for URL '%s': %s", lb_url, e)
-            id = None
+            tmdb_id = None
 
     @staticmethod
-    def _get_tmdb_id_from_lb(lb_url: str, is_diary: bool) -> int:
+    def _get_tmdb_id_from_lb_page(lb_url: str, is_diary: bool) -> int:
         """Scraping the TMDB link from a Letterboxd film page.
         Inspect this HTML for reference: https://letterboxd.com/film/seven-samurai/
         """
         logger.info("Fetching TMDb ID from URL: %s (is_diary=%s)", lb_url, is_diary)
 
         try:
-            res = requests.get(lb_url)
+            res = requests.get(lb_url, timeout=10)
             res.raise_for_status()
         except requests.RequestException as e:
-            raise ValueError(f"Failed to fetch URL: {e}")
+            logger.error("Failed to fetch URL: %s", e)
+            raise
 
         lb_page = html.fromstring(res.text)
 
-        # Diary links sends you to a different page with no link to TMDB. Redirect to the actual page.
         if is_diary:
+            # Diary pages have no link to TMDB. Redirect to the main film page.
             logger.debug("Handling diary page redirect for URL: %s", lb_url)
             title_link = lb_page.xpath("//span[@class='film-title-wrapper']/a")
             if not title_link:
@@ -196,10 +274,11 @@ class LBPublicConnector:
             logger.debug("Redirecting to film page URL: %s", film_url)
 
             try:
-                res = requests.get(film_url)
+                res = requests.get(film_url, timeout=10)
                 res.raise_for_status()
             except requests.RequestException as e:
-                raise ValueError(f"Failed to fetch URL: {e}")
+                logger.error("Failed to fetch URL: %s", e)
+                raise
 
             lb_page = html.fromstring(res.text)
 
@@ -210,7 +289,10 @@ class LBPublicConnector:
         tmdb_category = tmdb_link[0].get("href").split("/")[-3]
 
         if tmdb_category != "movie":
-            raise ValueError(f"Found TMDb link with type \"{tmdb_category}\". This tool only supports type \"movie\".")
+            raise ValueError(
+                f"Found TMDb link with type '{tmdb_category}'."
+                + "This tool only supports type 'movie'."
+            )
 
         tmdb_id = tmdb_link[0].get("href").split("/")[-2]
         logger.info("Successfully fetched TMDb ID: %s from URL: %s", tmdb_id, lb_url)

@@ -2,9 +2,10 @@
 Utilities Module for Letterboxd Operations
 ==========================================
 
-This module contains small utility functions, constants, and configurations for interacting with
-the Letterboxd platform. It includes base URLs, endpoint templates, operation mappings,
-and helper functions for constructing URLs and managing logging.
+This module contains small utility functions, constants, and configurations for
+interacting with the Letterboxd platform. It includes base URLs, endpoint
+templates, operation mappings, and helper functions for constructing URLs and
+managing logging.
 
 """
 
@@ -40,10 +41,13 @@ LB_OPERATIONS = {
 }
 
 def create_lb_operation_url_with_title(lb_title: str, operation: str) -> str:
+    """Create URL for a Letterboxd operation that requires the internal Letterboxd Title"""
     return LB_BASE_URL + LB_OPERATION_TITLE_TEMPLATES[operation](lb_title)
 
-def create_lb_operation_url_with_id(id: str, operation: str) -> str:
-    return LB_BASE_URL + LB_OPERATION_ID_TEMPLATES[operation](id)
+def create_lb_operation_url_with_id(lb_id: str, operation: str) -> str:
+    """Create URL for a Letterboxd operation that requires the internal Letterboxd ID"""
+    return LB_BASE_URL + LB_OPERATION_ID_TEMPLATES[operation](lb_id)
 
 def create_lb_search_url(search_query: str) -> str:
+    """Create URL for a Letterboxd Search"""
     return SEARCH_URL_TEMPLATE.format(query=search_query)

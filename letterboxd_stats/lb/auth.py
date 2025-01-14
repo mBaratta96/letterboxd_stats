@@ -2,8 +2,8 @@
 LBAuth Module
 =============
 
-This module provides the `LBAuth` class, which handles user authentication for Letterboxd.
-It facilitates login sessions and manages CSRF tokens for secure communication with the Letterboxd platform.
+This module provides the `LBAuth` class, which handles user authentication and
+tokens for Letterboxd.
 
 Classes:
 --------
@@ -33,6 +33,17 @@ from .utilities import LB_BASE_URL, LOGIN_URL
 
 logger = logging.getLogger(__name__)
 class LBAuth:
+    """
+    Manages user authentication and session handling for Letterboxd.
+
+    Example:
+    --------
+    ```python
+    auth = LBAuth(username="user", password="pass")
+    auth.login()
+    print(auth.logged_in)  # Output: True
+    ```
+    """
     def __init__(self, username=None, password=None, session=None):
         self.session = session or requests.Session()
 
@@ -48,10 +59,12 @@ class LBAuth:
             logger.info("Session initialized with Letterboxd.")
         except requests.RequestException as e:
             logger.error("Failed to initialize session with Letterboxd: %s", e)
-            raise ConnectionError("Could not establish a session with Letterboxd.")
+            raise
 
 
     def login(self):
+        """Logs the LBAuth Session into Letterboxd using the class credentials.
+        """
         if not self.username or not self.password:
             logger.error("Login attempted without username or password.")
             raise ValueError("Username and password must be provided to log in.")
@@ -68,7 +81,7 @@ class LBAuth:
             response.raise_for_status()
         except requests.RequestException as e:
             logger.error("Login request failed: %s", e)
-            raise ConnectionError("Failed to send login request to Letterboxd.")
+            raise
 
         # Check the login result
         login_result = response.json().get("result")
@@ -80,4 +93,5 @@ class LBAuth:
         logger.info("Successfully logged in as '%s'.", self.username)
 
     def get_csrf_token(self):
+        """Fetch token essential for most authenticated calls to LB"""
         return self.session.cookies.get("com.xk72.webparts.csrf")
