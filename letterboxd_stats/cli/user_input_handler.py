@@ -1,15 +1,46 @@
-import pandas as pd
+"""
+UserInputHandler Module
+=======================
+
+This module provides a collection of static methods for handling user input in a CLI application.
+It leverages the `InquirerPy` library to create interactive prompts, including dropdowns,
+fuzzy search selectors, checkboxes, and numerical inputs.
+
+Classes:
+--------
+- UserInputHandler: A collection of static methods for various types of user input,
+  designed for use in the context of a Letterboxd or TMDb-related CLI application.
+
+Features:
+---------
+1. **Interactive Prompts**:
+   - Includes options for single selection, multi-selection, numerical input, and text input.
+   - Provides support for fuzzy searching and dropdowns for better user experience.
+
+2. **Input Validation**:
+   - Ensures valid inputs through validators, such as checking date formats or numeric ranges.
+
+3. **Pre-populated Choices**:
+   - Allows for dynamic generation of selectable options from lists or pandas DataFrames.
+
+4. **Diary Entry Creation**:
+   - Supports creating payloads for diary entries, including rating, review, tags, and more.
+
+"""
+
 from datetime import datetime
 
+import pandas as pd
 from InquirerPy import inquirer
 from InquirerPy.base.control import Choice
+
 
 def _validate_date(s: str) -> bool:
     try:
         datetime.strptime(s, "%Y-%m-%d")
+        return True
     except ValueError:
         return False
-    return True
 
 class UserInputHandler:
 
@@ -23,7 +54,7 @@ class UserInputHandler:
             validate=lambda result: result in options,
         ).execute()
         return result
-    
+
     @staticmethod
     def user_choose_option_search_result(options: list[str]) -> int:
         choices = [Choice(i, name=r) for i, r in enumerate(options)]
@@ -33,7 +64,7 @@ class UserInputHandler:
             default=choices[0],
         ).execute()
         return result
-    
+
     @staticmethod
     def user_choose_options_multiple(options: list[str]) -> list[str]:
         result = inquirer.checkbox(
@@ -55,7 +86,7 @@ class UserInputHandler:
     @staticmethod
     def user_choose_film_from_list(film_titles: pd.Series, film_ids: pd.Series) -> str:
         result = inquirer.fuzzy(  # type: ignore
-            message="Select film for more information:",
+            message="Select film for more information: (type to narrow your search)",
             mandatory=False,
             max_height="25%",
             choices=[Choice(value=film_id, name=film_title) for film_id, film_title in zip(film_ids, film_titles)],
@@ -72,20 +103,9 @@ class UserInputHandler:
             return None
         film_row = df.loc[film_id]
         return film_row
-    
 
     @staticmethod
-    def user_create_diary_entry_payload() -> dict[str, str]:
-        print("Set all the infos for the film:\n")
-        specify_date = inquirer.confirm(message="Specify date?").execute()  # type: ignore
-        today = datetime.today().strftime("%Y-%m-%d")
-        get_specified_date = inquirer.text(  # type: ignore
-            message="Set viewing date:",
-            default=today,
-            validate=lambda d: _validate_date(d),
-            invalid_message="Wrong date format",
-        )
-        specified_date = get_specified_date.execute() if specify_date else today
+    def user_choose_rating():
         stars = inquirer.number(  # type: ignore
             message="How many stars? (Only values from 0 to 5)",
             float_allowed=True,
@@ -96,6 +116,22 @@ class UserInputHandler:
             replace_mode=True,
             filter=lambda n: int(2 * float(n)),
         ).execute()
+
+        return stars
+
+
+    @staticmethod
+    def user_create_diary_entry_payload() -> dict[str, str]:
+        specify_date = inquirer.confirm(message="Specify date?").execute()  # type: ignore
+        today = datetime.today().strftime("%Y-%m-%d")
+        get_specified_date = inquirer.text(  # type: ignore
+            message="Set viewing date:",
+            default=today,
+            validate=lambda d: _validate_date(d),
+            invalid_message="Wrong date format",
+        )
+        specified_date = get_specified_date.execute() if specify_date else today
+        stars = UserInputHandler.user_choose_rating()
         liked = inquirer.confirm(message="Give this film a ♥?").execute()  # type: ignore
         leave_review = inquirer.confirm(message="Leave a review?").execute()  # type: ignore
         review = inquirer.text(  # type: ignore

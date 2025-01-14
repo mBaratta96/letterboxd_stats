@@ -1,17 +1,12 @@
-from typing import Callable, Dict
+"""
+Utilities Module for Letterboxd Operations
+==========================================
 
-import logging
+This module contains small utility functions, constants, and configurations for interacting with
+the Letterboxd platform. It includes base URLs, endpoint templates, operation mappings,
+and helper functions for constructing URLs and managing logging.
 
-# Create a library-specific logger
-logger = logging.getLogger("letterboxd")
-logger.setLevel(logging.INFO)
-
-# Add a console handler (users can customize this)
-console_handler = logging.StreamHandler()
-formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-console_handler.setFormatter(formatter)
-logger.addHandler(console_handler)
-
+"""
 
 LB_BASE_URL = "https://letterboxd.com"
 LOGIN_URL = LB_BASE_URL + "/user/login.do"
@@ -20,20 +15,20 @@ ADD_DIARY_URL = LB_BASE_URL + "/s/save-diary-entry"
 METADATA_URL = LB_BASE_URL +"/ajax/letterboxd-metadata/"
 
 
-LB_OPERATION_TITLE_TEMPLATES: Dict[str, Callable[[str], str]] = {
+LB_OPERATION_TITLE_TEMPLATES = {
     "diary": lambda s: f"/csi/film/{s}/sidebar-user-actions/?esiAllowUser=true",
     "add_watchlist": lambda s: f"/film/{s}/add-to-watchlist/",
     "remove_watchlist": lambda s: f"/film/{s}/remove-from-watchlist/",
     "film_page": lambda s: f"/film/{s}",
 }
 
-LB_OPERATION_ID_TEMPLATES: Dict[str, Callable[[str], str]] = {
+LB_OPERATION_ID_TEMPLATES = {
     "watch": lambda s: f"/s/film:{s}/watch/",
     "like": lambda s: f"/s/film:{s}/like/",
     "rate": lambda s: f"/s/film:{s}/rate/",
 }
 
-LB_OPERATIONS: Dict[str, Dict[str, str | bool | None]] = {
+LB_OPERATIONS = {
     "Add to diary": {"method": "add_diary_entry", "status": None},
     "Update film rating": {"method": "set_film_rating", "status": None},
     "Add to Liked films": {"method": "set_film_liked_status", "status": True},

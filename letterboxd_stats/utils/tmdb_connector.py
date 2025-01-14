@@ -1,10 +1,42 @@
-import pandas as pd
+"""
+TMDbAPI Module
+==============
 
+This module provides a wrapper around the TMDb API to facilitate fetching and managing
+data related to movies, people, and their associated details. It uses the `tmdbv3api` library
+for API interactions and pandas for data handling.
+
+Classes:
+--------
+- TMDbAPI: A wrapper around the TMDb API providing utility methods for fetching movie details,
+  person details, and performing searches.
+
+Features:
+---------
+1. **Movie Details**:
+   - Fetch runtime and detailed metadata for movies using TMDb IDs.
+   - Construct URLs for poster images.
+
+2. **Person Details**:
+   - Search for people by name.
+   - Fetch detailed information about a person, including their movie credits.
+
+3. **Search Functionality**:
+   - Perform searches for movies and people using TMDb's search endpoints.
+
+"""
+
+import logging
 from typing import Any, Tuple
-from tmdbv3api import TMDb, Person, Movie, Search
+
+import pandas as pd
 from pandarallel import pandarallel
+from tmdbv3api import Movie, Person, Search, TMDb
 from tmdbv3api.exceptions import TMDbException
 from tmdbv3api.objs.account import AsObj
+
+logger = logging.getLogger(__name__)
+
 
 POSTER_URL_PREFIX = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2"
 
@@ -21,7 +53,7 @@ class TMDbAPI:
         pandarallel.initialize(progress_bar=False, verbose=1)
 
     @staticmethod
-    def get_tmdb_poster_url(poster_path: str):
+    def _get_tmdb_poster_url(poster_path: str):
         """
         Construct the full URL for a movie poster.
         """
@@ -33,33 +65,13 @@ class TMDbAPI:
         """
         Fetch the runtime of a movie using its TMDB ID.
         """
-
         try:
             runtime = self.movie.details(tmdb_id).runtime  # type: ignore
         except TMDbException:
             runtime = 0
         return runtime
 
-    def search_tmdb_people(self, person_query: str) -> Any | AsObj:
-        """
-        Search for people on TMDB by name. Returns all search results.
-        """
-        print(f"Searching for person named '{person_query}'")
-        search_results = self.search.people({"query": person_query})
-        if len([result.name for result in search_results]) == 0:
-            raise Exception("No results found for your TMDB person search.")
-        return search_results
-
-    def search_tmdb_movies(self, movie_query: str) -> Any | AsObj:
-        """Search TMDB's Movie database. Return results.
-        """
-        print(f"Searching for movie '{movie_query}'")
-        search_results = self.search.movies({"query": movie_query})
-        if len([f"{result.title} ({result.release_date})" for result in search_results]) == 0:
-            raise Exception("No results found for your TMDB movie search.")
-        return search_results
-
-    def fetch_tmdb_person_details(self, tmdb_person_id: str) -> Tuple[pd.DataFrame, str, str]:
+    def fetch_person_details(self, tmdb_person_id: str) -> Tuple[pd.DataFrame, str, str]:
         """
         Fetch detailed information about a person. Returns list of movies, name, and most known-for department.
         https://developer.themoviedb.org/reference/person-details
@@ -82,7 +94,7 @@ class TMDbAPI:
         return df, person_["name"], person_["known_for_department"]
 
 
-    def fetch_all_movie_details(self, tmdb_id: int, letterboxd_url=None) -> dict:
+    def fetch_movie_details(self, tmdb_id: int, letterboxd_url=None) -> dict:
         """Creates dict of movie details fetched from TMDB API. Optionally include Letterboxd URL
         """
         movie_details = self.movie.details(tmdb_id)
@@ -95,12 +107,31 @@ class TMDbAPI:
             "Release Date": movie_details["release_date"],
         }
 
-        poster_url = self.get_tmdb_poster_url(movie_details.get("poster_path"))
+        poster_url = self._get_tmdb_poster_url(movie_details.get("poster_path"))
 
         if poster_url:
             selected_details["Poster"] = poster_url
-        
+
         if letterboxd_url:
             selected_details["Letterboxd URL"] = letterboxd_url
 
         return selected_details
+
+    def search_tmdb_people(self, person_query: str) -> Any | AsObj:
+        """
+        Search for people on TMDB by name. Returns all search results.
+        """
+        logger.info(f"Searching TMDB for person named '{person_query}'")
+        search_results = self.search.people({"query": person_query})
+        if len([result.name for result in search_results]) == 0:
+            raise Exception("No results found for your TMDB person search.")
+        return search_results
+
+    def search_tmdb_movies(self, movie_query: str) -> Any | AsObj:
+        """Search TMDB's Movie database by title. Return results.
+        """
+        logger.info(f"Searching TMDB for movie '{movie_query}'")
+        search_results = self.search.movies({"query": movie_query})
+        if len([f"{result.title} ({result.release_date})" for result in search_results]) == 0:
+            raise Exception("No results found for your TMDB movie search.")
+        return search_results

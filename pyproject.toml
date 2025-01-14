@@ -1,15 +1,18 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "letterboxd_stats"
-version = "0.2.14"
-authors = [{ name = "mBaratta96" }]
+version = "0.3.0"
+authors = [
+    { name = "mBaratta96" },
+    { name = "TreySu" }
+    ]
 description = "Get information about your Letterboxd activity."
 readme = "README.md"
 license = { file = "LICENSE" }
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
@@ -19,7 +22,7 @@ dependencies = [
     "ascii_magic~=2.3.0",
     "inquirerpy~=0.3.4",
     "lxml~=4.9.0",
-    "pandas~=2.2.1",
+    "pandas~=2.2.3",
     "pandarallel~=1.6.5",
     "platformdirs~=3.0.0",
     "requests~=2.31.0",

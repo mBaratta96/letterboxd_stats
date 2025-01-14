@@ -1,8 +1,75 @@
+"""
+Letterboxd Stats CLI Entry Point
+================================
+
+This script serves as the entry point for the Letterboxd Stats CLI application. It allows users to
+interact with their Letterboxd data, perform searches, update metadata, and explore export files,
+all from the command line. The script uses an `argparse` interface to provide a variety of commands
+and options.
+
+Features:
+---------
+1. **Configuration Support**:
+   - Loads settings from a `config.toml` file or environment variables.
+   - Supports specifying a custom configuration folder via command-line arguments.
+
+2. **Letterboxd Data Management**:
+   - Download Letterboxd export data for offline analysis.
+   - View and interact with Watchlist, Diary, Ratings, and Lists export files.
+
+3. **Search Functionality**:
+   - Search for films and people using Letterboxd and TMDb integrations.
+
+4. **Metadata Interaction**:
+   - Update metadata such as watched status, ratings, and diary entries directly from the CLI.
+
+"""
+import argparse
+import logging
+import logging.config
 import os
 import sys
-import argparse
-from .utils.config_loader import load_config, default_config_dir
+
 from .cli.letterboxd_cli import LetterboxdCLI
+from .utils.config_loader import default_config_dir, load_config
+
+DEBUG_LOGGING = True
+LOGGING_LEVEL = "DEBUG" if DEBUG_LOGGING else "INFO"
+LOGGING_CONFIG = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "detailed": {
+            "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        },
+        "simple": {
+            "format": "%(levelname)s - %(message)s",
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "level": "WARNING",
+            "formatter": "simple",
+        },
+        "file": {
+            "class": "logging.FileHandler",
+            "filename": "app.log",
+            "level": LOGGING_LEVEL,
+            "formatter": "detailed",
+        },
+    },
+    "loggers": {
+        "": {  # Root logger
+            "level": LOGGING_LEVEL,
+            "handlers": ["console", "file"],
+        },
+    },
+}
+
+logging.config.dictConfig(LOGGING_CONFIG)
+
+logger = logging.getLogger(__name__)
 
 def _create_parser():
     parser = argparse.ArgumentParser(
@@ -28,41 +95,46 @@ def _parse_args():
     if len(sys.argv) == 1:
         parser.print_help()
         sys.exit(0)
-        
+
     return args
 
 def _try_command(command, args):
     try:
         command(*args)
     except Exception as e:
-        print(e)
+        logger.error(e)
 
 def main():
+    logger.info("Letterboxd Stats started.")
+
+    # Get CLI arguments
     args = _parse_args()
 
-    # Load config
+    # Load configuration file
     folder = args.config_folder or default_config_dir
-    
     config_path = os.path.abspath(os.path.join(folder, "config.toml"))
-
-
     config = load_config(config_path)
-    
-    try:
-        tmdb_api_key = config["TMDB"]["api_key"]
-    except KeyError:
-        raise KeyError("The 'TMDB API key' is required but was not provided in the configuration or environment.")
-    
-    cli = LetterboxdCLI(
-        tmdb_api_key,
-        config["Letterboxd"]["username"], 
-        config["Letterboxd"]["password"], 
-        config["root_folder"], 
-        config["CLI"]["poster_columns"], 
-        config["CLI"]["ascending"], 
-        config["TMDB"]["get_list_runtimes"], 
-        args.limit
-        )
+
+    tmdb_api_key = config.get("TMDB", {}).get("api_key")
+
+    if tmdb_api_key is None:
+        logger.error("TMDB API key is required, but was not found in configuration or environment.")
+        return
+
+    lb_cli_kwargs = {
+        "tmdb_api_key": tmdb_api_key,
+        "lb_username": config.get("Letterboxd", {}).get("username"),
+        "lb_password": config.get("Letterboxd", {}).get("password"),
+        "root_folder": config.get("root_folder"),
+        "cli_poster_columns": config.get("CLI", {}).get("poster_columns"),
+        "cli_ascending": config.get("CLI", {}).get("ascending"),
+        "tmdb_get_list_runtimes": config.get("TMDB", {}).get("get_list_runtimes"),
+        "limit": args.limit
+    }
+
+    filtered_kwargs = {k: v for k, v in lb_cli_kwargs.items() if v is not None}
+
+    cli = LetterboxdCLI(**filtered_kwargs)
 
     try:
         if args.download:
@@ -79,9 +151,9 @@ def main():
             _try_command(cli.view_exported_lb_data, ("Ratings",))
         if args.lists:
             _try_command(cli.view_exported_lb_data, ("Lists",))
-        
+
     except KeyboardInterrupt:
-        print('\nProgram interrupted. Exiting.')
+        logger.info('\nProgram interrupted. Exiting.')
         sys.exit(0)
 
 if __name__ == "__main__":
