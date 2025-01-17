@@ -28,23 +28,22 @@ It is required to create a `config.toml`. You can create it in the default confi
 # Where you want the .csv file of your Letterboxd activity to be saved.
 root_folder = "~/Documents/letterboxd_stats/"
 
-[CLI]
-# The size of the ASCII art poster printed in your terminal when you check the details of a movie.
-# Set to 0 to disable
-poster_columns = 180
-# Set ascending order for sorting of tables
-ascending = false
-
 [TMDB]
 api_key = "YOUR_TMDB_API_KEY"
 # When you get your lists (-L options), also get all the runtimes from TMDB
 # and compute the mean of the ratings weighted on the durations. This slows the process.
 get_list_runtimes = false
 
-
 [Letterboxd]
 username = "your-username"
 password = "your-password"
+
+[CLI]
+# The size of the ASCII art poster printed in your terminal when you check the details of a movie.
+# Set to 0 to disable
+poster_columns = 180
+# Set ascending order for sorting of tables
+ascending = false
 ```
 
 ## Options
@@ -68,10 +67,20 @@ options:
 
 ```
 
-## To do
+## To-Do
 
-_Note: this is something I do during my free time. Therefore, I can't promise consistent support for this project._
+_Note: This is intended as a small project and is maintained during free time. Feature development and support may vary._
 
--   [x] Use web-scraping to add film to diary/wishlist
-
+-   [x] Use web-scraping to add film to diary/watchlist.
+-   [x] Use pseudo-api to update user's per-film metadata (watchlisted, watched, liked, rating) 
+-   [x] Add environment variable support.
 -   [ ] Check followers' activity.
+-   [ ] Add more analytics and visualizations.
+
+## Contributing
+
+Contributions are welcome! Feel free to open issues or submit pull requests on the [GitHub repository](https://github.com/your-repo/letterboxd_stats). 
+
+## License
+
+This project is licensed under the MIT License.

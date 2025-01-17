@@ -1,99 +1,225 @@
+"""
+Letterboxd Stats CLI Entry Point
+================================
+
+This script serves as the entry point for the Letterboxd Stats CLI application.
+It allows users to interact with their Letterboxd data, perform searches, update
+metadata, and explore export files, all from the command line. The script uses
+an `argparse` interface to provide a variety of commands and options.
+
+Features:
+---------
+1. **Configuration Support**:
+   - Loads settings from a `config.toml` file or environment variables.
+   - Supports specifying a custom configuration folder via command-line arguments.
+
+2. **Letterboxd Data Management**:
+   - Download Letterboxd export data for offline analysis.
+   - View and interact with Watchlist, Diary, Ratings, and Lists export files.
+
+3. **Search Functionality**:
+   - Search for films and people using Letterboxd and TMDb integrations.
+
+4. **Metadata Interaction**:
+   - Update metadata such as watched status, ratings, and diary entries directly from the CLI.
+
+"""
+
+import argparse
+import logging
+import logging.config
 import os
 import sys
 
-from letterboxd_stats import tmdb
-from letterboxd_stats import data
-from letterboxd_stats import web_scraper as ws
-from letterboxd_stats import args, config
+from .cli.letterboxd_cli import LetterboxdCLI
+from .utils.config_loader import default_config_dir, load_config
 
-DATA_FILES = {"Watchlist": "watchlist.csv", "Diary": "diary.csv", "Ratings": "ratings.csv", "Lists": "lists"}
+DEBUG_LOGGING = True
+LOGGING_LEVEL = "DEBUG" if DEBUG_LOGGING else "INFO"
+LOGGING_CONFIG = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "detailed": {
+            "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        },
+        "simple": {
+            "format": "%(levelname)s - %(message)s",
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "level": "WARNING",
+            "formatter": "simple",
+        },
+        "file": {
+            "class": "logging.FileHandler",
+            "filename": "app.log",
+            "level": LOGGING_LEVEL,
+            "formatter": "detailed",
+        },
+    },
+    "loggers": {
+        "": {  # Root logger
+            "level": LOGGING_LEVEL,
+            "handlers": ["console", "file"],
+        },
+    },
+}
+
+logging.config.dictConfig(LOGGING_CONFIG)
+
+logger = logging.getLogger(__name__)
 
 
-def try_command(command, args):
+def _create_parser():
+    parser = argparse.ArgumentParser(
+        prog="Letterboxd Stats",
+        description="CLI tool to view and interact with Letterboxd",
+    )
+    parser.add_argument("-s", "--search-person", help="Search for a person")
+    parser.add_argument("-S", "--search-film", help="Search for a film")
+    parser.add_argument(
+        "-d", "--download", help="Download letterboxd data", action="store_true"
+    )
+    parser.add_argument(
+        "-W",
+        "--watchlist",
+        help="View downloaded Letterboxd watchlist",
+        action="store_true",
+    )
+    parser.add_argument(
+        "-D",
+        "--diary",
+        help="View downloaded Letterboxd diary entries",
+        action="store_true",
+    )
+    parser.add_argument(
+        "-R",
+        "--ratings",
+        help="View downloaded Letterboxd ratings",
+        action="store_true",
+    )
+    parser.add_argument(
+        "-L", "--lists", help="View downloaded Letterboxd lists", action="store_true"
+    )
+    parser.add_argument(
+        "-l",
+        "--limit",
+        help="Limit the number of items of your wishlist/diary",
+        type=int,
+    )
+    parser.add_argument(
+        "-c", "--config_folder", help="Specify the folder of your config.toml file"
+    )
+    return parser
+
+
+def _parse_args():
+    parser = _create_parser()
+    args = parser.parse_args()
+
+    # Check if no arguments were passed
+    if len(sys.argv) == 1:
+        parser.print_help()
+        sys.exit(0)
+
+    return args
+
+
+def _try_command(command, args):
     try:
         command(*args)
     except Exception as e:
-        print(e)
-
-
-def check_path(path: str):
-    if not os.path.exists(path):
-        raise FileNotFoundError(
-            f"No Letterboxd data was found in {path}. Make sure the path is correct or run -d to download your data"
-        )
-
-
-def download_data():
-    """Download exported data you find in the import/export section of your Letterboxd profile"""
-
-    connector = ws.Connector()
-    connector.login()
-    connector.download_stats()
-
-
-def search_person(args_search: str):
-    """Search for a director, list his/her films and check if you have watched them."""
-
-    df, name = tmdb.get_person(args_search)
-    path = os.path.expanduser(os.path.join(config["root_folder"], "static", "watched.csv"))
-    check_path(path)
-    df = data.read_watched_films(df, path, name)
-    film = data.select_film_of_person(df)
-    # We want to print the link of the selected film. This has to be retrieved from the search page.
-    while film is not None:
-        search_film_query = f"{film['Title']} {film['Release Date'].year}"  # type: ignore
-        title_url = ws.get_lb_title(search_film_query)
-        tmdb.get_movie_detail(int(film.name), ws.create_lb_url(title_url, "film_page"))  # type: ignore
-        film = data.select_film_of_person(df)
-
-
-def search_film(args_search_film: str):
-    title_url = ws.get_lb_title(args_search_film, True)
-    film_url = ws.create_lb_url(title_url, "film_page")
-    tmdb.get_movie_detail(ws.get_tmdb_id(film_url), film_url)  # type: ignore
-    answer = ws.select_optional_operation()
-    if answer != "Exit":
-        connector = ws.Connector()
-        connector.login()
-        connector.perform_operation(answer, title_url)
-
-
-def display_data(args_limit: int, args_ascending: bool, data_type: str):
-    """Load and show on the CLI different .csv files that you have downloaded with the -d flag."""
-
-    path = os.path.expanduser(os.path.join(config["root_folder"], "static", DATA_FILES[data_type]))
-    check_path(path)
-    letterboxd_url = (
-        data.open_file(data_type, path, args_limit, args_ascending)
-        if data_type != "Lists"
-        else data.open_list(path, args_limit, args_ascending)
-    )
-    # If you select a film, show its details.
-    if letterboxd_url is not None:
-        id = ws.get_tmdb_id(letterboxd_url, data_type == "diary")
-        if id is not None:
-            tmdb.get_movie_detail(id, letterboxd_url)
+        logger.error(e)
+        raise
 
 
 def main():
+    """
+    Main entry point for the Letterboxd Stats CLI application.
+
+    This function initializes the logging system, parses command-line arguments,
+    loads the configuration, and executes the requested commands. The commands
+    allow users to interact with Letterboxd data such as downloading export
+    files, searching for films or people, and viewing Watchlist, Diary, Ratings,
+    or Lists.
+
+    Key Responsibilities:
+    ----------------------
+    1. **Argument Parsing**:
+       - Handles user input via command-line arguments using argparse.
+       - Prints help information if no arguments are provided.
+
+    2. **Configuration Loading**:
+       - Loads settings from a `config.toml` file or an environment variable.
+       - Validates the presence of critical keys like the TMDB API key.
+
+    3. **Command Execution**:
+       - Downloads Letterboxd data, performs searches, or views exports.
+       - Gracefully handles errors during command execution with proper logging.
+
+    4. **Graceful Exit**:
+       - Handles `KeyboardInterrupt` (Ctrl+C) to ensure a clean exit.
+
+    Raises:
+    -------
+    - SystemExit:
+        If required arguments are missing or if the program is interrupted.
+    """
+
+    logger.info("Letterboxd Stats started.")
+
+    # Get CLI arguments
+    args = _parse_args()
+
+    # Load configuration file
+    folder = args.config_folder or default_config_dir
+    config_path = os.path.abspath(os.path.join(folder, "config.toml"))
+    config = load_config(config_path)
+
+    tmdb_api_key = config.get("TMDB", {}).get("api_key")
+
+    if tmdb_api_key is None:
+        logger.error(
+            "TMDB API key is required, but was not found in configuration or environment."
+        )
+        return
+
+    lb_cli_kwargs = {
+        "tmdb_api_key": tmdb_api_key,
+        "lb_username": config.get("Letterboxd", {}).get("username"),
+        "lb_password": config.get("Letterboxd", {}).get("password"),
+        "root_folder": config.get("root_folder"),
+        "cli_poster_columns": config.get("CLI", {}).get("poster_columns"),
+        "cli_ascending": config.get("CLI", {}).get("ascending"),
+        "tmdb_get_list_runtimes": config.get("TMDB", {}).get("get_list_runtimes"),
+        "limit": args.limit,
+    }
+
+    filtered_kwargs = {k: v for k, v in lb_cli_kwargs.items() if v is not None}
+
+    cli = LetterboxdCLI(**filtered_kwargs)
+
     try:
         if args.download:
-            try_command(download_data, ())
-        if args.search:
-            try_command(search_person, (args.search,))
+            _try_command(cli.download_stats, ())
+        if args.search_person:
+            _try_command(cli.search_person, (args.search_person,))
         if args.search_film:
-            try_command(search_film, (args.search_film,))
+            _try_command(cli.search_film, (args.search_film,))
         if args.watchlist:
-            try_command(display_data, (args.limit, config["CLI"]["ascending"], "Watchlist"))
+            _try_command(cli.view_exported_lb_data, ("Watchlist",))
         if args.diary:
-            try_command(display_data, (args.limit, config["CLI"]["ascending"], "Diary"))
+            _try_command(cli.view_exported_lb_data, ("Diary",))
         if args.ratings:
-            try_command(display_data, (args.limit, config["CLI"]["ascending"], "Ratings"))
+            _try_command(cli.view_exported_lb_data, ("Ratings",))
         if args.lists:
-            try_command(display_data, (args.limit, config["CLI"]["ascending"], "Lists"))
-        
+            _try_command(cli.view_exported_lb_data, ("Lists",))
+
     except KeyboardInterrupt:
-        print('\nProgram interrupted. Exiting.')
+        logger.info("\nProgram interrupted. Exiting.")
         sys.exit(0)
 
 
