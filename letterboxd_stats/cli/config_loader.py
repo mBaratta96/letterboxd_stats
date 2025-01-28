@@ -35,7 +35,7 @@ default_config_dir = platformdirs.user_config_dir("letterboxd_stats", getpass.ge
 
 CONFIG_DEFAULTS = {
     "CLI": {
-        "poster_columns": 180,
+        "poster_columns": 80,
         "ascending": False,
     },
     "TMDB": {

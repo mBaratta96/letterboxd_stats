@@ -2,7 +2,7 @@ from unittest.mock import patch
 
 import pytest
 
-from letterboxd_stats.utils.tmdb_api import TMDbAPI
+from letterboxd_stats.cli.tmdb_api import TMDbAPI
 
 
 @pytest.fixture

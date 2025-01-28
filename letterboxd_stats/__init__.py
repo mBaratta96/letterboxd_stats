@@ -15,10 +15,10 @@ __description__: A brief description of the package.
 __all__: Specifies the modules and functions to be exported when using `from package import *`.
 """
 from .cli.letterboxd_cli import LetterboxdCLI
+from .cli.tmdb_api import TMDbAPI
 from .lb.auth_connector import LBAuthConnector
 from .lb.data_exporter import LBUserDataExporter
 from .lb.public_connector import LBPublicConnector
-from .utils.tmdb_api import TMDbAPI
 
 __version__ = "0.3.0"
 __author__ = "mBaratta96"

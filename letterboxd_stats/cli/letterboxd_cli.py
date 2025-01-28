@@ -53,10 +53,11 @@ from requests import RequestException
 
 from ..lb.auth_connector import LBAuthConnector
 from ..lb.utilities import LB_OPERATIONS, create_lb_operation_url_with_title
-from ..utils.renderer import CLIRenderer
-from ..utils.tmdb_api import TMDbAPI
-from .export_viewer import ExportViewer
+from .export_viewer import ExportViewer, get_list_name
+from .renderer import CLIRenderer
+from .tmdb_api import TMDbAPI
 from .user_input_handler import (user_choose_film_from_dataframe,
+                                 user_choose_film_from_list,
                                  user_choose_option,
                                  user_choose_option_search_result,
                                  user_choose_rating,
@@ -71,7 +72,7 @@ class LetterboxdCLI:
         tmdb_api_key: str,
         lb_username: str = None,
         lb_password: str = None,
-        root_folder: str = "/tmp",
+        root_folder: str = None,
         cli_poster_columns: int = 80,
         cli_ascending: bool = False,
         tmdb_get_list_runtimes: bool = False,
@@ -116,6 +117,10 @@ class LetterboxdCLI:
             ValueError: If `tmdb_api_key` is invalid or not provided.
         """
 
+        if not root_folder:
+            root_folder = "/tmp"
+            logger.info("Root folder set to %s", root_folder)
+
         logger.info("Initializing LetterboxdCLI")
         self.root_folder = os.path.expanduser(root_folder)
         logger.debug("Root folder set to: %s", self.root_folder)
@@ -150,17 +155,19 @@ class LetterboxdCLI:
         self.renderer.render_text(f"Data successfully downloaded in {download_dir}")
         return download_dir
 
+
     def fetch_all_film_metadata(self, letterboxd_title: str):
         logger.info("Fetching metadata for film: %s", letterboxd_title)
         try:
             film_url = create_lb_operation_url_with_title(letterboxd_title, "film_page")
-            tmdb_id = self.lb_connector.get_tmdb_id_from_lb(film_url)
+            tmdb_id = self.lb_connector.get_tmdb_id_from_lb_url(film_url)
             selected_details = {}
 
             if tmdb_id:
                 logger.debug("TMDb ID found: %d", tmdb_id)
                 tmdb_details = self.tmdb_api.fetch_movie_details(tmdb_id, film_url)  # type: ignore
-                selected_details.update(tmdb_details)
+                if tmdb_details:
+                    selected_details.update(tmdb_details)
             if self.lb_connector and self.lb_connector.auth.logged_in:
                 lb_data = self.lb_connector.fetch_lb_film_user_metadata(
                     letterboxd_title
@@ -175,70 +182,87 @@ class LetterboxdCLI:
 
     def search_person(self, search_query: str):
         """Search for a director, list his/her films and check if you have watched them."""
-        self.renderer.render_text(f"Searching TMDB for person named '{search_query}'")
+        self.renderer.render_text(f"Searching TMDb for person named '{search_query}'")
         search_results = self.tmdb_api.search_tmdb_people(search_query)
         search_result = search_results[
             user_choose_option_search_result([result.name for result in search_results])
         ]  # Get User Input
-        df, name, known_for_department = self.tmdb_api.fetch_person_details(
+        person_films_df, name, known_for_department = self.tmdb_api.fetch_person_details(
             search_result["id"]
         )
         logger.debug("Person found: %s, Known for: %s", name, known_for_department)
+
+
         department = user_choose_option(
-            df["Department"].unique(),
+            person_films_df["Department"].unique(),
             f"Select a department for {name}",
             known_for_department,
         )
-        df = df[df["Department"] == department]
-        df = df.drop("Department", axis=1)
-        # person.details provides movies without time duration. If the user wants<S-D-A>
-        # (since this slows down the process) get with the movie.details API.
 
-        if self.export_viewer.get_list_runtimes is True:
-            self.renderer.render_text("Fetching movie runtimes...")
-            df["Duration"] = df.index.to_series().parallel_map(self.tmdb_api.fetch_movie_runtime)  # type: ignore
-            logger.info("Fetched movie runtimes for the selected films.")
+        while department:
+            department_films_df = person_films_df[person_films_df["Department"] == department]
+            department_films_df = department_films_df.drop("Department", axis=1)
+            # person.details provides movies without time duration. If the user wants<S-D-A>
+            # (since this slows down the process) get with the movie.details API.
 
-        df = df.drop_duplicates()
+            if self.export_viewer.get_list_runtimes is True:
+                self.renderer.render_text("Fetching movie runtimes...")
+                department_films_df["Duration"] = department_films_df.index.to_series().parallel_map(self.tmdb_api.fetch_movie_runtime)  # type: ignore
+                logger.info("Fetched movie runtimes for the selected films.")
 
-        if self.export_viewer.export_exists():
-            logger.info("Checking watched status from exports")
-            df = self.export_viewer.add_lb_watched_status_column(df)
-            df["Release Date"] = pd.to_datetime(df["Release Date"])
-            df.sort_values(by="Release Date", inplace=True)
-            logger.debug("Added watched status and sorted by release date.")
-        self.renderer.render_table(df, name)
+            department_films_df = department_films_df.drop_duplicates()
 
-        selected_film = user_choose_film_from_dataframe(df)
+            if self.export_viewer.export_exists():
+                logger.info("Checking watched status from exports")
+                department_films_df = self.export_viewer.add_lb_watched_status_column(department_films_df)
+                department_films_df["Release Date"] = pd.to_datetime(department_films_df["Release Date"])
+                department_films_df.sort_values(by="Release Date", inplace=True)
+                logger.debug("Added watched status and sorted by release date.")
+            self.renderer.render_table(department_films_df, name)
 
-        # We want to print the link of the selected film. This has to be retrieved from the search page.
-        while selected_film is not None:
-            search_film_query = f"{selected_film['Title']} {selected_film['Release Date'].year}"  # type: ignore
-            letterboxd_title = self.search_for_lb_title(search_film_query)
-            film_details = self.fetch_all_film_metadata(letterboxd_title)
-            self.renderer.render_film_details(film_details)
-            logger.info(
-                "Displayed details for film: %s (%s)",
-                selected_film["Title"],
-                selected_film["Release Date"],
+            selected_film = user_choose_film_from_dataframe(department_films_df)
+
+            # We want to print the link of the selected film. This has to be retrieved from the search page.
+            while selected_film is not None:
+                search_film_query = f"{selected_film['Title']} {selected_film['Release Date'].year}"  # type: ignore
+                #search_film_query = f"tmdb:{selected_film['Id']}"  # type: ignore
+                letterboxd_title = self.interactive_lb_search(search_film_query, return_first_result=True)
+
+                if not letterboxd_title:
+                    logger.warning("No results selected for film: %s", search_query)
+                    return
+                self.interact_with_film(letterboxd_title)
+                selected_film = user_choose_film_from_dataframe(person_films_df)
+
+            department = user_choose_option(
+                person_films_df["Department"].unique(),
+                f"Select a department for {name}",
+                known_for_department,
             )
 
-            selected_film = user_choose_film_from_dataframe(df)
 
     def search_film(self, search_query: str):
         logger.info("Searching for film: %s", search_query)
-        letterboxd_title = self.search_for_lb_title(search_query, True)
+
+        letterboxd_title = self.interactive_lb_search(search_query)
         if not letterboxd_title:
-            logger.warning("No results found for film: %s", search_query)
+            logger.warning("No results selected for film: %s", search_query)
             return
+        return self.interact_with_film(letterboxd_title)
+
+
+    def interact_with_film(self, letterboxd_title: str):
+
         film_details = self.fetch_all_film_metadata(letterboxd_title)
-        self.renderer.render_film_details(film_details)
+
+        local_metadata = film_details.copy()
+        self.renderer.render_film_details(local_metadata)
 
         while True:
             answer = user_choose_option(
-                ["Exit"] + list(LB_OPERATIONS.keys()), "Select operation:"
+                ["Exit"] + list(self.filter_operations(local_metadata)), "Select operation:"
             )
-            if answer == "Exit":
+            if not answer or answer == "Exit":
                 break
 
             # Dynamically determine additional arguments based on the operation
@@ -250,33 +274,91 @@ class LetterboxdCLI:
                 self.renderer.render_text("Set all the info for the diary entry:")
                 diary_payload = user_create_diary_entry_payload()
                 extra_args = [diary_payload]
+            try:
+                self.lb_connector.perform_film_operation(answer, letterboxd_title, *extra_args)
+                self.renderer.render_text(f"Successfully updated {letterboxd_title}.")
 
-            self.lb_connector.perform_operation(answer, letterboxd_title, *extra_args)
-            self.renderer.render_text(f"Successfully updated {letterboxd_title}.")
+                # Update local metadata based on operation
+                if answer == "Mark film as watched":
+                    local_metadata["Watched"] = True
+                elif answer == "Un-mark film as watched":
+                    local_metadata["Watched"] = False
+                elif answer == "Add to Liked films":
+                    local_metadata["Liked"] = True
+                elif answer == "Remove from liked films":
+                    local_metadata["Liked"] = False
+                elif answer == "Add to watchlist":
+                    local_metadata["Watchlisted"] = True
+                elif answer == "Remove from watchlist":
+                    local_metadata["Watchlisted"] = False
+                elif answer == "Update film rating":
+                    local_metadata["Rating"] = stars
+                    if stars > 0:
+                        local_metadata["Watched"] = True
 
-    def search_for_lb_title(self, title: str, allow_selection=False) -> str:
+                #self.renderer.render_last_rows(local_metadata, 4)
+
+            except ConnectionError as e:
+                logger.error(e)
+
+
+
+    @staticmethod
+    def filter_operations(metadata):
+        """Filters LB_OPERATIONS based on the film's metadata."""
+        operations = {}
+
+        if not metadata["Watched"]:
+            operations["Mark film as watched"] = LB_OPERATIONS["Mark film as watched"]
+        else:
+            operations["Un-mark film as watched"] = LB_OPERATIONS["Un-mark film as watched"]
+
+        if not metadata["Liked"]:
+            operations["Add to Liked films"] = LB_OPERATIONS["Add to Liked films"]
+        else:
+            operations["Remove from liked films"] = LB_OPERATIONS["Remove from liked films"]
+
+        if not metadata["Watchlisted"]:
+            operations["Add to watchlist"] = LB_OPERATIONS["Add to watchlist"]
+        else:
+            operations["Remove from watchlist"] = LB_OPERATIONS["Remove from watchlist"]
+
+        if metadata["Rating"] is None:
+            operations["Update film rating"] = LB_OPERATIONS["Update film rating"]
+        else:
+            operations["Update film rating"] = LB_OPERATIONS["Update film rating"]
+
+        # Always allow adding to the diary
+        operations["Add to diary"] = LB_OPERATIONS["Add to diary"]
+
+        return operations
+
+    def interactive_lb_search(self, search_query: str, return_first_result=False) -> str:
         """Search a film and get its Letterboxd link.
         For reference: https://letterboxd.com/search/seven+samurai/?adult
         """
-        logger.debug("Searching for Letterboxd title: %s", title)
         try:
-            search_results = self.lb_connector.search_lb_by_title(title)
+            search_results = self.lb_connector.search_lb(search_query)
+            print(search_results)
+            if not search_results:
+                return None
             # If we want to select films from the search page, get more data to print the selection prompt.
-            if allow_selection:
-                selected_film = user_choose_option(
-                    list(search_results.keys()), "Select your film"
-                )
-                title_url = search_results[selected_film].split("/")[-2]
-            else:
+            if return_first_result:
                 selected_film = list(search_results.keys())[0]
-                title_url = search_results[selected_film].split("/")[-2]
+            else:
+                selected_film = user_choose_option(list(search_results.keys()), "Select your film")
+
+            if not selected_film:
+                logger.warning("No film selected.")
+                return None
+
+            title_url = search_results[selected_film].split("/")[-2]
             logger.info("Letterboxd title found: %s", selected_film)
             return title_url
         except ValueError as e:
-            logger.warning("No results found for title '%s': %s", title, e)
             return None  # Return None or handle the error as needed
         except RequestException as e:
-            logger.error("Failed to retrieve results for title '%s': %s", title, e)
+            logger.error("Failed to retrieve results for title '%s': %s", search_query, e)
             return None  # Return None or handle the error as needed
         except Exception as e:
             logger.error("An unexpected error occurred: %s", e)
@@ -290,25 +372,63 @@ class LetterboxdCLI:
             export_type (str): The type of export to view (e.g., "Diary", "Watchlist", "Lists").
         """
         logger.debug("Viewing LB export: %s", export_type)
-        path = self.export_viewer.get_export_path(export_type)
+        exports_path = self.export_viewer.get_export_path(export_type)
 
         if export_type == "Lists":
             logger.debug("Processing 'Lists' export type.")
-            letterboxd_url = self.export_viewer.view_lb_export_lists_directory(
-                path, self.renderer.list_print_limit
-            )
+            list_path = self.export_viewer.choose_list_from_exports(exports_path)
+            while list_path:
+                self.view_lb_export_csv("Lists", os.path.join(exports_path, list_path), 100, header=3)
+                list_path = self.export_viewer.choose_list_from_exports(exports_path)
+
         else:
             logger.debug("Processing '%s' export type.", export_type)
-            letterboxd_url = self.export_viewer.view_lb_export_csv(
-                export_type, path, self.renderer.list_print_limit
+            self.view_lb_export_csv(export_type, exports_path, self.renderer.list_print_limit)
+
+
+    def view_lb_export_csv(
+        self, export_type: str, path: str, limit: int = None, header=0
+    ):
+        """There are some operations that are the same for all the .csv files.
+        Isolate those similar operations,and then perform the particular operation
+        for a certain file (watchlist, list, diary...). OPERATIONS_BY_EXPORT_TYPE
+        selects those particular operations according to the file we opened.
+        Mainly they do ordering and column filtering operations.
+        """
+        logger.info("Viewing Letterboxd export: %s", export_type)
+        logger.debug("Path to CSV: %s", path)
+        try:
+            df = pd.read_csv(path, header=header)
+            # df = self.add_lb_watched_status_column(df)
+            df.rename(columns={"Name": "Title", "Letterboxd URI": "Url"}, inplace=True)
+
+            df["Year"] = df["Year"].fillna(0).astype(int)
+            df = self.export_viewer.user_operations_by_export_type[export_type](
+                df, self.renderer.sort_ascending
             )
 
-        if letterboxd_url:
-            is_diary = export_type.lower() == "diary"
-            tmdb_id = self.lb_connector.get_tmdb_id_from_lb(letterboxd_url, is_diary)
-            if tmdb_id:
-                film_details = self.tmdb_api.fetch_movie_details(
-                    tmdb_id, letterboxd_url
-                )
-                logger.info("Fetched film details for TMDB ID: %s", tmdb_id)
-                self.renderer.render_film_details(film_details)
+            if limit is not None:
+                logger.debug("Applying limit: %d", limit)
+                df = df.iloc[:limit, :]
+            list_name = export_type
+            if export_type == "Lists":
+                list_name = get_list_name(path)
+            self.renderer.render_table(df, list_name)
+            selected_film = user_choose_film_from_list(df["Title"], df["Url"])
+            logger.info("Selected film: %s", selected_film)
+
+            while selected_film:
+                lb_title = self.lb_connector.get_lb_title_from_lb_url(selected_film)
+                if lb_title:
+                    self.interact_with_film(lb_title)
+
+                selected_film = user_choose_film_from_list(df["Title"], df["Url"])
+                logger.info("Selected film: %s", selected_film)
+
+            return
+        except FileNotFoundError as e:
+            logger.error("Export file not found: %s", e)
+            raise
+        except Exception as e:
+            logger.exception("An error occurred while processing the export: %s", e)
+            raise

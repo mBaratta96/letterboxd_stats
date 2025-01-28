@@ -3,9 +3,9 @@ CLIRenderer Module
 ==================
 
 This module provides utilities for rendering data and visuals in the terminal
-using the `rich` library and additional ASCII/Unicode rendering tools. It is
+using the `rich` library and additional ASCII rendering tools. It is
 tailored for Letterboxd-related content, offering functionality to render tables,
-dictionaries, and images (posters) in ASCII or Unicode format.
+dictionaries, and images (posters) in ASCII  format.
 
 Classes:
 --------
@@ -15,6 +15,7 @@ Classes:
 """
 
 import logging
+import sys
 
 import pandas as pd
 from ascii_magic import AsciiArt
@@ -133,42 +134,22 @@ class CLIRenderer:
             film_details.pop("Original Title", None)
         self.render_dict(film_details, expand=False)
 
+    def clear_last_rows(self, num_rows=5):
+        # Use ANSI escape codes to move the cursor up and clear lines
+        clear_lines = f"\033[{num_rows}F\033[J"  # Move up `num_rows` lines and clear
+        sys.stdout.write(clear_lines)  # Write raw ANSI codes directly to stdout
+        sys.stdout.flush()  # Ensure the output is flushed
+
+    def render_last_dict_rows(self,metadata, num_rows=5):
+        self.clear_last_rows(num_rows*2+1)
+        trimmed_metadata = dict(list(metadata.items())[-num_rows:])
+
+        self.render_dict(trimmed_metadata, expand=False)
+
+
     @staticmethod
     def render_ascii_image_from_url(img_url: str, poster_columns: int = 80):
         """Render an image to the Console in colored ASCII. Primarily used for posters.
         """
         art = AsciiArt.from_url(img_url)
-
         art.to_terminal(columns=poster_columns)
-
-    # @staticmethod
-    # def render_unicode_poster(poster_url: str, poster_columns: int = 80,
-    #   max_height: int = 60, block_mode: bool = True):
-    #     """
-    #     Render a poster as Unicode art in the console.
-
-    #     Parameters:
-    #     - poster_url: URL of the poster image.
-    #     - poster_columns: Width of the Unicode art in characters.
-    #     - max_height: Maximum height of the Unicode art in characters.
-    #     - block_mode: Whether to use Unicode block elements for rendering.
-    #     """
-    #     # Fetch the poster image from the URL
-    #     response = requests.get(poster_url)
-    #     if response.status_code != 200:
-    #         raise ValueError(f"Failed to fetch image from URL: {poster_url}")
-
-    #     # Save the image to a temporary file
-    #     with tempfile.NamedTemporaryFile(suffix=".jpg", delete=False) as temp_file:
-    #         temp_file.write(response.content)
-    #         temp_file_path = temp_file.name
-
-    #     # Load the image into img2unicode
-    #     image_data = BytesIO(response.content)
-    #     optimizer = img2unicode.FastGenericDualOptimizer("block") if block_
-    # mode else img2unicode.FastGammaOptimizer("no_block")
-    #     renderer = img2unicode.Renderer(default_optimizer=optimizer,
-    #       max_h=max_height, max_w=poster_columns)
-    #
-    #     # Render the poster directly to the terminal
-    #     renderer.render_terminal(temp_file_path, "test.txt")

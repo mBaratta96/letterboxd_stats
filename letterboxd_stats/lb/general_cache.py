@@ -24,9 +24,9 @@ Features:
    - `clear`: Remove entries from the cache, either globally or within a specific namespace.
 
 """
-
 import logging
 import sqlite3
+import time
 
 logger = logging.getLogger(__name__)
 
@@ -81,38 +81,60 @@ class GeneralCache:
                     prefix TEXT,
                     key TEXT,
                     id INTEGER,
+                    timestamp REAL,
                     PRIMARY KEY (prefix, key)
                 )
-            """
+                """
             )
             conn.commit()
 
-    def get(self, prefix, key):
+    def get(self, prefix, key, timeout=None):
         """Basic CRUD Operation: READ"""
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
             cursor.execute(
-                "SELECT id FROM cache WHERE prefix = ? AND key = ?", (prefix, key)
+                "SELECT id, timestamp FROM cache WHERE prefix = ? AND key = ?",
+                (prefix, key),
             )
             result = cursor.fetchone()
-            return result[0] if result else None
+            if result:
+                cached_id, timestamp = result
+                if timeout is not None:
+                    current_time = time.time()
+                    if current_time - timestamp > timeout:
+                        # Cache expired, remove the entry
+                        self.clear(prefix, key)
+                        return None
+                return cached_id
+            return None
 
     def save(self, prefix, key, tmdb_id):
         """Basic CRUD Operation: CREATE/UPDATE"""
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
+            current_time = time.time()
             cursor.execute(
-                "INSERT OR REPLACE INTO cache (prefix, key, id) VALUES (?, ?, ?)",
-                (prefix, key, tmdb_id),
+                "INSERT OR REPLACE INTO cache (prefix, key, id, timestamp) VALUES (?, ?, ?, ?)",
+                (prefix, key, tmdb_id, current_time),
             )
             conn.commit()
 
-    def clear(self, namespace=None):
-        """Basic CRUD Operation: DELETE"""
+    def clear(self, prefix=None, key=None):
+        """
+        Remove entries from the cache.
+
+        Parameters:
+        - prefix (str, optional): Namespace for the cache entry.
+        - key (str, optional): Specific key to clear within the namespace.
+        """
         with sqlite3.connect(self.db_path) as conn:
             cursor = conn.cursor()
-            if namespace:
-                cursor.execute("DELETE FROM cache WHERE namespace = ?", (namespace,))
+            if prefix and key:
+                cursor.execute(
+                    "DELETE FROM cache WHERE prefix = ? AND key = ?", (prefix, key)
+                )
+            elif prefix:
+                cursor.execute("DELETE FROM cache WHERE prefix = ?", (prefix,))
             else:
                 cursor.execute("DELETE FROM cache")
             conn.commit()

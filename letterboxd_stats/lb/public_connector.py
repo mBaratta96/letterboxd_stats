@@ -40,12 +40,13 @@ import logging
 import requests
 from lxml import html
 
-from ..utils.general_cache import GeneralCache
+from .general_cache import GeneralCache
 from .utilities import (LB_BASE_URL, create_lb_operation_url_with_title,
                         create_lb_search_url)
 
 logger = logging.getLogger(__name__)
 
+THIRTY_DAYS_IN_SECONDS = 2592000
 
 class LBPublicConnector:
     """
@@ -74,10 +75,10 @@ class LBPublicConnector:
     - get_tmdb_id(lb_title: str) -> int | None:
         Fetches the TMDb ID for a film using its Letterboxd title.
 
-    - get_tmdb_id_from_lb(lb_url: str, is_diary=False) -> int | None:
+    - get_tmdb_id_from_lb(lb_url: str) -> int | None:
         Scrapes a Letterboxd film page to retrieve the associated TMDb ID.
 
-    - _get_tmdb_id_from_lb_page(lb_url: str, is_diary: bool) -> int:
+    - _get_tmdb_id_from_lb_page(lb_url: str) -> int:
         Internal method to scrape the TMDb link from a Letterboxd page,
         ensuring the film is categorized as a "movie" on TMDb.
 
@@ -92,7 +93,7 @@ class LBPublicConnector:
     connector = LBPublicConnector(cache_path="letterboxd_cache.db")
 
     # Search for a film by title
-    results = connector.search_lb_by_title("Inception")
+    results = connector.search_lb("Inception")
     print(results)
 
     # Get Letterboxd film ID
@@ -105,6 +106,8 @@ class LBPublicConnector:
     ```
     """
 
+
+
     def __init__(self, cache_path="cache.db"):
         logger.info("Initializing LBPublicConnector with cache path: %s", cache_path)
         self.session = requests.Session()
@@ -112,7 +115,7 @@ class LBPublicConnector:
         self.cache = GeneralCache(cache_path)
         logger.info("LBPublicConnector initialized successfully.")
 
-    def search_lb_by_title(self, search_query: str):
+    def search_lb(self, search_query: str):
         """
         Search for films by title.
 
@@ -174,7 +177,7 @@ class LBPublicConnector:
             ConnectionError: If the page cannot be retrieved.
         """
         # Check if the film ID is already cached
-        namespace = "lb_title_to_lb_id"
+        namespace = "lb_id"
         logger.info("Retrieving Letterboxd film ID for title: %s", lb_title)
 
         cached_id = self.cache.get(namespace, lb_title)
@@ -210,20 +213,65 @@ class LBPublicConnector:
 
         return letterboxd_film_id
 
-    def get_tmdb_id(self, lb_title: str) -> int | None:
-        """Fetch TMDB ID using the Letterboxd Title"""
-        film_url = create_lb_operation_url_with_title(lb_title, "film_page")
-        return self.get_tmdb_id_from_lb(film_url)
-
-    def get_tmdb_id_from_lb(self, lb_url: str, is_diary=False) -> int | None:
-        """Fetch TMDB ID using the Letterboxd film page URL. Uses cache is possible.
+    def get_lb_title_from_lb_url(self, lb_url: str) -> str | None:
         """
+        Extract the Letterboxd title from a given URL, handling both
+        letterboxd.com and boxd.it redirects.
 
-        namespace = "lb_title_to_tmdb_id"
-        # key = lb_url.rsplit("/", 1)[1]
-        logger.info("Retrieving TMDb ID for URL: %s", lb_url)
+        Args:
+            lb_url (str): The Letterboxd URL to extract the title from.
 
-        cached_id = self.cache.get(namespace, lb_url)
+        Returns:
+            str | None: The extracted Letterboxd title, or None if the extraction fails.
+        """
+        try:
+            # Follow redirects for boxd.it links
+            response = requests.head(lb_url, allow_redirects=True, timeout=10)
+            resolved_url = response.url
+
+            # Validate the resolved URL structure
+            if "letterboxd.com/film/" not in resolved_url:
+                logger.warning(f"Unexpected URL format after resolving: {resolved_url}")
+                return None
+
+            # Extract the title from the resolved URL
+            title = resolved_url.rstrip('/').split('/')[-1]
+
+            logger.info(f"Resolved and extracted Letterboxd title: {title}")
+            return title
+        except requests.RequestException as e:
+            logger.error(f"Failed to resolve URL {lb_url}: {e}")
+            return None
+        except Exception as e:
+            logger.error(f"An unexpected error occurred while processing URL {lb_url}: {e}")
+            return None
+
+
+    def get_lb_title_from_tmdb_id(self, tmdb_id: str) -> int | None:
+        """Fetch TMDb ID using the Letterboxd Title"""
+        search_results = self.search_lb(f"tmdb:{tmdb_id}")
+        selected_film = list(search_results.keys())[0]
+        title_url = search_results[selected_film].split("/")[-2]
+        return title_url
+
+    def get_tmdb_id_from_lb_title(self, lb_title: str) -> int | None:
+        """Fetch TMDb ID using the Letterboxd Title"""
+        film_url = create_lb_operation_url_with_title(lb_title, "film_page")
+        return self.get_tmdb_id_from_lb_url(film_url)
+
+    def get_tmdb_id_from_lb_url(self, lb_url: str) -> int | None:
+        """Fetch TMDb ID using the Letterboxd film page URL. Uses cache is possible.
+        """
+        namespace = "tmdb_id"
+        # Determine namespace and key dynamically
+        if not "letterboxd.com/film" in lb_url:
+            key = self.get_lb_title_from_lb_url(lb_url)
+        else:
+            key = lb_url.rsplit("/", 1)[1]  # Extract the film name from the URL
+
+
+        logger.info("Retrieving TMDb ID for namespace: %s, key: %s", namespace, key)
+        cached_id = self.cache.get(namespace, key, THIRTY_DAYS_IN_SECONDS)
 
         if cached_id:
             logger.debug("Cache hit for URL: %s, TMDb ID: %s", lb_url, cached_id)
@@ -234,9 +282,9 @@ class LBPublicConnector:
         )
 
         try:
-            tmdb_id = self._get_tmdb_id_from_lb_page(lb_url, is_diary)
+            tmdb_id = self._get_tmdb_id_from_lb_page(lb_url)
             if tmdb_id:
-                self.cache.save(namespace, lb_url, tmdb_id)
+                self.cache.save(namespace, key, tmdb_id)
                 logger.info(
                     "Successfully retrieved and cached TMDb ID: %s for URL: %s",
                     tmdb_id,
@@ -248,11 +296,11 @@ class LBPublicConnector:
             tmdb_id = None
 
     @staticmethod
-    def _get_tmdb_id_from_lb_page(lb_url: str, is_diary: bool) -> int:
-        """Scraping the TMDB link from a Letterboxd film page.
+    def _get_tmdb_id_from_lb_page(lb_url: str) -> int:
+        """Scraping the TMDb link from a Letterboxd film page.
         Inspect this HTML for reference: https://letterboxd.com/film/seven-samurai/
         """
-        logger.info("Fetching TMDb ID from URL: %s (is_diary=%s)", lb_url, is_diary)
+        logger.info("Fetching TMDb ID from URL: %s", lb_url)
 
         try:
             res = requests.get(lb_url, timeout=10)
@@ -262,9 +310,12 @@ class LBPublicConnector:
             raise
 
         lb_page = html.fromstring(res.text)
+        # Extract the type from the <meta> tag
+        meta_type = lb_page.xpath("//meta[@property='og:type']/@content")
+        meta_type_str = meta_type[0] if meta_type else None
 
-        if is_diary:
-            # Diary pages have no link to TMDB. Redirect to the main film page.
+        if meta_type_str == "letterboxd:review":
+            # Diary pages have no link to TMDb. Redirect to the main film page.
             logger.debug("Handling diary page redirect for URL: %s", lb_url)
             title_link = lb_page.xpath("//span[@class='film-title-wrapper']/a")
             if not title_link:

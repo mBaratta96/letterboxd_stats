@@ -1,5 +1,4 @@
 ascii_magic==2.3.0
-img2unicode==0.1a11
 InquirerPy==0.3.4
 lxml==4.9.4
 pandarallel==1.6.5

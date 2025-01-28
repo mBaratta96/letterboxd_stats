@@ -8,7 +8,7 @@ Search for actors/directors, analyze your diary/watchlist/rating, check which fi
 
 ## Requirements
 
--   Python >= 3.8
+-   Python >= 3.10
 -   A [TMDb API key](https://www.themoviedb.org/documentation/api): to retrieve all the general information for movies/people
 -   A Letterboxd account: to export your Letterboxd activity through web-scraping.
 
@@ -30,7 +30,7 @@ root_folder = "~/Documents/letterboxd_stats/"
 
 [TMDB]
 api_key = "YOUR_TMDB_API_KEY"
-# When you get your lists (-L options), also get all the runtimes from TMDB
+# When you get your lists (-L options), also get all the runtimes from TMDb
 # and compute the mean of the ratings weighted on the durations. This slows the process.
 get_list_runtimes = false
 
@@ -41,7 +41,7 @@ password = "your-password"
 [CLI]
 # The size of the ASCII art poster printed in your terminal when you check the details of a movie.
 # Set to 0 to disable
-poster_columns = 180
+poster_columns = 80
 # Set ascending order for sorting of tables
 ascending = false
 ```
@@ -67,19 +67,29 @@ options:
 
 ```
 
+## Features
+
+1. **Download and Analyze Letterboxd Data**:
+   - Export your Watchlist, Diary, Ratings, and Lists for offline analysis.
+2. **Search Functionality**:
+   - Search for films, actors, and directors via the TMDb API.
+3. **Metadata Management**:
+   - Update metadata such as watched status, ratings, and diary entries directly from the CLI.
+
+
 ## To-Do
 
 _Note: This is intended as a small project and is maintained during free time. Feature development and support may vary._
 
 -   [x] Use web-scraping to add film to diary/watchlist.
--   [x] Use pseudo-api to update user's per-film metadata (watchlisted, watched, liked, rating) 
+-   [x] Use pseudo-api to update user's per-film metadata (watchlisted, watched, liked, rating)
 -   [x] Add environment variable support.
 -   [ ] Check followers' activity.
 -   [ ] Add more analytics and visualizations.
 
 ## Contributing
 
-Contributions are welcome! Feel free to open issues or submit pull requests on the [GitHub repository](https://github.com/your-repo/letterboxd_stats). 
+Contributions are welcome! Feel free to open issues or submit pull requests on the [GitHub repository](https://github.com/your-repo/letterboxd_stats).
 
 ## License
 

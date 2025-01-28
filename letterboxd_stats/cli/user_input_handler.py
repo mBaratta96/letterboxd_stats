@@ -41,6 +41,7 @@ def user_choose_option_lb_lists(options: list[str]) -> str:
         max_height="25%",
         choices=options,
         validate=lambda result: result in options,
+        keybindings={"skip": [{"key": "escape"}]},
     ).execute()
     return result
 
@@ -58,8 +59,10 @@ def user_choose_option_search_result(options: list[str]) -> int:
     choices = [Choice(i, name=r) for i, r in enumerate(options)]
     result = inquirer.select(  # type: ignore
         message="Result of your search. Please select one",
+        mandatory=True,
         choices=choices,
         default=choices[0],
+        keybindings={"skip": [{"key": "escape"}]},
     ).execute()
     return result
 
@@ -79,8 +82,7 @@ def user_choose_options_multiple(options: list[str]) -> list[str]:
                 Use space to toggle your choices. \
                 Press Enter to confirm.",
         choices=[Choice(option, enabled=True) for option in options],  # Pre-select all
-        validate=lambda result: len(result)
-        > 0,  # Ensure at least one option is selected
+        validate=lambda result: len(result) > 0,  # Ensure at least one option
     ).execute()
     return result
 
@@ -103,6 +105,8 @@ def user_choose_option(
         message=message,
         choices=options,
         default=default or options[0],
+        keybindings={"skip": [{"key": "escape"}]},
+        mandatory=False
     ).execute()
     return result
 

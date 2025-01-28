@@ -101,7 +101,7 @@ class TMDbAPI:
 
     def fetch_movie_runtime(self, tmdb_id: int) -> int:
         """
-        Fetch the runtime of a movie using its TMDB ID.
+        Fetch the runtime of a movie using its TMDb ID.
         """
         try:
             runtime=getattr(self.movie.details(tmdb_id), "runtime", None)
@@ -137,10 +137,17 @@ class TMDbAPI:
 
     def fetch_movie_details(self, tmdb_id: int, letterboxd_url=None) -> dict:
         """
-        Creates dict of movie details fetched from TMDB API.
+        Creates dict of movie details fetched from TMDb API.
         Optionally include Letterboxd URL
         """
-        movie_details = self.movie.details(tmdb_id)
+
+        try:
+            # Attempt to fetch movie details
+            movie_details = self.movie.details(tmdb_id)
+        except TMDbException as e:
+            # Log the error and provide context
+            logger.warning(f"Failed to fetch TMDb details for {letterboxd_url or 'film'} with ID {tmdb_id}: {e}")
+            raise RuntimeError(f"Could not fetch movie details: {e}") from e
 
         selected_details = {
             "Title": movie_details["title"],
@@ -162,19 +169,19 @@ class TMDbAPI:
 
     def search_tmdb_people(self, person_query: str) -> Any | AsObj:
         """
-        Search for people on TMDB by name. Returns all search results.
+        Search for people on TMDb by name. Returns all search results.
         """
-        logger.info("Searching TMDB for person named '%s'", person_query)
+        logger.info("Searching TMDb for person named '%s'", person_query)
         search_results = self.search.people({"query": person_query})
         if len([result.name for result in search_results]) == 0:
-            raise ValueError("No results found for your TMDB person search.")
+            raise ValueError("No results found for your TMDb person search.")
         return search_results
 
     def search_tmdb_movies(self, movie_query: str) -> Any | AsObj:
-        """Search TMDB's Movie database by title. Return results.
+        """Search TMDb's Movie database by title. Return results.
         """
-        logger.info("Searching TMDB for movie '%s'",movie_query)
+        logger.info("Searching TMDb for movie '%s'",movie_query)
         search_results = self.search.movies({"query": movie_query})
         if len([f"{result.title} ({result.release_date})" for result in search_results]) == 0:
-            raise ValueError("No results found for your TMDB movie search.")
+            raise ValueError("No results found for your TMDb movie search.")
         return search_results

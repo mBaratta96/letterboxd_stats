@@ -185,7 +185,7 @@ class LBAuthConnector(LBPublicConnector):
         logger.info("Fetched metadata for '%s': %s", lb_title, metadata)
         return metadata
 
-    def perform_operation(self, operation: str, link: str, *args, **kwargs):
+    def perform_film_operation(self, operation: str, link: str, *args, **kwargs):
         """Perform an operation on a Letterboxd link."""
         if not self.auth.logged_in:
             raise RuntimeError("User must be logged in to perform this operation.")
@@ -193,7 +193,7 @@ class LBAuthConnector(LBPublicConnector):
         operation_data = LB_OPERATIONS.get(operation)
         if not operation_data:
             raise ValueError(
-                f"Operation '{operation}' is not registered in FILM_OPERATIONS."
+                f"Operation '{operation}' is not registered in LB_OPERATIONS."
             )
 
         method_name = operation_data["method"]

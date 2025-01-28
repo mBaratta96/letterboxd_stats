@@ -115,6 +115,7 @@ class LBUserDataExporter:
 
         # Write the downloaded archive to disk
         archive_path = os.path.join(download_dir, filename)
+
         try:
             with open(archive_path, "wb") as archive_file:
                 archive_file.write(response.content)
@@ -124,7 +125,9 @@ class LBUserDataExporter:
             raise
 
         # Extract the archive
-        extracted_dir = os.path.join(download_dir, os.path.splitext(filename)[0])
+        #extracted_dir = os.path.join(download_dir, os.path.splitext(filename)[0])
+        extracted_dir = download_dir
+
         try:
             with ZipFile(archive_path, "r") as zip_file:
                 zip_file.extractall(extracted_dir)
