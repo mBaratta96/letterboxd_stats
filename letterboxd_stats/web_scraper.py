@@ -113,11 +113,11 @@ def _get_tmdb_id_from_web(link: str, is_diary: bool) -> int:
     if is_diary:
         title_link = film_page.xpath("//span[@class='film-title-wrapper']/a")
         if len(title_link) == 0:
-            raise ValueError("No link found for film.")
-        film_link = title_link[0]
-        film_url = URL + film_link.get("href")
-        film_page = html.fromstring(requests.get(film_url).text)
-    tmdb_link = film_page.xpath("//a[@data-track-action='TMDb']")
+            raise ValueError("No movie link found.")
+        movie_link = title_link[0]
+        movie_url = URL + movie_link.get("href")
+        movie_page = html.fromstring(requests.get(movie_url).text)
+    tmdb_link = movie_page.xpath("//a[@data-track-action='TMDB']")
     if len(tmdb_link) == 0:
         raise ValueError("No link found for film")
     
