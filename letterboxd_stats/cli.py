@@ -20,14 +20,14 @@ def select_value(values: list[str], message: str, default: str | None = None) ->
     return value
 
 
-def select_movie(movies: pd.Series, results: pd.Series) -> str:
+def select_film(films: pd.Series, results: pd.Series) -> str:
     result = inquirer.fuzzy(  # type: ignore
-        message="Select movie for more information",
+        message="Select film for more information:",
         mandatory=False,
         max_height="25%",
-        choices=[Choice(value=result, name=title) for result, title in zip(results, movies)],
+        choices=[Choice(value=result, name=title) for result, title in zip(results, films)],
         keybindings={"skip": [{"key": "escape"}]},
-        invalid_message="Input not in list of movies.",
+        invalid_message="Input not in list of films.",
         validate=lambda result: result in results.values,
     ).execute()
     return result
@@ -100,7 +100,7 @@ def _validate_date(s: str) -> bool:
     return True
 
 
-def add_film_questions() -> dict[str, str]:
+def get_input_add_diary_entry() -> dict[str, str]:
     print("Set all the infos for the film:\n")
     specify_date = inquirer.confirm(message="Specify date?").execute()  # type: ignore
     today = datetime.today().strftime("%Y-%m-%d")
@@ -121,13 +121,14 @@ def add_film_questions() -> dict[str, str]:
         replace_mode=True,
         filter=lambda n: int(2 * float(n)),
     ).execute()
-    liked = inquirer.confirm(message="Did you like the movie?").execute()  # type: ignore
+    liked = inquirer.confirm(message="Give this film a ♥?").execute()  # type: ignore
+    leave_review = inquirer.confirm(message="Leave a review?").execute()  # type: ignore
     review = inquirer.text(  # type: ignore
         message="Write a review. "
         + "Use HTML tags for formatting (<b>, <i>, <a href='[URL]'>, <blockquote<>). "
         + "Press Enter for multiline.",
         multiline=True,
-    ).execute()
+    ).execute() if leave_review else ""
     contains_spoilers = False
     if len(review) > 0:
         contains_spoilers = inquirer.confirm(message="The review contains spoilers?").execute()  # type: ignore
