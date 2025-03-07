@@ -108,10 +108,10 @@ def _get_tmdb_id_from_web(link: str, is_diary: bool) -> int:
     """
 
     res = requests.get(link)
-    film_page = html.fromstring(res.text)
+    movie_page = html.fromstring(res.text)
     # Diary links sends you to a different page with no link to TMDB. Redirect to the actual page.
     if is_diary:
-        title_link = film_page.xpath("//span[@class='film-title-wrapper']/a")
+        title_link = movie_page.xpath("//span[@class='film-title-wrapper']/a")
         if len(title_link) == 0:
             raise ValueError("No movie link found.")
         movie_link = title_link[0]
