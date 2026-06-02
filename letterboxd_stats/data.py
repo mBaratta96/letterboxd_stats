@@ -1,12 +1,12 @@
+import os
+
+import numpy as np
 import pandas as pd
 from pandarallel import pandarallel
-import numpy as np
-from letterboxd_stats import cli
-from letterboxd_stats.web_scraper import get_tmdb_id
-from letterboxd_stats import tmdb
-import os
-from letterboxd_stats import config
 from tqdm import tqdm
+
+from letterboxd_stats import cli, config, tmdb
+from letterboxd_stats.web_scraper import get_tmdb_id
 
 tqdm.pandas(desc="Fetching ids...")
 pandarallel.initialize(progress_bar=False, verbose=1)
@@ -21,7 +21,7 @@ def check_if_watched(df: pd.DataFrame, row: pd.Series) -> bool:
     if row["Title"] in df["Name"].values:
         watched_films_same_name = df[df["Name"] == row["Title"]]
         for _, film in watched_films_same_name.iterrows():
-            film_id = get_tmdb_id(film["Letterboxd URI"])
+            film_id = get_tmdb_id(film["Letterboxd URI"], is_diary=True)
             if film_id == row.name:
                 return True
     return False

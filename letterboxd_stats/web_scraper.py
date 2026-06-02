@@ -1,10 +1,11 @@
 import os
-from zipfile import ZipFile
-from letterboxd_stats import config
-from letterboxd_stats import cli
-import requests
-from lxml import html
 import shelve
+from zipfile import ZipFile
+
+from curl_cffi import requests
+from lxml import html
+
+from letterboxd_stats import cli, config
 
 URL = "https://letterboxd.com"
 LOGIN_PAGE = URL + "/user/login.do"
@@ -16,20 +17,47 @@ FILM_OPERATIONS = {
     "Remove from watchlist": "remove_watchlist_entry",
 }
 OPERATIONS_URLS = {
-    "search": lambda s: f"/s/search/{s}/",
+    "search": lambda s: f"/s/search/{s}/?adult",
     "diary": lambda s: f"/csi/film/{s}/sidebar-user-actions/?esiAllowUser=true",
     "add_watchlist": lambda s: f"/film/{s}/add-to-watchlist/",
     "remove_watchlist": lambda s: f"/film/{s}/remove-from-watchlist/",
     "film_page": lambda s: f"/film/{s}",
 }
+USER_AGENT = "Mozilla/5.0 (X11; Linux x86_64; rv:128.0) Gecko/20100101 Firefox/128.0"
 
 cache_path = os.path.expanduser(os.path.join(config["root_folder"], "static", "cache.db"))
+headers = {
+    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:128.0) Gecko/20100101 Firefox/128.0",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.5",
+    "Accept-Encoding": "gzip, deflate, br, zstd",
+    "DNT": "1",
+    "Sec-GPC": "1",
+    "Connection": "keep-alive",
+    "Upgrade-Insecure-Requests": "1",
+    "Sec-Fetch-Dest": "document",
+    "Sec-Fetch-Mode": "navigate",
+    "Sec-Fetch-Site": "none",
+    "Sec-Fetch-User": "?1",
+    "Priority": "u=0, i",
+    "Pragma": "no-cache",
+    "Cache-Control": "no-cache",
+    "TE": "trailers",
+}
 
 
 class Connector:
     def __init__(self):
         self.session = requests.Session()
-        # get home page to set cookies in the session.
+        self.session.impersonate = "firefox133"
+        self.session.headers.update(
+            {
+                "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:128.0) Gecko/20100101 Firefox/128.0",
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                "Accept-Language": "en-US,en;q=0.5",
+                "Accept-Encoding": "gzip, deflate, br, zstd",
+            }
+        )
         self.session.get(URL)
 
     def login(self):
@@ -75,7 +103,7 @@ class Connector:
         payload["__csrf"] = self.session.cookies.get("com.xk72.webparts.csrf")
         res = self.session.post(ADD_DIARY_URL, data=payload)
         if not (res.status_code == 200 and res.json()["result"] is True):
-            raise ConnectionError(f"Failed to add to diary.")
+            raise ConnectionError("Failed to add to diary.")
         print(f"{title} was added to your diary.")
 
     def add_watchlist_entry(self, title: str):
@@ -107,25 +135,31 @@ def _get_tmdb_id_from_web(link: str, is_diary: bool) -> int:
     Inspect this HTML for reference: https://letterboxd.com/film/seven-samurai/
     """
 
-    res = requests.get(link)
-    movie_page = html.fromstring(res.text)
     # Diary links sends you to a different page with no link to TMDB. Redirect to the actual page.
     if is_diary:
-        title_link = movie_page.xpath("//span[@class='film-title-wrapper']/a")
-        if len(title_link) == 0:
+        res = requests.get(link, allow_redirects=False)
+        title_link = res.headers.get("location")
+        cookies = res.cookies
+        if title_link is None:
             raise ValueError("No movie link found.")
-        movie_link = title_link[0]
-        movie_url = URL + movie_link.get("href")
-        movie_page = html.fromstring(requests.get(movie_url).text)
+        movie_res = requests.get(
+            title_link,
+            cookies=cookies,
+            headers={"User-Agent": USER_AGENT},
+        )
+        movie_page = html.fromstring(movie_res.text)
+    else:
+        res = requests.get(link)
+        movie_page = html.fromstring(res.text)
     tmdb_link = movie_page.xpath("//a[@data-track-action='TMDB']")
     if len(tmdb_link) == 0:
         raise ValueError("No link found for film")
-    
+
     tmdb_category = tmdb_link[0].get("href").split("/")[-3]
-    
+
     if tmdb_category != "movie":
         full_link = tmdb_link[0].get("href")
-        raise ValueError(f"Tool does not currently support TMDB category \"{tmdb_category}\": {full_link}")
+        raise ValueError(f'Tool does not currently support TMDB category "{tmdb_category}": {full_link}')
 
     id = tmdb_link[0].get("href").split("/")[-2]
     return int(id)
@@ -168,6 +202,9 @@ def get_lb_title(title: str, allow_selection=False) -> str:
     search_url = create_lb_url(title, "search")
     print(f"Searching for '{title}'")
     res = requests.get(search_url)
+    cookie = res.cookies.get("com.xk72.webparts.csrf")
+    search_url = f"{search_url}&__csrf={cookie}"
+    res = requests.get(search_url, headers={"User-Agent": USER_AGENT}, cookies=res.cookies)
     if res.status_code != 200:
         raise ConnectionError("Failed to retrieve the Letterboxd page.")
     search_page = html.fromstring(res.text)
@@ -175,7 +212,7 @@ def get_lb_title(title: str, allow_selection=False) -> str:
     if allow_selection:
         film_list = search_page.xpath("//div[@class='film-detail-content']")
         if len(film_list) == 0:
-            raise ValueError(f"No results found for your Letterboxd film search.")
+            raise ValueError("No results found for your Letterboxd film search.")
         title_years_directors_links = {}
         for film in film_list:
             title = film.xpath("./h2/span/a")[0].text.rstrip()

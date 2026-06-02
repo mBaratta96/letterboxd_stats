@@ -1,12 +1,14 @@
-from rich.console import Console
-from rich.table import Table
-from rich import box
+from datetime import datetime
+
 import pandas as pd
+from ascii_magic import AsciiArt
 from InquirerPy import inquirer
 from InquirerPy.base.control import Choice
+from rich import box
+from rich.console import Console
+from rich.table import Table
+
 from letterboxd_stats import config
-from ascii_magic import AsciiArt
-from datetime import datetime
 
 IMAGE_URL = "https://www.themoviedb.org/t/p/w600_and_h900_bestv2"
 
@@ -123,12 +125,16 @@ def get_input_add_diary_entry() -> dict[str, str]:
     ).execute()
     liked = inquirer.confirm(message="Give this film a ♥?").execute()  # type: ignore
     leave_review = inquirer.confirm(message="Leave a review?").execute()  # type: ignore
-    review = inquirer.text(  # type: ignore
-        message="Write a review. "
-        + "Use HTML tags for formatting (<b>, <i>, <a href='[URL]'>, <blockquote<>). "
-        + "Press Enter for multiline.",
-        multiline=True,
-    ).execute() if leave_review else ""
+    review = (
+        inquirer.text(  # type: ignore
+            message="Write a review. "
+            + "Use HTML tags for formatting (<b>, <i>, <a href='[URL]'>, <blockquote<>). "
+            + "Press Enter for multiline.",
+            multiline=True,
+        ).execute()
+        if leave_review
+        else ""
+    )
     contains_spoilers = False
     if len(review) > 0:
         contains_spoilers = inquirer.confirm(message="The review contains spoilers?").execute()  # type: ignore

@@ -1,11 +1,12 @@
 from typing import Any, Tuple
-from tmdbv3api import TMDb, Person, Movie, Search
-from tmdbv3api.exceptions import TMDbException
+
 import pandas as pd
 from pandarallel import pandarallel
+from tmdbv3api import Movie, Person, Search, TMDb
+from tmdbv3api.exceptions import TMDbException
 from tmdbv3api.objs.account import AsObj
-from letterboxd_stats import cli
-from letterboxd_stats import config
+
+from letterboxd_stats import cli, config
 
 tmdb = TMDb()
 tmdb.api_key = config["TMDB"]["api_key"]
@@ -35,7 +36,7 @@ def get_person(name: str) -> Tuple[pd.DataFrame, str]:
         {
             "Id": m.id,
             "Title": m.title,
-            "Release Date": m.release_date,
+            "Release Date": m.get("release_date") or "",
             "Department": m.department,
         }
         for m in movie_credits["crew"]

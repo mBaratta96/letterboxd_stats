@@ -1,9 +1,10 @@
-import tomli
-import os
-import platformdirs
 import argparse
 import getpass
+import os
 import sys
+
+import platformdirs
+import tomli
 
 default_folder = platformdirs.user_config_dir("letterboxd_stats", getpass.getuser())
 
@@ -16,6 +17,7 @@ CONFIG_DEFAULTS = {
         "get_list_runtimes": False,
     },
 }
+
 
 def load_config(file_path, defaults):
     # Load the TOML file if it exists
@@ -33,6 +35,7 @@ def load_config(file_path, defaults):
 
     return merged_config
 
+
 def merge_dicts(defaults, overrides):
     """Recursively merge two dictionaries."""
     merged = defaults.copy()
@@ -42,6 +45,7 @@ def merge_dicts(defaults, overrides):
         else:
             merged[key] = value
     return merged
+
 
 def apply_env_variables(config):
     """Override configuration with environment variables."""
@@ -64,11 +68,12 @@ def apply_env_variables(config):
             elif value.isdigit():
                 value = int(value)
             config[section][key] = value
-            
+
             # Print a message indicating the environment variable is being used
             print(f"Using environment variable {env_var} for config: {section}.{key} = {value}")
-        
+
     return config
+
 
 parser = argparse.ArgumentParser(
     prog="Letterboxd Stats",
@@ -89,7 +94,7 @@ parser.add_argument("-L", "--lists", help="show lists", action="store_true")
 parser.add_argument("-l", "--limit", help="limit the number of items of your wishlist/diary", type=int)
 parser.add_argument("-c", "--config_folder", help="Specify the folder of your config.toml file")
 
-#if len(sys.argv) == 1:
+# if len(sys.argv) == 1:
 #    parser.print_help(sys.stderr)
 #    sys.exit(1)
 
@@ -104,4 +109,3 @@ if not os.path.exists(config_path):
     )
 
 config = load_config(config_path, CONFIG_DEFAULTS)
-

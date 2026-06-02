@@ -9,24 +9,25 @@ authors = [{ name = "mBaratta96" }]
 description = "Get information about your Letterboxd activity."
 readme = "README.md"
 license = { file = "LICENSE" }
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
 ]
 dependencies = [
-    "ascii_magic~=2.3.0",
-    "inquirerpy~=0.3.4",
-    "lxml~=4.9.0",
-    "pandas~=2.2.1",
-    "pandarallel~=1.6.5",
-    "platformdirs~=3.0.0",
-    "requests~=2.31.0",
-    "rich~=13.3.5",
-    "tmdbv3api~=1.7.7",
-    "tomli~=2.0.1",
-    "tqdm~=4.65.0"
+  "ascii_magic~=2.3.0",
+  "inquirerpy~=0.3.4",
+  "lxml~=4.9.0",
+  "pandas~=2.2.1",
+  "pandarallel~=1.6.5",
+  "platformdirs~=3.0.0",
+  "requests~=2.31.0",
+  "rich~=13.3.5",
+  "tmdbv3api~=1.7.7",
+  "tomli~=2.0.1",
+  "tqdm~=4.65.0",
+  "curl-cffi>=0.13.0",
 ]
 
 [project.urls]

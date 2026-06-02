@@ -1,10 +1,8 @@
 import os
 import sys
 
-from letterboxd_stats import tmdb
-from letterboxd_stats import data
+from letterboxd_stats import args, config, data, tmdb
 from letterboxd_stats import web_scraper as ws
-from letterboxd_stats import args, config
 
 DATA_FILES = {"Watchlist": "watchlist.csv", "Diary": "diary.csv", "Ratings": "ratings.csv", "Lists": "lists"}
 
@@ -13,7 +11,8 @@ def try_command(command, args):
     try:
         command(*args)
     except Exception as e:
-        print(e)
+        print("EXCEPTED")
+        raise (e)
 
 
 def check_path(path: str):
@@ -91,9 +90,9 @@ def main():
             try_command(display_data, (args.limit, config["CLI"]["ascending"], "Ratings"))
         if args.lists:
             try_command(display_data, (args.limit, config["CLI"]["ascending"], "Lists"))
-        
+
     except KeyboardInterrupt:
-        print('\nProgram interrupted. Exiting.')
+        print("\nProgram interrupted. Exiting.")
         sys.exit(0)
 
 
